@@ -8,7 +8,7 @@
 
 - [x] [Rest_Issues|Issues]
 - [x] [Rest_Projects|Projects]
-- [ ] [Rest_Memberships|Project Memberships]
+- [x] [Rest_Memberships|Project Memberships]
 - [x] [Rest_Users|Users]
 - [x] [Rest_TimeEntries|Time Entries]
 - [ ] [Rest_News|News]

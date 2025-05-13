@@ -59,6 +59,12 @@ class GetTimeEntriesTool(MCPTool):
     )
 
     def run(self, redmine_url, api_key, project_id=None, user_id=None, limit=None, offset=None):
+        import os
+
+        if redmine_url is None:
+            redmine_url = os.environ.get("REDMINE_URL")
+        if api_key is None:
+            api_key = os.environ.get("REDMINE_API_KEY")
         headers = {"X-Redmine-API-Key": api_key}
         params = {}
         if project_id:
