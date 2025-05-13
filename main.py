@@ -11,7 +11,7 @@ from tools.update_issue_tool import UpdateIssueTool
 
 server = MCPServer(
     name="redmine-mcp-server",
-    description="Redmine APIにアクセスするMCPサーバ",
+    description="An MCP server for accessing the Redmine API.",
     tools=[
         GetIssuesTool(),
         CreateIssueTool(),

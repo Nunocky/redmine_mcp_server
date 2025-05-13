@@ -4,36 +4,36 @@ from fastmcp.server import MCPTool, MCPToolArgument, MCPToolOutput
 
 class GetMembershipsTool(MCPTool):
     name = "get_memberships"
-    description = "Redmineのプロジェクトメンバーシップ一覧を取得します"
+    description = "Get a list of project memberships from Redmine."
     arguments = [
         MCPToolArgument(
             name="redmine_url",
             type="string",
-            description="RedmineのベースURL（例: https://redmine.example.com）",
+            description="Base URL of Redmine (e.g. https://redmine.example.com)",
             required=True,
         ),
         MCPToolArgument(
             name="api_key",
             type="string",
-            description="RedmineのAPIキー",
+            description="Redmine API key",
             required=True,
         ),
         MCPToolArgument(
             name="project_id",
             type="string",
-            description="プロジェクトID",
+            description="Project ID",
             required=True,
         ),
         MCPToolArgument(
             name="limit",
             type="integer",
-            description="取得件数（ページネーション用）",
+            description="Number of items to retrieve (pagination)",
             required=False,
         ),
         MCPToolArgument(
             name="offset",
             type="integer",
-            description="取得開始位置（ページネーション用）",
+            description="Offset for pagination",
             required=False,
         ),
     ]
@@ -42,12 +42,12 @@ class GetMembershipsTool(MCPTool):
         properties={
             "memberships": {
                 "type": "array",
-                "description": "プロジェクトメンバーシップ一覧",
+                "description": "List of project memberships",
                 "items": {"type": "object"},
             },
-            "total_count": {"type": "integer", "description": "全件数"},
-            "limit": {"type": "integer", "description": "取得件数"},
-            "offset": {"type": "integer", "description": "取得開始位置"},
+            "total_count": {"type": "integer", "description": "Total number of memberships"},
+            "limit": {"type": "integer", "description": "Number of items returned"},
+            "offset": {"type": "integer", "description": "Offset of the first item returned"},
         },
         required=["memberships", "total_count", "limit", "offset"],
     )

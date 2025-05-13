@@ -4,36 +4,36 @@ from fastmcp.server import MCPTool, MCPToolArgument, MCPToolOutput
 
 class GetIssuesTool(MCPTool):
     name = "get_issues"
-    description = "Redmineの課題一覧を取得します"
+    description = "Get a list of issues from Redmine."
     arguments = [
         MCPToolArgument(
             name="redmine_url",
             type="string",
-            description="RedmineのベースURL（例: https://redmine.example.com）",
+            description="Base URL of Redmine (e.g. https://redmine.example.com)",
             required=True,
         ),
         MCPToolArgument(
             name="api_key",
             type="string",
-            description="RedmineのAPIキー",
+            description="Redmine API key",
             required=True,
         ),
         MCPToolArgument(
             name="project_id",
             type="string",
-            description="プロジェクトID（省略時は全プロジェクト）",
+            description="Project ID (if omitted, all projects)",
             required=False,
         ),
         MCPToolArgument(
             name="limit",
             type="integer",
-            description="取得件数（ページネーション用）",
+            description="Number of items to retrieve (pagination)",
             required=False,
         ),
         MCPToolArgument(
             name="offset",
             type="integer",
-            description="取得開始位置（ページネーション用）",
+            description="Offset for pagination",
             required=False,
         ),
     ]
@@ -42,12 +42,12 @@ class GetIssuesTool(MCPTool):
         properties={
             "issues": {
                 "type": "array",
-                "description": "課題一覧",
+                "description": "List of issues",
                 "items": {"type": "object"},
             },
-            "total_count": {"type": "integer", "description": "全課題数"},
-            "limit": {"type": "integer", "description": "取得件数"},
-            "offset": {"type": "integer", "description": "取得開始位置"},
+            "total_count": {"type": "integer", "description": "Total number of issues"},
+            "limit": {"type": "integer", "description": "Number of items returned"},
+            "offset": {"type": "integer", "description": "Offset of the first item returned"},
         },
         required=["issues", "total_count", "limit", "offset"],
     )

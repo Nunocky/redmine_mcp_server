@@ -4,54 +4,54 @@ from fastmcp.server import MCPTool, MCPToolArgument, MCPToolOutput
 
 class CreateIssueTool(MCPTool):
     name = "create_issue"
-    description = "Redmineの課題を新規作成します"
+    description = "Create a new issue in Redmine."
     arguments = [
         MCPToolArgument(
             name="redmine_url",
             type="string",
-            description="RedmineのベースURL（例: https://redmine.example.com）",
+            description="Base URL of Redmine (e.g. https://redmine.example.com)",
             required=True,
         ),
         MCPToolArgument(
             name="api_key",
             type="string",
-            description="RedmineのAPIキー",
+            description="Redmine API key",
             required=True,
         ),
         MCPToolArgument(
             name="project_id",
             type="string",
-            description="プロジェクトID",
+            description="Project ID",
             required=True,
         ),
         MCPToolArgument(
             name="subject",
             type="string",
-            description="課題タイトル",
+            description="Issue subject/title",
             required=True,
         ),
         MCPToolArgument(
             name="description",
             type="string",
-            description="課題の説明",
+            description="Issue description",
             required=False,
         ),
         MCPToolArgument(
             name="custom_fields",
             type="array",
-            description="カスタムフィールド（例: [{'id':1,'value':'foo'}]）",
+            description="Custom fields (e.g. [{'id':1,'value':'foo'}])",
             required=False,
         ),
         MCPToolArgument(
             name="uploads",
             type="array",
-            description="添付ファイル情報（例: [{'token':'xxx','filename':'a.txt'}]）",
+            description="Attachment info (e.g. [{'token':'xxx','filename':'a.txt'}])",
             required=False,
         ),
     ]
     output = MCPToolOutput(
         type="object",
-        properties={"issue": {"type": "object", "description": "作成された課題情報"}},
+        properties={"issue": {"type": "object", "description": "Created issue information"}},
         required=["issue"],
     )
 

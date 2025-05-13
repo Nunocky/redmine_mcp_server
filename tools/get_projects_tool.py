@@ -4,30 +4,30 @@ from fastmcp.server import MCPTool, MCPToolArgument, MCPToolOutput
 
 class GetProjectsTool(MCPTool):
     name = "get_projects"
-    description = "Redmineのプロジェクト一覧を取得します"
+    description = "Get a list of projects from Redmine."
     arguments = [
         MCPToolArgument(
             name="redmine_url",
             type="string",
-            description="RedmineのベースURL（例: https://redmine.example.com）",
+            description="Base URL of Redmine (e.g. https://redmine.example.com)",
             required=True,
         ),
         MCPToolArgument(
             name="api_key",
             type="string",
-            description="RedmineのAPIキー",
+            description="Redmine API key",
             required=True,
         ),
         MCPToolArgument(
             name="limit",
             type="integer",
-            description="取得件数（ページネーション用）",
+            description="Number of items to retrieve (pagination)",
             required=False,
         ),
         MCPToolArgument(
             name="offset",
             type="integer",
-            description="取得開始位置（ページネーション用）",
+            description="Offset for pagination",
             required=False,
         ),
     ]
@@ -36,12 +36,12 @@ class GetProjectsTool(MCPTool):
         properties={
             "projects": {
                 "type": "array",
-                "description": "プロジェクト一覧",
+                "description": "List of projects",
                 "items": {"type": "object"},
             },
-            "total_count": {"type": "integer", "description": "全プロジェクト数"},
-            "limit": {"type": "integer", "description": "取得件数"},
-            "offset": {"type": "integer", "description": "取得開始位置"},
+            "total_count": {"type": "integer", "description": "Total number of projects"},
+            "limit": {"type": "integer", "description": "Number of items returned"},
+            "offset": {"type": "integer", "description": "Offset of the first item returned"},
         },
         required=["projects", "total_count", "limit", "offset"],
     )

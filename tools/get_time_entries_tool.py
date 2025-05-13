@@ -4,42 +4,42 @@ from fastmcp.server import MCPTool, MCPToolArgument, MCPToolOutput
 
 class GetTimeEntriesTool(MCPTool):
     name = "get_time_entries"
-    description = "Redmineの作業時間エントリ一覧を取得します"
+    description = "Get a list of time entries from Redmine."
     arguments = [
         MCPToolArgument(
             name="redmine_url",
             type="string",
-            description="RedmineのベースURL（例: https://redmine.example.com）",
+            description="Base URL of Redmine (e.g. https://redmine.example.com)",
             required=True,
         ),
         MCPToolArgument(
             name="api_key",
             type="string",
-            description="RedmineのAPIキー",
+            description="Redmine API key",
             required=True,
         ),
         MCPToolArgument(
             name="project_id",
             type="string",
-            description="プロジェクトID（省略時は全プロジェクト）",
+            description="Project ID (if omitted, all projects)",
             required=False,
         ),
         MCPToolArgument(
             name="user_id",
             type="integer",
-            description="ユーザーID（省略時は全ユーザー）",
+            description="User ID (if omitted, all users)",
             required=False,
         ),
         MCPToolArgument(
             name="limit",
             type="integer",
-            description="取得件数（ページネーション用）",
+            description="Number of items to retrieve (pagination)",
             required=False,
         ),
         MCPToolArgument(
             name="offset",
             type="integer",
-            description="取得開始位置（ページネーション用）",
+            description="Offset for pagination",
             required=False,
         ),
     ]
@@ -48,12 +48,12 @@ class GetTimeEntriesTool(MCPTool):
         properties={
             "time_entries": {
                 "type": "array",
-                "description": "作業時間エントリ一覧",
+                "description": "List of time entries",
                 "items": {"type": "object"},
             },
-            "total_count": {"type": "integer", "description": "全エントリ数"},
-            "limit": {"type": "integer", "description": "取得件数"},
-            "offset": {"type": "integer", "description": "取得開始位置"},
+            "total_count": {"type": "integer", "description": "Total number of time entries"},
+            "limit": {"type": "integer", "description": "Number of items returned"},
+            "offset": {"type": "integer", "description": "Offset of the first item returned"},
         },
         required=["time_entries", "total_count", "limit", "offset"],
     )
