@@ -7,15 +7,15 @@
 ## APIs
 
 - [x] Issues
-- [x] Projects
+- [ ] Projects ★
 - [x] Project Memberships
-- [x] Users
-- [x] Time Entries
-- [x] News
-- [x] Issue Relations
-- [x] Versions
-- [x] Wiki Pages
-- [x] Queries
+- [ ] Users
+- [ ] Time Entries
+- [ ] News
+- [ ] Issue Relations
+- [ ] Versions
+- [ ] Wiki Pages
+- [ ] Queries
 - [ ] Attachments
 - [ ] Issue Statuses
 - [ ] Trackers
@@ -28,3 +28,12 @@
 - [ ] Files
 - [ ] My account
 - [ ] Journals
+
+
+
+## Stable APIs
+
+| API | Status | Notes | Version |
+|-----|--------|-------|---------|
+| [Projects](Rest_Projects) | Stable | | 1.0 |
+| [Time Entries](Rest_TimeEntries) | Stable | | 1.1 |

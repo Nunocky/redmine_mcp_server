@@ -29,8 +29,11 @@ def update_issue(
         issue_data["uploads"] = uploads
     url = f"{redmine_url.rstrip('/')}/issues/{issue_id}.json"
     resp = requests.put(url, headers=headers, json={"issue": issue_data})
-    resp.raise_for_status()
-    return {"success": resp.status_code == 200}
+    return {
+        "success": resp.status_code in (200, 204),
+        "status_code": resp.status_code,
+        "response_text": resp.text,
+    }
 
 
 UpdateIssueTool = Tool.from_function(update_issue, name="update_issue", description="Update an existing issue in Redmine.")
