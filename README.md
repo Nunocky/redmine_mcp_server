@@ -1,5 +1,7 @@
 # Redmine MCP Server
 
+**UNDER CONSTRUCTION**
+
 ## API Refecence
 - [Redmine API](https://www.redmine.org/projects/redmine/wiki/Rest_api)
 - [MCP Specification](https://modelcontextprotocol.io/specification/2025-03-26)
@@ -33,7 +35,7 @@
 
 ## Stable APIs
 
-| API | Status | Notes | Version |
-|-----|--------|-------|---------|
-| [Projects](Rest_Projects) | Stable | | 1.0 |
-| [Time Entries](Rest_TimeEntries) | Stable | | 1.1 |
+| API                              | Status | Notes | Version |
+| -------------------------------- | ------ | ----- | ------- |
+| [Projects](Rest_Projects)        | Stable |       | 1.0     |
+| [Time Entries](Rest_TimeEntries) | Stable |       | 1.1     |
