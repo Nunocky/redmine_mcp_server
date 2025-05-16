@@ -2,9 +2,11 @@ import os
 import sys
 from pprint import pprint
 
-from main import get_projects_tool
+
 import pytest
 from dotenv import load_dotenv
+
+from main import get_projects_tool
 
 load_dotenv()
 

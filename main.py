@@ -4,6 +4,7 @@ Redmine MCPサーバとしてtools配下の全APIツールを@mcp.tool()で登�
 """
 
 import asyncio
+import json
 import os
 
 from fastmcp.server import FastMCP
@@ -25,7 +26,7 @@ from tools.Projects.archive_project_tool import ArchiveProjectTool
 from tools.Projects.create_project_tool import CreateProjectTool
 from tools.Projects.delete_project_tool import DeleteProjectTool
 from tools.Projects.get_project_tool import GetProjectTool
-from tools.Projects.get_projects_tool import get_projects
+from tools.Projects.get_projects_tool import GetProjectsTool
 from tools.Projects.unarchive_project_tool import UnarchiveProjectTool
 from tools.Projects.update_project_tool import UpdateProjectTool
 from tools.TimeEntries.create_time_entry_tool import CreateTimeEntryTool
@@ -46,15 +47,15 @@ async def get_memberships(
     project_id: str,
 ) -> dict:
     """指定したプロジェクトのメンバーシップ一覧を取得"""
-    params = {
-        "redmine_url": redmine_url,
-        "api_key": api_key,
-        "project_id": project_id,
-    }
-    result = await GetMembershipsTool.run(params)
+    result = await GetMembershipsTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "project_id": project_id,
+        }
+    )
     # TextContentでラップされている場合はアンラップ
     if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        import json
         return json.loads(result[0].text)
     return result
 
@@ -72,19 +73,17 @@ async def get_news(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_API_KEY")
-    params = {
-        "redmine_url": redmine_url,
-        "api_key": api_key,
-        "project_id": project_id,
-        "limit": limit,
-        "offset": offset,
-    }
-    # None値は除外
-    params = {k: v for k, v in params.items() if v is not None}
-    result = await GetNewsTool.run(params)
+    result = await GetNewsTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "project_id": project_id,
+            "limit": limit,
+            "offset": offset,
+        }
+    )
     # TextContentでラップされている場合はアンラップ
     if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        import json
         return json.loads(result[0].text)
     return result
 
@@ -108,7 +107,6 @@ async def get_queries_tool(
     )
     # TextContentでラップされている場合はアンラップ
     if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        import json
         return json.loads(result[0].text)
     return result
 
@@ -200,12 +198,14 @@ async def get_issue(
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_API_KEY")
 
-    return await GetIssueTool.run({
-        "redmine_url": redmine_url,
-        "api_key": api_key,
-        "issue_id": issue_id,
-        "include": include if include is not None else "",
-    })
+    return await GetIssueTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "issue_id": issue_id,
+            "include": include if include is not None else "",
+        }
+    )
 
 
 @mcp.tool()
@@ -219,9 +219,7 @@ async def get_issues(
     """Redmine課題一覧を取得"""
     # runは同期関数なので、async対応のためスレッド実行
     loop = asyncio.get_event_loop()
-    return await loop.run_in_executor(
-        None, lambda: GetIssuesTool().run(offset, limit, sort, include, filters)
-    )
+    return await loop.run_in_executor(None, lambda: GetIssuesTool().run(offset, limit, sort, include, filters))
 
 
 @mcp.tool()
@@ -298,16 +296,16 @@ async def get_issue_relations(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_API_KEY")
-    params = {
-        "redmine_url": redmine_url,
-        "api_key": api_key,
-        "issue_id": issue_id,
-        "limit": limit,
-        "offset": offset,
-    }
-    # None値は除外
-    params = {k: v for k, v in params.items() if v is not None}
-    return await GetIssueRelationsTool.run(params)
+
+    return await GetIssueRelationsTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "issue_id": issue_id,
+            "limit": limit,
+            "offset": offset,
+        }
+    )
 
 
 @mcp.tool()
@@ -521,15 +519,22 @@ async def get_projects_tool(
     """Redmineプロジェクト一覧を取得"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
+    if redmine_url is None:
+        redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_API_KEY")
-    return get_projects(
-        redmine_url=redmine_url,
-        api_key=api_key,
-        include=include,
-        limit=limit,
-        offset=offset,
+    result = await GetProjectsTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "include": include,
+            "limit": limit,
+            "offset": offset,
+        }
     )
+    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
+        return json.loads(result[0].text)
+    return result
 
 
 @mcp.tool()
