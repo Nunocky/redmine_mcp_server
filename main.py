@@ -4,7 +4,6 @@ Redmine MCPサーバとしてtools配下の全APIツールを@mcp.tool()で登�
 """
 
 import asyncio
-import json
 import os
 
 from fastmcp.server import FastMCP
@@ -36,6 +35,7 @@ from tools.Users.delete_user_tool import DeleteUserTool
 from tools.Users.get_user_tool import GetUserTool
 from tools.Users.get_users_tool import GetUsersTool
 from tools.Users.update_user_tool import UpdateUserTool
+from unwrap_text_content import unwrap_text_content
 
 mcp = FastMCP("Redmine MCP Server", "0.1.0")
 
@@ -54,10 +54,7 @@ async def get_memberships(
             "project_id": project_id,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -82,10 +79,7 @@ async def get_news(
             "offset": offset,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -105,10 +99,7 @@ async def get_queries_tool(
             "api_key": api_key,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -372,7 +363,6 @@ async def archive_project(
             "api_key": api_key,
         }
     )
-    # TextContentでラップされている場合はアンラップ
     return unwrap_text_content(result)
 
 
@@ -418,10 +408,7 @@ async def create_project(
             "custom_field_values": custom_field_values,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -442,10 +429,7 @@ async def delete_project(
             "api_key": api_key,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -466,10 +450,7 @@ async def unarchive_project(
             "api_key": api_key,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -514,10 +495,7 @@ async def update_project(
             "custom_field_values": custom_field_values,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -536,10 +514,7 @@ async def get_project(
             "include": include,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -566,9 +541,7 @@ async def get_projects_tool(
             "offset": offset,
         }
     )
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
