@@ -35,7 +35,6 @@ def test_run_http_error(tool):
     with pytest.raises(Exception):
         tool(redmine_url, api_key, 99999999)
 
-# @pytest.mark.skip(reason="一般ユーザーAPIキーでも他ユーザー情報を返しているため、権限エラーの例外が発生しませんでした")
 def test_run_with_current_user(tool):
     """
     /users/current エンドポイントを使用してユーザー情報を取得し、基本的な項目を検証する。

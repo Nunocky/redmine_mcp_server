@@ -1,10 +1,29 @@
 # Redmine MCP Server
 
-**UNDER CONSTRUCTION**
-
 ## API Refecence
 - [Redmine API](https://www.redmine.org/projects/redmine/wiki/Rest_api)
 - [MCP Specification](https://modelcontextprotocol.io/specification/2025-03-26)
+
+## setup
+
+```sh
+uv sync
+```
+
+### Cline
+
+```json
+    "Local Redmine": {
+      "disabled": false,
+      "command": "uv",
+      "args": [
+        "--directory",
+        "<path_to_mcp_server>",
+        "run",
+        "main.py"
+      ],
+    }
+```
 
 ## APIs
 
@@ -30,39 +49,3 @@
 - [ ] Files
 - [ ] My account
 - [ ] Journals
-
-
-
-## Cline
-
-```json
-    "Local Redmine": {
-      "disabled": false,
-      "timeout": 60,
-      "command": "uv",
-      "args": [
-        "--directory",
-        "<path_to_mcp_server>",
-        "run",
-        "main.py"
-      ],
-      "env": {
-        "REDMINE_URL": "http://***",
-        "REDMINE_ADMIN_API_KEY": "***"
-      },
-      "transportType": "stdio"
-    }
-```
-
-## Example
-
-### users
-
-```sh
-curl -H "X-Redmine-API-Key: ..." "http://...:8082/users.json?limit=25&amp;offset=0"
-```
-
-### membership
-```sh
-curl -H "X-Redmine-API-Key: ..." "http://.../projects/123/memberships.json?limit=25&amp;offset=0"
-```
