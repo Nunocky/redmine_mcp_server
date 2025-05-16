@@ -1,7 +1,5 @@
 import os
 import sys
-import random
-import string
 from pprint import pprint
 
 import pytest

@@ -2,8 +2,6 @@ import os
 import pytest
 import pprint
 import dotenv
-import random
-import string
 from tests.random_identifier import random_identifier
 from tools.Projects.create_project_tool import create_project
 from tools.Projects.update_project_tool import update_project
