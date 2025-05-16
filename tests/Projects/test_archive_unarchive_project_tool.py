@@ -4,16 +4,13 @@ import pprint
 import dotenv
 import random
 import string
+from tests.random_identifier import random_identifier
 from tools.Projects.create_project_tool import create_project
 from tools.Projects.archive_project_tool import archive_project
 from tools.Projects.unarchive_project_tool import unarchive_project
 from tools.Projects.delete_project_tool import delete_project
 
 dotenv.load_dotenv()
-
-def random_identifier(prefix="testproj"):
-    """Generate a unique identifier"""
-    return prefix + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
 def test_create_archive_unarchive_delete_project_real_api():
     """Real API: Create project -> Archive -> Unarchive -> Delete"""
