@@ -70,8 +70,12 @@ def test_get_issues_api_error(monkeypatch):
     """APIエラー時に例外が発生することを検証する"""
     def mock_get(*args, **kwargs):
         class MockResponse:
-            def json(self):
-                raise Exception("API error")
+            def __init__(self):
+                self.status_code = 404
+
+            def raise_for_status(self):
+                from requests.exceptions import HTTPError
+                raise HTTPError(f"404 Client Error: Not Found for url: {kwargs.get('url', '')}")
         return MockResponse()
     monkeypatch.setattr("tools.redmine_api_client.RedmineAPIClient.get", mock_get)
     try:
