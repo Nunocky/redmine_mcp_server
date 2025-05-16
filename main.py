@@ -4,7 +4,6 @@ Redmine MCPサーバとしてtools配下の全APIツールを@mcp.tool()で登�
 """
 
 import asyncio
-import json
 import os
 
 from fastmcp.server import FastMCP
@@ -36,6 +35,7 @@ from tools.Users.delete_user_tool import DeleteUserTool
 from tools.Users.get_user_tool import GetUserTool
 from tools.Users.get_users_tool import GetUsersTool
 from tools.Users.update_user_tool import UpdateUserTool
+from unwrap_text_content import unwrap_text_content
 
 mcp = FastMCP("Redmine MCP Server", "0.1.0")
 
@@ -54,10 +54,7 @@ async def get_memberships(
             "project_id": project_id,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -82,10 +79,7 @@ async def get_news(
             "offset": offset,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -105,10 +99,7 @@ async def get_queries_tool(
             "api_key": api_key,
         }
     )
-    # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -365,11 +356,14 @@ async def archive_project(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await ArchiveProjectTool.run(
-        project_id_or_identifier,
-        redmine_url,
-        api_key,
+    result = await ArchiveProjectTool.run(
+        {
+            "project_id_or_identifier": project_id_or_identifier,
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -395,23 +389,26 @@ async def create_project(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await CreateProjectTool.run(
-        name,
-        identifier,
-        redmine_url,
-        api_key,
-        description,
-        homepage,
-        is_public,
-        parent_id,
-        inherit_members,
-        default_assigned_to_id,
-        default_version_id,
-        tracker_ids,
-        enabled_module_names,
-        issue_custom_field_ids,
-        custom_field_values,
+    result = await CreateProjectTool.run(
+        {
+            "name": name,
+            "identifier": identifier,
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "description": description,
+            "homepage": homepage,
+            "is_public": is_public,
+            "parent_id": parent_id,
+            "inherit_members": inherit_members,
+            "default_assigned_to_id": default_assigned_to_id,
+            "default_version_id": default_version_id,
+            "tracker_ids": tracker_ids,
+            "enabled_module_names": enabled_module_names,
+            "issue_custom_field_ids": issue_custom_field_ids,
+            "custom_field_values": custom_field_values,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -425,11 +422,14 @@ async def delete_project(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await DeleteProjectTool.run(
-        project_id_or_identifier,
-        redmine_url,
-        api_key,
+    result = await DeleteProjectTool.run(
+        {
+            "project_id_or_identifier": project_id_or_identifier,
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -443,11 +443,14 @@ async def unarchive_project(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await UnarchiveProjectTool.run(
-        project_id_or_identifier,
-        redmine_url,
-        api_key,
+    result = await UnarchiveProjectTool.run(
+        {
+            "project_id_or_identifier": project_id_or_identifier,
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -473,23 +476,26 @@ async def update_project(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await UpdateProjectTool.run(
-        project_id_or_identifier,
-        redmine_url,
-        api_key,
-        name,
-        description,
-        homepage,
-        is_public,
-        parent_id,
-        inherit_members,
-        default_assigned_to_id,
-        default_version_id,
-        tracker_ids,
-        enabled_module_names,
-        issue_custom_field_ids,
-        custom_field_values,
+    result = await UpdateProjectTool.run(
+        {
+            "project_id_or_identifier": project_id_or_identifier,
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "name": name,
+            "description": description,
+            "homepage": homepage,
+            "is_public": is_public,
+            "parent_id": parent_id,
+            "inherit_members": inherit_members,
+            "default_assigned_to_id": default_assigned_to_id,
+            "default_version_id": default_version_id,
+            "tracker_ids": tracker_ids,
+            "enabled_module_names": enabled_module_names,
+            "issue_custom_field_ids": issue_custom_field_ids,
+            "custom_field_values": custom_field_values,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -500,12 +506,15 @@ async def get_project(
     """Redmineプロジェクト詳細を取得"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await GetProjectTool.run(
-        project_id_or_identifier,
-        redmine_url,
-        api_key,
-        include,
+    result = await GetProjectTool.run(
+        {
+            "project_id_or_identifier": project_id_or_identifier,
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "include": include,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -532,9 +541,7 @@ async def get_projects_tool(
             "offset": offset,
         }
     )
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
