@@ -11,20 +11,20 @@ def tool():
 
 def test_run_success(tool):
     """
-    実際のRedmineサーバーにアクセスしてユーザー一覧を取得し、基本的な項目を検証する。
+    Access the actual Redmine server to retrieve the user list and verify basic items.
     """
-    # 環境変数の設定
+    # Set environment variables
     os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
     assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
-    # 実行
+    # Execute
     result = tool.run(limit=5)
     pprint(result, stream=sys.stderr)
 
-    # 検証
+    # Verify
     assert "users" in result
     assert isinstance(result["users"], list)
     assert "total_count" in result
@@ -34,55 +34,55 @@ def test_run_success(tool):
 
 def test_run_with_status_filter(tool):
     """
-    status フィルタを使用してユーザー一覧を取得し、結果を検証する。
+    Use the status filter to retrieve the user list and verify the results.
     """
-    # 環境変数の設定
+    # Set environment variables
     os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
     assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
-    # 実行 (アクティブユーザーのみ)
+    # Execute (active users only)
     result = tool.run(status=1, limit=5)
     pprint(result, stream=sys.stderr)
 
-    # 検証
+    # Verify
     assert "users" in result
     assert isinstance(result["users"], list)
 
-    # すべてのユーザーがアクティブであることを確認
-    # 注: APIレスポンスにstatusが含まれない場合はスキップ
+    # Confirm that all users are active
+    # Note: Skip if status is not included in the API response
     for user in result["users"]:
         if "status" in user:
             assert user["status"] == 1
 
 def test_run_with_name_filter(tool):
     """
-    name フィルタを使用してユーザー一覧を取得し、結果を検証する。
+    Use the name filter to retrieve the user list and verify the results.
     """
-    # 環境変数の設定
+    # Set environment variables
     os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
     assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
-    # テスト用のユーザー名（環境に合わせて変更）
+    # Test username (change according to your environment)
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
-    # 実行
+    # Execute
     result = tool.run(name=test_name)
     pprint(result, stream=sys.stderr)
 
-    # 検証
+    # Verify
     assert "users" in result
     assert isinstance(result["users"], list)
 
-    # 少なくとも1人のユーザーが見つかることを確認
+    # Confirm that at least one user is found
     assert len(result["users"]) > 0
 
-    # 検索結果にtest_nameが含まれていることを確認
+    # Confirm that test_name is included in the search results
     found = False
     for user in result["users"]:
         if (
@@ -94,55 +94,55 @@ def test_run_with_name_filter(tool):
             found = True
             break
 
-    assert found, f"検索結果に '{test_name}' が含まれていません"
+    assert found, f"Search results do not include '{test_name}'"
 
 def test_run_with_group_id_filter(tool):
     """
-    group_id フィルタを使用してユーザー一覧を取得し、結果を検証する。
-    注: このテストはグループが存在する環境でのみ成功します。
+    Use the group_id filter to retrieve the user list and verify the results.
+    Note: This test will only succeed in an environment where groups exist.
     """
-    # 環境変数の設定
+    # Set environment variables
     os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
     assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
-    # テスト用のグループID（環境に合わせて変更）
+    # Test group ID (change according to your environment)
     test_group_id = os.getenv("REDMINE_TEST_GROUP_ID")
 
-    # グループIDが設定されていない場合はスキップ
+    # Skip if group ID is not set
     if not test_group_id:
         pytest.skip("REDMINE_TEST_GROUP_ID is not set in .env")
 
-    # 実行
+    # Execute
     result = tool.run(group_id=int(test_group_id))
     pprint(result, stream=sys.stderr)
 
-    # 検証
+    # Verify
     assert "users" in result
     assert isinstance(result["users"], list)
 
 def test_run_with_pagination(tool):
     """
-    limit と offset を使用したページネーションのテスト
+    Test pagination using limit and offset
     """
-    # 環境変数の設定
+    # Set environment variables
     os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
     assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
-    # 1ページ目を取得 (最初の2件)
+    # Get the first page (first 2 items)
     result_page1 = tool.run(limit=2, offset=0)
     pprint(result_page1, stream=sys.stderr)
 
-    # 2ページ目を取得 (次の2件)
+    # Get the second page (next 2 items)
     result_page2 = tool.run(limit=2, offset=2)
     pprint(result_page2, stream=sys.stderr)
 
-    # 検証
+    # Verify
     assert "users" in result_page1
     assert "users" in result_page2
     assert isinstance(result_page1["users"], list)
@@ -152,41 +152,41 @@ def test_run_with_pagination(tool):
     assert result_page1["offset"] == 0
     assert result_page2["offset"] == 2
 
-    # 十分なユーザーがいる場合、異なるユーザーが取得されることを確認
+    # If there are enough users, confirm that different users are retrieved
     if len(result_page1["users"]) > 0 and len(result_page2["users"]) > 0:
         if "id" in result_page1["users"][0] and "id" in result_page2["users"][0]:
             assert result_page1["users"][0]["id"] != result_page2["users"][0]["id"]
 
 def test_run_with_combined_filters(tool):
     """
-    複数のフィルタを組み合わせたテスト
+    Test combining multiple filters
     """
-    # 環境変数の設定
+    # Set environment variables
     os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
     assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
-    # テスト用のユーザー名（環境に合わせて変更）
+    # Test username (change according to your environment)
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
-    # 実行 (アクティブユーザーかつ特定の名前を持つユーザー)
+    # Execute (active users with a specific name)
     result = tool.run(status=1, name=test_name, limit=5)
     pprint(result, stream=sys.stderr)
 
-    # 検証
+    # Verify
     assert "users" in result
     assert isinstance(result["users"], list)
 
-    # 結果が存在する場合、条件を満たすことを確認
+    # If results exist, confirm that they meet the conditions
     if len(result["users"]) > 0:
         for user in result["users"]:
-            # statusが含まれている場合は確認
+            # Confirm if status is included
             if "status" in user:
                 assert user["status"] == 1
 
-            # 名前が含まれていることを確認
+            # Confirm that the name is included
             found = False
             if (
                 test_name.lower() in user.get("login", "").lower() or
@@ -196,4 +196,4 @@ def test_run_with_combined_filters(tool):
             ):
                 found = True
 
-            assert found, f"ユーザー {user.get('login')} は検索条件 '{test_name}' を満たしていません"
+            assert found, f"User {user.get('login')} does not meet the search criteria '{test_name}'"

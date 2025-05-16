@@ -9,12 +9,12 @@ from tools.Issues.add_watcher_tool import add_watcher
 from tools.Issues.remove_watcher_tool import remove_watcher
 
 def setup_module(module):
-    # .envファイルの絶対パスを指定してロード
+    # Load .env file by specifying its absolute path
     load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 def test_add_remove_watcher_real_redmine():
     """
-    実際のRedmineサーバーで課題にウォッチャーを追加・削除する統合テスト。
+    Integration test to add and remove a watcher from an issue on a real Redmine server.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -23,20 +23,20 @@ def test_add_remove_watcher_real_redmine():
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert watcher_user_id, "REDMINE_WATCHER_USER_ID is not set in .env"
     project_id = "testproject"
-    subject = "ウォッチャーテスト課題 (pytest)"
-    description = "pytestによるウォッチャー追加・削除テスト用課題"
-    # 課題作成
+    subject = "Watcher Test Issue (pytest)"
+    description = "Issue for testing watcher addition and removal by pytest"
+    # Create issue
     issue_tool = CreateIssueTool()
     issue = issue_tool.run(project_id, subject, description=description)["issue"]
     issue_id = issue["id"]
-    # ウォッチャー追加
+    # Add watcher
     add_result = add_watcher(redmine_url, api_key, issue_id, int(watcher_user_id))
     print("add_watcher result:", add_result)
     assert add_result["success"] is True
-    # ウォッチャー削除
+    # Remove watcher
     remove_result = remove_watcher(redmine_url, api_key, issue_id, int(watcher_user_id))
     print("remove_watcher result:", remove_result)
     assert remove_result["success"] is True
-    # 後始末：課題削除
+    # Cleanup: Delete issue
     del_result = delete_issue(redmine_url, api_key, issue_id)
     assert del_result["success"] is True

@@ -1,6 +1,6 @@
-"""Redmine APIクライアント
+"""Redmine API Client
 
-RedmineのREST APIへの共通アクセス処理を提供するクラス。
+A class that provides common access processing to Redmine's REST API.
 """
 
 import os
@@ -10,30 +10,30 @@ import requests
 
 
 class RedmineAPIClient:
-    """Redmine APIクライアント
+    """Redmine API Client
 
     Attributes:
-        base_url (str): RedmineサーバーのベースURL
-        api_key (str): RedmineのAPIキー
+        base_url (str): Base URL of the Redmine server
+        api_key (str): Redmine API key
     """
 
     def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None):
-        """初期化
+        """Initialization
 
         Args:
-            base_url (str, optional): RedmineサーバーのベースURL
-            api_key (str, optional): RedmineのAPIキー
+            base_url (str, optional): Base URL of the Redmine server
+            api_key (str, optional): Redmine API key
         """
         self.base_url = base_url or os.environ.get("REDMINE_URL")
         self.api_key = api_key or os.environ.get("REDMINE_ADMIN_API_KEY")
         if not self.base_url or not self.api_key:
-            raise ValueError("RedmineのURLまたはAPIキーが設定されていません。")
+            raise ValueError("Redmine URL or API key is not set.")
 
     def _headers(self) -> Dict[str, str]:
-        """APIリクエスト用ヘッダーを生成
+        """Generate headers for API requests
 
         Returns:
-            dict: ヘッダー情報
+            dict: Header information
         """
         return {"X-Redmine-API-Key": self.api_key}
 
@@ -46,21 +46,21 @@ class RedmineAPIClient:
         json: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None,
     ) -> requests.Response:
-        """APIリクエストを送信
+        """Send an API request
 
         Args:
-            method (str): HTTPメソッド
-            endpoint (str): エンドポイントパス（例: '/projects.json'）
-            params (dict, optional): クエリパラメータ
-            data (dict or str, optional): POST/PUTデータ
-            json (dict, optional): JSONデータ
-            headers (dict, optional): 追加ヘッダー
+            method (str): HTTP method
+            endpoint (str): Endpoint path (e.g., '/projects.json')
+            params (dict, optional): Query parameters
+            data (dict or str, optional): POST/PUT data
+            json (dict, optional): JSON data
+            headers (dict, optional): Additional headers
 
         Returns:
-            requests.Response: レスポンスオブジェクト
+            requests.Response: Response object
 
         Raises:
-            requests.HTTPError: HTTPエラー時
+            requests.HTTPError: When an HTTP error occurs
         """
         url = self.base_url.rstrip("/") + endpoint
         req_headers = self._headers()
@@ -78,54 +78,54 @@ class RedmineAPIClient:
         return resp
 
     def get(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> requests.Response:
-        """GETリクエスト
+        """GET request
 
         Args:
-            endpoint (str): エンドポイントパス
-            params (dict, optional): クエリパラメータ
+            endpoint (str): Endpoint path
+            params (dict, optional): Query parameters
 
         Returns:
-            requests.Response: レスポンス
+            requests.Response: Response
         """
         return self._request("GET", endpoint, params=params)
 
     def post(
         self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
     ) -> requests.Response:
-        """POSTリクエスト
+        """POST request
 
         Args:
-            endpoint (str): エンドポイントパス
-            data (dict, optional): フォームデータ
-            json (dict, optional): JSONデータ
+            endpoint (str): Endpoint path
+            data (dict, optional): Form data
+            json (dict, optional): JSON data
 
         Returns:
-            requests.Response: レスポンス
+            requests.Response: Response
         """
         return self._request("POST", endpoint, data=data, json=json)
 
     def put(
         self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
     ) -> requests.Response:
-        """PUTリクエスト
+        """PUT request
 
         Args:
-            endpoint (str): エンドポイントパス
-            data (dict, optional): フォームデータ
-            json (dict, optional): JSONデータ
+            endpoint (str): Endpoint path
+            data (dict, optional): Form data
+            json (dict, optional): JSON data
 
         Returns:
-            requests.Response: レスポンス
+            requests.Response: Response
         """
         return self._request("PUT", endpoint, data=data, json=json)
 
     def delete(self, endpoint: str) -> requests.Response:
-        """DELETEリクエスト
+        """DELETE request
 
         Args:
-            endpoint (str): エンドポイントパス
+            endpoint (str): Endpoint path
 
         Returns:
-            requests.Response: レスポンス
+            requests.Response: Response
         """
         return self._request("DELETE", endpoint)

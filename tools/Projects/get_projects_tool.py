@@ -1,6 +1,6 @@
-"""Redmineのプロジェクト一覧取得ツール
+"""Redmine Project List Retrieval Tool
 
-RedmineAPIClientを利用してプロジェクト一覧を取得する。
+Retrieve a list of projects using RedmineAPIClient.
 """
 
 from typing import Any, Dict, Optional
@@ -17,21 +17,21 @@ def get_projects(
     limit: Optional[int] = None,
     offset: Optional[int] = None,
 ) -> Dict[str, Any]:
-    """Redmineのプロジェクト一覧を取得する
+    """Get a list of Redmine projects
 
     Args:
-        redmine_url (str, optional): RedmineサーバーのURL。未指定時は環境変数REDMINE_URLを利用
-        api_key (str, optional): RedmineのAPIキー。未指定時は環境変数REDMINE_ADMIN_API_KEYを利用
-        include (str, optional): 追加情報（カンマ区切り: trackers, issue_categories, enabled_modules, time_entry_activities, issue_custom_fields）
-        limit (int, optional): 取得件数
-        offset (int, optional): オフセット
+        redmine_url (str, optional): URL of the Redmine server. Uses environment variable REDMINE_URL if not specified.
+        api_key (str, optional): Redmine API key. Uses environment variable REDMINE_ADMIN_API_KEY if not specified.
+        include (str, optional): Additional information (comma-separated: trackers, issue_categories, enabled_modules, time_entry_activities, issue_custom_fields)
+        limit (int, optional): Number of items to retrieve
+        offset (int, optional): Offset
 
     Returns:
-        dict: プロジェクト一覧情報
-            - projects (list): プロジェクト情報リスト
-            - total_count (int): 総件数
-            - limit (int): 取得件数
-            - offset (int): オフセット
+        dict: Project list information
+            - projects (list): List of project information
+            - total_count (int): Total number of items
+            - limit (int): Number of items retrieved
+            - offset (int): Offset
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}
@@ -52,4 +52,4 @@ def get_projects(
     }
 
 
-GetProjectsTool = Tool.from_function(get_projects, name="get_projects", description="Redmineプロジェクト一覧を取得する")
+GetProjectsTool = Tool.from_function(get_projects, name="get_projects", description="Get a list of Redmine projects")

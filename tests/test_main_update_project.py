@@ -12,21 +12,21 @@ from main import create_project, update_project, delete_project
 load_dotenv()
 
 def random_identifier(prefix="testproj"):
-    """一意なidentifierを生成"""
+    """Generate a unique identifier"""
     return prefix + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
 @pytest.mark.asyncio
 async def test_create_update_delete_project():
-    """Redmineプロジェクト作成・更新・削除APIの正常系テスト
+    """Normal case test for Redmine project creation, update, and deletion APIs
 
     Args:
-        なし
+        None
 
     Raises:
-        AssertionError: APIレスポンスが期待通りでない場合
+        AssertionError: If the API response is not as expected
 
     Note:
-        REDMINE_URL, REDMINE_ADMIN_API_KEY は .env で設定してください。
+        Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
@@ -34,10 +34,10 @@ async def test_create_update_delete_project():
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
     identifier = random_identifier()
-    name = "テストプロジェクト_" + identifier
-    description = "自動テスト用プロジェクト"
+    name = "Test Project_" + identifier
+    description = "Project for automated testing"
 
-    # プロジェクト作成
+    # Create project
     result_create = await create_project(
         name=name,
         identifier=identifier,
@@ -52,9 +52,9 @@ async def test_create_update_delete_project():
     assert result_create["name"] == name
     assert result_create["description"] == description
 
-    # プロジェクト更新
-    new_name = name + "_更新"
-    new_description = "更新後の説明"
+    # Update project
+    new_name = name + "_Updated"
+    new_description = "Updated description"
     result_update = await update_project(
         project_id_or_identifier=identifier,
         redmine_url=redmine_url,
@@ -63,7 +63,7 @@ async def test_create_update_delete_project():
         description=new_description
     )
     pprint(result_update, stream=sys.stderr)
-    # Redmineの仕様上、204 No Contentの場合は空dictとなる
+    # According to Redmine's specification, an empty dict is returned for 204 No Content
     if result_update:
         assert isinstance(result_update, dict)
         if "name" in result_update:
@@ -71,7 +71,7 @@ async def test_create_update_delete_project():
         if "description" in result_update:
             assert result_update["description"] == new_description
 
-    # プロジェクト削除
+    # Delete project
     result_delete = await delete_project(
         project_id_or_identifier=identifier,
         redmine_url=redmine_url,

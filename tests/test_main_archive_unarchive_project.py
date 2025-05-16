@@ -12,21 +12,21 @@ from main import create_project, archive_project, unarchive_project, delete_proj
 load_dotenv()
 
 def random_identifier(prefix="testproj"):
-    """一意なidentifierを生成"""
+    """Generate a unique identifier"""
     return prefix + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
 @pytest.mark.asyncio
 async def test_create_archive_unarchive_delete_project():
-    """Redmineプロジェクト作成・アーカイブ・アーカイブ解除・削除APIの正常系テスト
+    """Normal case test for Redmine project creation, archiving, unarchiving, and deletion APIs
 
     Args:
-        なし
+        None
 
     Raises:
-        AssertionError: APIレスポンスが期待通りでない場合
+        AssertionError: If the API response is not as expected
 
     Note:
-        REDMINE_URL, REDMINE_ADMIN_API_KEY は .env で設定してください。
+        Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
@@ -34,10 +34,10 @@ async def test_create_archive_unarchive_delete_project():
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
     identifier = random_identifier()
-    name = "テストプロジェクト_" + identifier
-    description = "自動テスト用プロジェクト"
+    name = "Test Project_" + identifier
+    description = "Project for automated testing"
 
-    # プロジェクト作成
+    # Create project
     result_create = await create_project(
         name=name,
         identifier=identifier,
@@ -52,7 +52,7 @@ async def test_create_archive_unarchive_delete_project():
     assert result_create["name"] == name
     assert result_create["description"] == description
 
-    # プロジェクトアーカイブ
+    # Archive project
     result_archive = await archive_project(
         project_id_or_identifier=identifier,
         redmine_url=redmine_url,
@@ -61,7 +61,7 @@ async def test_create_archive_unarchive_delete_project():
     pprint(result_archive, stream=sys.stderr)
     assert result_archive["status"] == "success"
 
-    # プロジェクトアーカイブ解除
+    # Unarchive project
     result_unarchive = await unarchive_project(
         project_id_or_identifier=identifier,
         redmine_url=redmine_url,
@@ -70,7 +70,7 @@ async def test_create_archive_unarchive_delete_project():
     pprint(result_unarchive, stream=sys.stderr)
     assert result_unarchive["status"] == "success"
 
-    # プロジェクト削除
+    # Delete project
     result_delete = await delete_project(
         project_id_or_identifier=identifier,
         redmine_url=redmine_url,

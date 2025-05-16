@@ -16,7 +16,7 @@ def random_login():
 
 def test_create_user_success(tool):
     """
-    Redmineにユーザーを新規作成し、レスポンス内容を検証する。
+    Create a new user in Redmine and verify the response content.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -38,7 +38,7 @@ def test_create_user_success(tool):
 
 def test_create_user_missing_required(tool):
     """
-    必須項目が不足している場合にエラー(Exception)となることを検証する。
+    Verify that an error (Exception) occurs when required fields are missing.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")

@@ -11,7 +11,7 @@ def tool():
 
 def test_delete_user_success(tool):
     """
-    Redmineの既存ユーザーを削除し、レスポンス内容を検証する。
+    Delete an existing user in Redmine and verify the response content.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -19,7 +19,7 @@ def test_delete_user_success(tool):
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert redmine_url, "REDMINE_URL is not set in .env"
     if not user_id:
-        pytest.skip("REDMINE_TEST_DELETE_USER_IDが未設定のためスキップ")
+        pytest.skip("Skipping because REDMINE_TEST_DELETE_USER_ID is not set")
     result = tool(
         redmine_url,
         api_key,
@@ -30,7 +30,7 @@ def test_delete_user_success(tool):
 
 def test_delete_user_not_found(tool):
     """
-    存在しないユーザーIDでリクエストし、HTTPエラー(Exception)が発生することを検証する。
+    Verify that an HTTP error (Exception) occurs when requesting with a non-existent user ID.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")

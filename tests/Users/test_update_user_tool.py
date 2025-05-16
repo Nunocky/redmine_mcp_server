@@ -11,7 +11,7 @@ def tool():
 
 def test_update_user_success(tool):
     """
-    Redmineの既存ユーザー情報を更新し、レスポンス内容を検証する。
+    Update existing user information in Redmine and verify the response content.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -26,12 +26,12 @@ def test_update_user_success(tool):
         lastname="User"
     )
     pprint(result, stream=sys.stderr)
-    # RedmineのPUT /users/:id.jsonは空レスポンスの場合もある
+    # Redmine's PUT /users/:id.json may return an empty response
     assert isinstance(result, dict)
 
 def test_update_user_not_found(tool):
     """
-    存在しないユーザーIDでリクエストし、HTTPエラー(Exception)が発生することを検証する。
+    Verify that an HTTP error (Exception) occurs when requesting with a non-existent user ID.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")

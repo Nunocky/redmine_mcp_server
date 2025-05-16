@@ -12,21 +12,21 @@ from main import create_project, delete_project
 load_dotenv()
 
 def random_identifier(prefix="testproj"):
-    """一意なidentifierを生成"""
+    """Generate a unique identifier"""
     return prefix + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
 @pytest.mark.asyncio
 async def test_delete_project():
-    """Redmineプロジェクト削除APIの正常系テスト
+    """Normal case test for Redmine project deletion API
 
     Args:
-        なし
+        None
 
     Raises:
-        AssertionError: APIレスポンスが期待通りでない場合
+        AssertionError: If the API response is not as expected
 
     Note:
-        REDMINE_URL, REDMINE_ADMIN_API_KEY は .env で設定してください。
+        Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
@@ -34,22 +34,22 @@ async def test_delete_project():
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
     identifier = random_identifier()
-    name = "削除テスト用プロジェクト_" + identifier
+    name = "Project for deletion test_" + identifier
 
-    # プロジェクト作成
+    # Create project
     result_create = await create_project(
         name=name,
         identifier=identifier,
         redmine_url=redmine_url,
         api_key=api_key,
-        description="削除テスト用プロジェクト"
+        description="Project for deletion test"
     )
     pprint(result_create, stream=sys.stderr)
     assert isinstance(result_create, dict)
     assert "id" in result_create
     assert result_create["identifier"] == identifier
 
-    # プロジェクト削除
+    # Delete project
     result_delete = await delete_project(
         project_id_or_identifier=identifier,
         redmine_url=redmine_url,
@@ -60,26 +60,26 @@ async def test_delete_project():
 
 @pytest.mark.asyncio
 async def test_delete_nonexistent_project():
-    """存在しないRedmineプロジェクト削除APIのテスト
+    """Test for deleting a non-existent Redmine project API
 
     Args:
-        なし
+        None
 
     Raises:
-        AssertionError: APIレスポンスが期待通りでない場合
+        AssertionError: If the API response is not as expected
 
     Note:
-        REDMINE_URL, REDMINE_ADMIN_API_KEY は .env で設定してください。
+        Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
-    # 存在しないプロジェクトIDを指定
+    # Specify a non-existent project ID
     nonexistent_id = "nonexistent_project_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
-    # プロジェクト削除
+    # Delete project
     result_delete = await delete_project(
         project_id_or_identifier=nonexistent_id,
         redmine_url=redmine_url,

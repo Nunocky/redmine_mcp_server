@@ -11,7 +11,7 @@ def tool():
 
 def test_run_success(tool):
     """
-    実際のRedmineサーバーにアクセスしてユーザー情報を取得し、基本的な項目を検証する。
+    Access the actual Redmine server to retrieve user information and verify basic items.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -26,7 +26,7 @@ def test_run_success(tool):
 
 def test_run_http_error(tool):
     """
-    存在しないユーザーIDでリクエストし、HTTPエラー(Exception)が発生することを検証する。
+    Verify that an HTTP error (Exception) occurs when requesting with a non-existent user ID.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -37,7 +37,7 @@ def test_run_http_error(tool):
 
 def test_run_with_current_user(tool):
     """
-    /users/current エンドポイントを使用してユーザー情報を取得し、基本的な項目を検証する。
+    Use the /users/current endpoint to retrieve user information and verify basic items.
     """
     api_key = os.getenv("REDMINE_USER_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -48,11 +48,11 @@ def test_run_with_current_user(tool):
     assert "user" in result
     assert "id" in result["user"]
     assert "login" in result["user"]
-    assert "api_key" in result["user"]  # 自分自身のユーザー情報にはapi_keyが含まれる
+    assert "api_key" in result["user"]  # User's own information includes api_key
 
 def test_run_with_include_memberships(tool):
     """
-    include=memberships パラメータを使用してユーザー情報を取得し、メンバーシップ情報が含まれることを検証する。
+    Use the include=memberships parameter to retrieve user information and verify that membership information is included.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -66,7 +66,7 @@ def test_run_with_include_memberships(tool):
 
 def test_run_with_include_groups(tool):
     """
-    include=groups パラメータを使用してユーザー情報を取得し、グループ情報が含まれることを検証する。
+    Use the include=groups parameter to retrieve user information and verify that group information is included.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -80,8 +80,8 @@ def test_run_with_include_groups(tool):
 
 def test_run_with_include_memberships_and_groups(tool):
     """
-    include=memberships,groups パラメータを使用してユーザー情報を取得し、
-    メンバーシップ情報とグループ情報の両方が含まれることを検証する。
+    Use the include=memberships,groups parameter to retrieve user information and
+    verify that both membership and group information are included.
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -96,7 +96,7 @@ def test_run_with_include_memberships_and_groups(tool):
 
 def test_run_locked_user_returns_404(tool):
     """
-    ロックされたユーザーIDを指定した場合に404エラー(Exception)となることを検証する。
+    Verify that a 404 error (Exception) occurs when specifying a locked user ID.
     """
     api_key = os.getenv("REDMINE_LOCKED_USER_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")

@@ -17,7 +17,7 @@ async def test_get_memberships_tool():
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
-    # 実際のAPI呼び出し（引数は適宜調整）
+    # Actual API call (adjust arguments as needed)
     result = await get_memberships(
         redmine_url=redmine_url,
         api_key=api_key,

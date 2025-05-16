@@ -1,6 +1,6 @@
-"""MCPサーバエントリポイント
+"""MCP server entry point
 
-Redmine MCPサーバとしてtools配下の全APIツールを@mcp.tool()で登録し、サーバを起動する。
+Registers all API tools under tools as Redmine MCP server using @mcp.tool() and starts the server.
 """
 
 import asyncio
@@ -46,7 +46,7 @@ async def get_memberships(
     api_key: str,
     project_id: str,
 ) -> dict:
-    """指定したプロジェクトのメンバーシップ一覧を取得"""
+    """Get a list of memberships for the specified project"""
     result = await GetMembershipsTool.run(
         {
             "redmine_url": redmine_url,
@@ -65,7 +65,7 @@ async def get_news(
     limit: int = None,
     offset: int = None,
 ) -> dict:
-    """Redmineニュース一覧を取得"""
+    """Get a list of Redmine news"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -87,7 +87,7 @@ async def get_queries_tool(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineクエリ一覧を取得"""
+    """Get a list of Redmine queries"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -110,7 +110,7 @@ async def get_versions(
     limit: int = None,
     offset: int = None,
 ) -> dict:
-    """Redmineバージョン一覧を取得"""
+    """Get a list of Redmine versions"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -130,7 +130,7 @@ async def get_wiki_pages(
     api_key: str = None,
     project_id: str = None,
 ) -> dict:
-    """Redmine Wikiページ一覧を取得"""
+    """Get a list of Redmine Wiki pages"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -160,7 +160,7 @@ async def create_issue(
     estimated_hours: float = None,
     uploads=None,
 ) -> dict:
-    """Redmine課題を作成"""
+    """Create a Redmine issue"""
     return CreateIssueTool().run(
         project_id,
         subject,
@@ -185,7 +185,7 @@ async def get_issue(
     issue_id: int,
     include: str = None,
 ) -> dict:
-    """Redmine課題詳細を取得"""
+    """Get Redmine issue details"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
 
@@ -207,8 +207,8 @@ async def get_issues(
     include: str = None,
     filters: dict = None,
 ) -> dict:
-    """Redmine課題一覧を取得"""
-    # runは同期関数なので、async対応のためスレッド実行
+    """Get a list of Redmine issues"""
+    # Since run is a synchronous function, execute it in a thread for async compatibility
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(None, lambda: GetIssuesTool().run(offset, limit, sort, include, filters))
 
@@ -220,7 +220,7 @@ async def add_watcher(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmine課題にウォッチャーを追加"""
+    """Add a watcher to a Redmine issue"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -243,7 +243,7 @@ async def remove_watcher(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmine課題からウォッチャーを削除"""
+    """Remove a watcher from a Redmine issue"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -262,7 +262,7 @@ async def delete_issue(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmine課題を削除"""
+    """Delete a Redmine issue"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -282,7 +282,7 @@ async def get_issue_relations(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmine課題のリレーション一覧を取得"""
+    """Get a list of Redmine issue relations"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -319,7 +319,7 @@ async def update_issue(
     private_notes: bool = None,
     uploads=None,
 ) -> dict:
-    """Redmine課題を更新"""
+    """Update a Redmine issue"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await UpdateIssueTool.run(
@@ -351,7 +351,7 @@ async def archive_project(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineプロジェクトをアーカイブ"""
+    """Archive a Redmine project"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -384,7 +384,7 @@ async def create_project(
     issue_custom_field_ids=None,
     custom_field_values=None,
 ) -> dict:
-    """Redmineプロジェクトを作成"""
+    """Create a Redmine project"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -417,7 +417,7 @@ async def delete_project(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineプロジェクトを削除"""
+    """Delete a Redmine project"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -438,7 +438,7 @@ async def unarchive_project(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineプロジェクトのアーカイブ解除"""
+    """Unarchive a Redmine project"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -471,7 +471,7 @@ async def update_project(
     issue_custom_field_ids=None,
     custom_field_values=None,
 ) -> dict:
-    """Redmineプロジェクトを更新"""
+    """Update a Redmine project"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -503,7 +503,7 @@ async def get_project(
     project_id_or_identifier: str,
     include: str = None,
 ) -> dict:
-    """Redmineプロジェクト詳細を取得"""
+    """Get Redmine project details"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await GetProjectTool.run(
@@ -525,7 +525,7 @@ async def get_projects_tool(
     limit: int = None,
     offset: int = None,
 ) -> dict:
-    """Redmineプロジェクト一覧を取得"""
+    """Get a list of Redmine projects"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if redmine_url is None:
@@ -556,7 +556,7 @@ async def create_time_entry(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineで新しいタイムエントリを作成"""
+    """Create a new time entry in Redmine"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -583,7 +583,7 @@ async def get_time_entries(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineのタイムエントリ一覧を取得"""
+    """Get a list of Redmine time entries"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -614,7 +614,7 @@ async def create_user(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineユーザーを作成"""
+    """Create a Redmine user"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -642,7 +642,7 @@ async def delete_user(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineユーザーを削除"""
+    """Delete a Redmine user"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -660,7 +660,7 @@ async def get_user(
     redmine_url: str = None,
     api_key: str = None,
 ) -> dict:
-    """Redmineユーザー情報を取得"""
+    """Get Redmine user information"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -682,7 +682,7 @@ async def get_users(
     limit: int = None,
     offset: int = None,
 ) -> dict:
-    """Redmineユーザー一覧を取得"""
+    """Get a list of Redmine users"""
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -715,7 +715,7 @@ async def update_user(
     custom_fields: list = None,
     status: int = None,
 ) -> dict:
-    """Redmineユーザー情報を更新"""
+    """Update Redmine user information"""
 
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")

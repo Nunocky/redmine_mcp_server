@@ -11,34 +11,34 @@ from tools.Projects.delete_project_tool import delete_project
 dotenv.load_dotenv()
 
 def random_identifier(prefix="testproj"):
-    """一意なidentifierを生成"""
+    """Generate a unique identifier"""
     return prefix + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
 def test_create_update_delete_project_real_api():
-    """実API: プロジェクト作成→更新→削除"""
+    """Real API: Create project -> Update -> Delete"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     if not redmine_url or not api_key:
-        pytest.skip("REDMINE_URL, REDMINE_ADMIN_API_KEYが未設定のためスキップ")
+        pytest.skip("Skipping because REDMINE_URL and REDMINE_ADMIN_API_KEY are not set")
 
     identifier = random_identifier()
-    name = "テストプロジェクト_" + identifier
+    name = "Test Project_" + identifier
 
-    # プロジェクト作成
+    # Create project
     result_create = create_project(
         name=name,
         identifier=identifier,
         redmine_url=redmine_url,
         api_key=api_key,
-        description="自動テスト用プロジェクト"
+        description="Project for automated testing"
     )
     pprint.pprint(result_create)
     assert "id" in result_create
     assert result_create["identifier"] == identifier
 
-    # プロジェクト更新
-    new_name = name + "_更新"
-    new_description = "更新後の説明"
+    # Update project
+    new_name = name + "_Updated"
+    new_description = "Updated description"
     result_update = update_project(
         identifier,
         redmine_url=redmine_url,
@@ -47,16 +47,16 @@ def test_create_update_delete_project_real_api():
         description=new_description
     )
     pprint.pprint(result_update)
-    # Redmineの仕様上、204 No Contentの場合は空dictとなる
+    # According to Redmine's specification, an empty dict is returned for 204 No Content
     if result_update:
         assert "id" in result_update
         assert result_update["name"] == new_name
         assert result_update["description"] == new_description
     else:
-        # 空dictなら更新成功とみなす
+        # If it's an empty dict, consider the update successful
         assert result_update == {}
 
-    # プロジェクト削除
+    # Delete project
     result_delete = delete_project(
         identifier,
         redmine_url=redmine_url,

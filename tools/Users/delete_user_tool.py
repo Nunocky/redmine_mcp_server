@@ -13,7 +13,7 @@ def delete_user(redmine_url: str, api_key: str, user_id: int):
     url = f"{redmine_url.rstrip('/')}/users/{user_id}.json"
     resp = requests.delete(url, headers=headers)
     resp.raise_for_status()
-    # Redmineは204 No Contentを返す
+    # Redmine returns 204 No Content
     return {"deleted": True}
 
 

@@ -1,13 +1,13 @@
-"""課題一覧取得ツール
+"""Issue List Retrieval Tool
 
-Redmineの課題（Issues）を一覧取得するツールです。
-存在しないリソース（404エラー）の場合は空の結果を返します。
+This tool retrieves a list of Redmine issues.
+Returns an empty result for non-existent resources (404 error).
 
 Returns:
-    dict: 課題一覧とページ情報
+    dict: Issue list and page information
 
 Raises:
-    Exception: APIリクエスト失敗時（404エラーを除く）
+    Exception: When API request fails (excluding 404 errors)
 """
 
 from typing import Any, Dict, Optional
@@ -25,23 +25,23 @@ def get_issues(
     include: Optional[str] = None,
     filters: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Redmineの課題一覧を取得する
+    """Get a list of Redmine issues
 
     Args:
-        offset: スキップする件数
-        limit: 取得件数
-        sort: ソートカラム（例: 'updated_on:desc'）
-        include: 追加情報（カンマ区切り）
-        filters: その他のフィルタ条件
+        offset: Number of items to skip
+        limit: Number of items to retrieve
+        sort: Sort column (e.g., 'updated_on:desc')
+        include: Additional information (comma-separated)
+        filters: Other filter conditions
 
     Returns:
-        課題一覧とページ情報
-        存在しないリソース（404エラー）の場合は空の結果を返します
+        Issue list and page information
+        Returns an empty result for non-existent resources (404 error)
 
     Raises:
-        Exception: APIリクエスト失敗時（404エラーを除く）
+        Exception: When API request fails (excluding 404 errors)
     """
-    # 直接RedmineAPIClientを使ってAPIを呼び出す
+    # Call the API directly using RedmineAPIClient
     client = RedmineAPIClient()
     params: Dict[str, Any] = {}
     if offset is not None:
@@ -62,15 +62,15 @@ def get_issues(
         )
         return response.json()
     except requests.exceptions.HTTPError as e:
-        # 404エラーの場合は空の結果を返す
+        # Return an empty result for 404 errors
         if e.response.status_code == 404:
             return {"issues": [], "total_count": 0, "offset": 0, "limit": 0}
-        # その他のエラーは再度発生させる
+        # Re-raise other errors
         raise
 
 
 GetIssuesTool = Tool.from_function(
     get_issues,
     name="get_issues",
-    description="Redmineの課題一覧を取得します",
+    description="Get a list of Redmine issues",
 )
