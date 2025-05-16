@@ -1,7 +1,29 @@
+from typing import Optional, Union
+
 import requests
 from fastmcp.tools.tool import Tool
 
-def get_user(redmine_url: str, api_key: str, user_id: int, include: str = None):
+
+def get_user(
+    redmine_url: str,
+    api_key: str,
+    user_id: Union[int, str],
+    include: Optional[str] = None,
+):
+    """Redmineユーザー詳細を取得
+
+    Args:
+        redmine_url (str): RedmineのURL
+        api_key (str): Redmine API キー
+        user_id (Union[int, str]): ユーザーID または 'current' (現在のユーザー)
+        include (Optional[str], optional): レスポンスに含める関連情報（memberships, groups）
+
+    Returns:
+        Dict[str, Any]: ユーザー詳細情報
+
+    Raises:
+        requests.exceptions.HTTPError: APIリクエスト失敗時
+    """
     import os
 
     if redmine_url is None:
@@ -17,8 +39,9 @@ def get_user(redmine_url: str, api_key: str, user_id: int, include: str = None):
     resp.raise_for_status()
     return resp.json()
 
+
 GetUserTool = Tool.from_function(
     get_user,
     name="get_user",
-    description="Get details of a user from Redmine by user_id."
+    description="Redmineユーザー詳細を取得",
 )

@@ -9,10 +9,10 @@
 ## APIs
 
 - [x] Issues
-- [ ] Projects ★
+- [x] Projects
 - [x] Project Memberships
-- [ ] Users
-- [ ] Time Entries
+- [x] Users
+- [x] Time Entries
 - [ ] News
 - [ ] Issue Relations
 - [ ] Versions
