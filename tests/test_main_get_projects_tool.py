@@ -2,23 +2,27 @@ import os
 import sys
 from pprint import pprint
 
+from main import get_projects_tool
+import pytest
 from dotenv import load_dotenv
-
-from tools.get_memberships_tool import get_memberships
 
 load_dotenv()
 
-def test_get_memberships():
+@pytest.mark.asyncio
+async def test_get_projects_tool():
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_API_KEY")
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_API_KEY is not set in .env"
 
-    result = get_memberships(
+    result = await get_projects_tool(
         redmine_url=redmine_url,
         api_key=api_key,
-        project_id=1)
+        include=None,
+        limit=5,
+        offset=0
+    )
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
-    assert "memberships" in result
-    assert isinstance(result["memberships"], list)
+    assert "projects" in result
+    assert isinstance(result["projects"], list)

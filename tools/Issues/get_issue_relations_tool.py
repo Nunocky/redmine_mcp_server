@@ -2,13 +2,16 @@ import requests
 from fastmcp.tools.tool import Tool
 
 
-def get_news(
+def get_issue_relations(
     redmine_url: str,
     api_key: str,
-    project_id: str = None,
+    issue_id: int = None,
     limit: int = None,
     offset: int = None,
 ):
+    """
+    Redmine課題のリレーション一覧を取得
+    """
     import os
 
     if redmine_url is None:
@@ -17,25 +20,26 @@ def get_news(
         api_key = os.environ.get("REDMINE_API_KEY")
     headers = {"X-Redmine-API-Key": api_key}
     params = {}
-    if project_id:
-        params["project_id"] = project_id
     if limit is not None:
         params["limit"] = limit
     if offset is not None:
         params["offset"] = offset
-    url = f"{redmine_url.rstrip('/')}/news.json"
+    if issue_id:
+        url = f"{redmine_url.rstrip('/')}/issues/{issue_id}/relations.json"
+    else:
+        url = f"{redmine_url.rstrip('/')}/relations.json"
     resp = requests.get(url, headers=headers, params=params)
     resp.raise_for_status()
     data = resp.json()
     return {
-        "news": data.get("news", []),
+        "relations": data.get("relations", []),
         "total_count": data.get("total_count", 0),
         "limit": data.get("limit", limit if limit is not None else 25),
         "offset": data.get("offset", offset if offset is not None else 0),
     }
 
-GetNewsTool = Tool.from_function(
-    get_news,
-    name="get_news",
-    description="Get a list of news from Redmine."
+GetIssueRelationsTool = Tool.from_function(
+    get_issue_relations,
+    name="get_issue_relations",
+    description="Redmine課題のリレーション一覧を取得"
 )

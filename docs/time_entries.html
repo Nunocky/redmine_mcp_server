@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Rest TimeEntries - Redmine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="E+DKdEceNo7iM4AR2Xd5FEzvKY8z3XCj+wgHUoG7de0feavft4tFgU8eAID9APXCOG7ElBouZsouAXVauFHT+w==" />
+<link rel='shortcut icon' href='/favicon.ico?1679302129' />
+<link rel="stylesheet" media="all" href="/stylesheets/jquery/jquery-ui-1.13.2.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/tribute-5.1.3.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/application.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/responsive.css?1679302129" />
+
+<script src="/javascripts/jquery-3.6.1-ui-1.13.2-ujs-5.2.8.1.js?1679302129"></script>
+<script src="/javascripts/jquery-migrate-3.3.2.min.js?1679302129"></script>
+<script src="/javascripts/tribute-5.1.3.min.js?1679302129"></script>
+<script src="/javascripts/tablesort-5.2.1.min.js?1679302129"></script>
+<script src="/javascripts/tablesort-5.2.1.number.min.js?1679302129"></script>
+<script src="/javascripts/application.js?1679302129"></script>
+<script src="/javascripts/responsive.js?1679302129"></script>
+<script>
+//<![CDATA[
+$(window).on('load', function(){ warnLeavingUnsaved('このページから移動すると、保存されていないデータが失われます。'); });
+//]]>
+</script>
+
+<script>
+//<![CDATA[
+rm = window.rm || {};rm.AutoComplete = rm.AutoComplete || {};rm.AutoComplete.dataSources = '{"issues":"/issues/auto_complete?project_id=redmine\u0026q=","wiki_pages":"/wiki_pages/auto_complete?project_id=redmine\u0026q="}';
+//]]>
+</script>
+
+<!-- page specific tags -->
+
+</head>
+<body class="project-redmine has-main-menu controller-wiki action-show avatars-on">
+
+<div id="wrapper">
+
+<div class="flyout-menu js-flyout-menu">
+
+        <div class="flyout-menu__search">
+            <form action="/projects/redmine/search" accept-charset="UTF-8" name="form-4b56ecf5" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+            <input type="hidden" name="wiki_pages" value="1" />
+            <label class="search-magnifier search-magnifier--flyout" for="flyout-search">&#9906;</label>
+            <input type="text" name="q" id="flyout-search" class="small js-search-input" placeholder="検索" />
+</form>        </div>
+
+
+        <h3>プロジェクト</h3>
+        <span class="js-project-menu"></span>
+
+    <h3>全般</h3>
+    <span class="js-general-menu"></span>
+
+    <span class="js-sidebar flyout-menu__sidebar"></span>
+
+    <h3>プロフィール</h3>
+    <span class="js-profile-menu"></span>
+
+</div>
+
+<div id="wrapper2">
+<div id="wrapper3">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a class="login" href="/login">ログイン</a></li><li><a class="register" href="/account/register">登録する</a></li></ul>    </div>
+
+    <ul><li><a class="home" href="/">ホーム</a></li><li><a class="projects" href="/projects">プロジェクト</a></li><li><a class="help" href="https://www.redmine.org/guide">ヘルプ</a></li></ul></div>
+
+<div id="header">
+
+    <a href="#" class="mobile-toggle-button js-flyout-menu-toggle-button"></a>
+
+    <div id="quick-search">
+        <form action="/projects/redmine/search" accept-charset="UTF-8" name="form-45196a90" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+        <input type="hidden" name="scope" value="subprojects" />
+        <input type="hidden" name="wiki_pages" value="1" />
+        <label for='q'>
+          <a accesskey="4" href="/projects/redmine/search?scope=subprojects">検索</a>:
+        </label>
+        <input type="text" name="q" id="q" size="20" class="small" accesskey="f" data-auto-complete="true" />
+</form>        <div id="project-jump" class="drdn"><span class="drdn-trigger">Redmine</span><div class="drdn-content"><div class="quick-search"><input type="text" name="q" id="projects-quick-search" value="" class="autocomplete" data-automcomplete-url="/projects/autocomplete.js?jump=wiki" autocomplete="off" /></div><div class="drdn-items projects selection"></div><div class="drdn-items all-projects selection"><a href="/projects?jump=wiki">全プロジェクト</a></div></div></div>
+    </div>
+
+    <h1><span class="current-project">Redmine</span></h1>
+
+    <div id="main-menu" class="tabs">
+        <ul><li><a class="overview" href="/projects/redmine">概要</a></li><li><a class="download" href="/projects/redmine/wiki/Download">Download</a></li><li><a class="activity" href="/projects/redmine/activity">活動</a></li><li><a class="roadmap" href="/projects/redmine/roadmap">ロードマップ</a></li><li><a class="issues" href="/projects/redmine/issues">チケット</a></li><li><a class="news" href="/projects/redmine/news">ニュース</a></li><li><a class="wiki selected" href="/projects/redmine/wiki">Wiki</a></li><li><a class="boards" href="/projects/redmine/boards">フォーラム</a></li><li><a class="repository" href="/projects/redmine/repository">リポジトリ</a></li></ul>
+        <div class="tabs-buttons" style="display:none;">
+            <button class="tab-left" onclick="moveTabLeft(this); return false;"></button>
+            <button class="tab-right" onclick="moveTabRight(this); return false;"></button>
+        </div>
+    </div>
+</div>
+
+<div id="main" class="">
+    <div id="sidebar">
+
+  <div class="wiki">
+    <a name="Latest-releases"></a>
+<h3 >Latest releases<a href="#Latest-releases" class="wiki-anchor">&para;</a></h3>
+
+
+	<p><a class="wiki-page" href="/projects/redmine/wiki/Download">5.0.12 (2025-03-10)</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Download">5.1.8 (2025-04-20)</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Download">6.0.5 (2025-04-20)</a></p>
+
+
+	<a name="Resources"></a>
+<h3 >Resources<a href="#Resources" class="wiki-anchor">&para;</a></h3>
+
+
+	<p><a class="wiki-page" href="/projects/redmine/wiki/Guide">User's Guide</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Developer_Guide">Developer's Guide</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Changelog">Changelog</a>, <a class="wiki-page" href="/projects/redmine/wiki/Security_Advisories">Security</a><br /><a class="wiki-page" href="/projects/redmine/wiki/FAQ">FAQ</a>, <a class="wiki-page" href="/projects/redmine/wiki/HowTos">HowTo's</a><br /><a href="/plugins">Plugins</a>, <a class="wiki-page" href="/projects/redmine/wiki/Theme_List">Themes</a><br /><a class="wiki-page" href="/projects/redmine/wiki/PrivacyPolicy">Privacy Policy</a></p>
+  </div>
+
+<h3>Wiki</h3>
+<ul>
+  <li><a href="/">メインページ</a></li>
+  <li><a href="/projects/redmine/wiki/index">索引(名前順)</a></li>
+  <li><a href="/projects/redmine/wiki/date_index">索引(日付順)</a></li>
+</ul>
+
+
+
+		<br />
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-0447284344517370";
+		google_alternate_color = "FFFFFF";
+		google_ad_width = 160;
+		google_ad_height = 600;
+		google_ad_format = "160x600_as";
+		google_ad_type = "text_image";
+		google_ad_channel = "";
+		google_color_border = "EEEEEE";
+		google_color_bg = "FFFFFF";
+		google_color_link = "484848";
+		google_color_text = "484848";
+		google_color_url = "2A5685";
+		//-->
+		</script>
+		<script type="text/javascript"
+		  src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+                <br />
+
+
+    </div>
+
+    <div id="content">
+
+        <div class="contextual">
+
+
+
+
+  <span class="drdn"><span class="drdn-trigger"><span class="icon-only icon-actions" title="操作">操作</span></span><div class="drdn-content"><div class="drdn-items">
+    <a class="icon icon-history" href="/projects/redmine/wiki/Rest_TimeEntries/history">履歴</a>
+
+
+
+
+
+
+</div></div></span></div>
+
+<p class="breadcrumb"><a href="/projects/redmine/wiki/Guide">Guide</a> » <a href="/projects/redmine/wiki/Developer_Guide">Developer Guide</a> » <a href="/projects/redmine/wiki/Rest_api">Rest api</a> » </p>
+
+
+<div class="wiki wiki-page">
+  <p>(note: for some versions of Redmine you can need some other extension of path /time_entries.xml, e.g. 2.5 works with *.json <a class="external" href="http://www.redmine.org/boards/2/topics/48933?r=48934#message-48934">http://www.redmine.org/boards/2/topics/48933?r=48934#message-48934</a> , sometimes in plugins it comes simply without any extension)</p>
+
+
+	<a name="Time-Entries"></a>
+<h1 >Time Entries<a href="#Time-Entries" class="wiki-anchor">&para;</a></h1>
+
+
+	<ul class="toc right"><li><strong>目次</strong></li><li><a href="#Time-Entries">Time Entries</a><ul><li><a href="#Listing-time-entries">Listing time entries</a><ul><li><a href="#project_id-filter">project_id filter</a></li><li><a href="#spent_on-filter">spent_on filter</a></li></ul>
+</li><li><a href="#Showing-a-time-entry">Showing a time entry</a></li><li><a href="#Creating-a-time-entry">Creating a time entry</a></li><li><a href="#Updating-a-time-entry">Updating a time entry</a></li><li><a href="#Deleting-a-time-entry">Deleting a time entry</a></li></ul></li></ul>
+
+
+	<a name="Listing-time-entries"></a>
+<h2 >Listing time entries<a href="#Listing-time-entries" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>GET /time_entries.xml</code></pre>
+
+
+	<p>Returns time entries.</p>
+
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>offset</code></li>
+		<li><code>limit</code></li>
+		<li><code>user_id</code></li>
+		<li><code>project_id</code></li>
+		<li><code>spent_on</code></li>
+		<li>...</li>
+	</ul>
+
+
+	<a name="project_id-filter"></a>
+<h3 ><code>project_id</code> filter<a href="#project_id-filter" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>When filtering by project id, you can use either project numeric ID or its string identifier, e.g.</p>
+
+
+<pre>
+...&#38;project_id=123
+</pre>
+
+<pre>
+...&#38;project_id=my-custom-project
+</pre>
+
+	<a name="spent_on-filter"></a>
+<h3 ><code>spent_on</code> filter<a href="#spent_on-filter" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>When filtering by date, you can require a min / max date with a custom syntax:</p>
+
+
+<pre>
+/time_entries.json?project_id=338&#38;from=2019-01-01&#38;to=2019-01-03&#38;limit=100
+</pre>
+
+	<a name="Showing-a-time-entry"></a>
+<h2 >Showing a time entry<a href="#Showing-a-time-entry" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>GET /time_entries/[id].xml</code></pre>
+
+
+	<p>Returns the time entry of given id.</p>
+
+
+	<a name="Creating-a-time-entry"></a>
+<h2 >Creating a time entry<a href="#Creating-a-time-entry" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>POST /time_entries.xml</code></pre>
+
+
+	<p>Creates a time entry.</p>
+
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>time_entry</code> (required): a hash of the time entry attributes, including:
+
+	<ul>
+	<li><code>issue_id</code> or <code>project_id</code> (only one is required): the issue id or project id to log time on (both are integers); note that project ids can only be found using the API (e.g. at /projects.json)</li>
+		<li><code>spent_on</code>: the date the time was spent (default to the current date); format is e.g. <code>2020-12-24</code></li>
+		<li><code>hours</code> (required): the number of spent hours</li>
+		<li><code>activity_id</code>: the id of the time activity. This parameter is required unless a default activity is defined in Redmine.</li>
+		<li><code>comments</code>: short description for the entry (255 characters max)</li>
+		<li><code>user_id</code>: user id to be specified in need of posting time on behalf of another user</li>
+	</ul></li>
+	</ul>
+
+
+	<p><ins>Response</ins>:</p>
+
+
+	<ul>
+	<li><code>201 Created</code>: time entry was created</li>
+		<li><code>422 Unprocessable Entity</code>: time entry was not created due to validation failures (response body contains the error messages)</li>
+	</ul>
+
+
+	<a name="Updating-a-time-entry"></a>
+<h2 >Updating a time entry<a href="#Updating-a-time-entry" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>PUT /time_entries/[id].xml</code></pre>
+
+
+	<p>Updates the time entry of given id.</p>
+
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>time_entry</code> (required): a hash of the time entry attributes (same as above)</li>
+	</ul>
+
+
+	<p><ins>Response</ins>:</p>
+
+
+	<ul>
+	<li><code>204 No Content</code>: time entry was updated</li>
+		<li><code>422 Unprocessable Entity</code>: time entry was not updated due to validation failures (response body contains the error messages)</li>
+	</ul>
+
+
+	<a name="Deleting-a-time-entry"></a>
+<h2 >Deleting a time entry<a href="#Deleting-a-time-entry" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>DELETE /time_entries/[id].xml</code></pre>
+
+
+	<p>Deletes the time entry of given id.</p>
+</div>
+
+
+<fieldset class="collapsible collapsed hide-when-print">
+  <legend onclick="toggleFieldset(this);" class="icon icon-collapsed">ファイル (0)</legend>
+  <div style="display: none;">
+
+
+
+</div>
+</fieldset>
+
+<p class="wiki-update-info">
+    <a class="user active" href="/users/332">Go MAEDA</a> さんが<a title="2021-09-09 15:19" href="/projects/redmine/activity?from=2021-09-09">3年以上</a>前に更新
+    · <a href="/projects/redmine/wiki/Rest_TimeEntries/history">15件の履歴</a>
+</p>
+
+
+
+
+
+
+        <div style="clear:both;"></div>
+    </div>
+</div>
+<div id="footer">
+    Powered by <a href="https://www.redmine.org/">Redmine</a> &copy; 2006-2023 Jean-Philippe Lang
+</div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>ロード中...</span></div>
+<div id="ajax-modal" style="display:none;"></div>
+
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Rest Issues - Redmine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="hx9QHbXLN4cDlEZ76F563RRC4Nlkcfa/GeP5dize4juLhjG2RV5EiK65xurMKfYLYMMNwk2C4NbM6ot+FTRELQ==" />
+<link rel='shortcut icon' href='/favicon.ico?1679302129' />
+<link rel="stylesheet" media="all" href="/stylesheets/jquery/jquery-ui-1.13.2.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/tribute-5.1.3.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/application.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/responsive.css?1679302129" />
+
+<script src="/javascripts/jquery-3.6.1-ui-1.13.2-ujs-5.2.8.1.js?1679302129"></script>
+<script src="/javascripts/jquery-migrate-3.3.2.min.js?1679302129"></script>
+<script src="/javascripts/tribute-5.1.3.min.js?1679302129"></script>
+<script src="/javascripts/tablesort-5.2.1.min.js?1679302129"></script>
+<script src="/javascripts/tablesort-5.2.1.number.min.js?1679302129"></script>
+<script src="/javascripts/application.js?1679302129"></script>
+<script src="/javascripts/responsive.js?1679302129"></script>
+<script>
+//<![CDATA[
+$(window).on('load', function(){ warnLeavingUnsaved('このページから移動すると、保存されていないデータが失われます。'); });
+//]]>
+</script>
+
+<script>
+//<![CDATA[
+rm = window.rm || {};rm.AutoComplete = rm.AutoComplete || {};rm.AutoComplete.dataSources = '{"issues":"/issues/auto_complete?project_id=redmine\u0026q=","wiki_pages":"/wiki_pages/auto_complete?project_id=redmine\u0026q="}';
+//]]>
+</script>
+
+<!-- page specific tags -->
+
+</head>
+<body class="project-redmine has-main-menu controller-wiki action-show avatars-on">
+
+<div id="wrapper">
+
+<div class="flyout-menu js-flyout-menu">
+
+        <div class="flyout-menu__search">
+            <form action="/projects/redmine/search" accept-charset="UTF-8" name="form-e54064be" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+            <input type="hidden" name="wiki_pages" value="1" />
+            <label class="search-magnifier search-magnifier--flyout" for="flyout-search">&#9906;</label>
+            <input type="text" name="q" id="flyout-search" class="small js-search-input" placeholder="検索" />
+</form>        </div>
+
+
+        <h3>プロジェクト</h3>
+        <span class="js-project-menu"></span>
+
+    <h3>全般</h3>
+    <span class="js-general-menu"></span>
+
+    <span class="js-sidebar flyout-menu__sidebar"></span>
+
+    <h3>プロフィール</h3>
+    <span class="js-profile-menu"></span>
+
+</div>
+
+<div id="wrapper2">
+<div id="wrapper3">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a class="login" href="/login">ログイン</a></li><li><a class="register" href="/account/register">登録する</a></li></ul>    </div>
+
+    <ul><li><a class="home" href="/">ホーム</a></li><li><a class="projects" href="/projects">プロジェクト</a></li><li><a class="help" href="https://www.redmine.org/guide">ヘルプ</a></li></ul></div>
+
+<div id="header">
+
+    <a href="#" class="mobile-toggle-button js-flyout-menu-toggle-button"></a>
+
+    <div id="quick-search">
+        <form action="/projects/redmine/search" accept-charset="UTF-8" name="form-8c8a30a7" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+        <input type="hidden" name="scope" value="subprojects" />
+        <input type="hidden" name="wiki_pages" value="1" />
+        <label for='q'>
+          <a accesskey="4" href="/projects/redmine/search?scope=subprojects">検索</a>:
+        </label>
+        <input type="text" name="q" id="q" size="20" class="small" accesskey="f" data-auto-complete="true" />
+</form>        <div id="project-jump" class="drdn"><span class="drdn-trigger">Redmine</span><div class="drdn-content"><div class="quick-search"><input type="text" name="q" id="projects-quick-search" value="" class="autocomplete" data-automcomplete-url="/projects/autocomplete.js?jump=wiki" autocomplete="off" /></div><div class="drdn-items projects selection"></div><div class="drdn-items all-projects selection"><a href="/projects?jump=wiki">全プロジェクト</a></div></div></div>
+    </div>
+
+    <h1><span class="current-project">Redmine</span></h1>
+
+    <div id="main-menu" class="tabs">
+        <ul><li><a class="overview" href="/projects/redmine">概要</a></li><li><a class="download" href="/projects/redmine/wiki/Download/70">Download</a></li><li><a class="activity" href="/projects/redmine/activity">活動</a></li><li><a class="roadmap" href="/projects/redmine/roadmap">ロードマップ</a></li><li><a class="issues" href="/projects/redmine/issues">チケット</a></li><li><a class="news" href="/projects/redmine/news">ニュース</a></li><li><a class="wiki selected" href="/projects/redmine/wiki">Wiki</a></li><li><a class="boards" href="/projects/redmine/boards">フォーラム</a></li><li><a class="repository" href="/projects/redmine/repository">リポジトリ</a></li></ul>
+        <div class="tabs-buttons" style="display:none;">
+            <button class="tab-left" onclick="moveTabLeft(this); return false;"></button>
+            <button class="tab-right" onclick="moveTabRight(this); return false;"></button>
+        </div>
+    </div>
+</div>
+
+<div id="main" class="">
+    <div id="sidebar">
+
+  <div class="wiki">
+    <a name="Latest-releases"></a>
+<h3 >Latest releases<a href="#Latest-releases" class="wiki-anchor">&para;</a></h3>
+
+
+	<p><a class="wiki-page" href="/projects/redmine/wiki/Download">5.0.12 (2025-03-10)</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Download">5.1.8 (2025-04-20)</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Download">6.0.5 (2025-04-20)</a></p>
+
+
+	<a name="Resources"></a>
+<h3 >Resources<a href="#Resources" class="wiki-anchor">&para;</a></h3>
+
+
+	<p><a class="wiki-page" href="/projects/redmine/wiki/Guide">User's Guide</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Developer_Guide">Developer's Guide</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Changelog">Changelog</a>, <a class="wiki-page" href="/projects/redmine/wiki/Security_Advisories">Security</a><br /><a class="wiki-page" href="/projects/redmine/wiki/FAQ">FAQ</a>, <a class="wiki-page" href="/projects/redmine/wiki/HowTos">HowTo's</a><br /><a href="/plugins">Plugins</a>, <a class="wiki-page" href="/projects/redmine/wiki/Theme_List">Themes</a><br /><a class="wiki-page" href="/projects/redmine/wiki/PrivacyPolicy">Privacy Policy</a></p>
+  </div>
+
+<h3>Wiki</h3>
+<ul>
+  <li><a href="/">メインページ</a></li>
+  <li><a href="/projects/redmine/wiki/index">索引(名前順)</a></li>
+  <li><a href="/projects/redmine/wiki/date_index">索引(日付順)</a></li>
+</ul>
+
+
+
+		<br />
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-0447284344517370";
+		google_alternate_color = "FFFFFF";
+		google_ad_width = 160;
+		google_ad_height = 600;
+		google_ad_format = "160x600_as";
+		google_ad_type = "text_image";
+		google_ad_channel = "";
+		google_color_border = "EEEEEE";
+		google_color_bg = "FFFFFF";
+		google_color_link = "484848";
+		google_color_text = "484848";
+		google_color_url = "2A5685";
+		//-->
+		</script>
+		<script type="text/javascript"
+		  src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+                <br />
+
+
+    </div>
+
+    <div id="content">
+
+        <div class="contextual">
+
+
+
+
+  <span class="drdn"><span class="drdn-trigger"><span class="icon-only icon-actions" title="操作">操作</span></span><div class="drdn-content"><div class="drdn-items">
+    <a class="icon icon-history" href="/projects/redmine/wiki/Rest_Issues/history">履歴</a>
+
+
+
+
+
+
+</div></div></span></div>
+
+<p class="breadcrumb"><a href="/projects/redmine/wiki/Guide">Guide</a> » <a href="/projects/redmine/wiki/Developer_Guide">Developer Guide</a> » <a href="/projects/redmine/wiki/Rest_api">Rest api</a> » </p>
+
+
+<div class="wiki wiki-page">
+  <a name="Issues"></a>
+<h1 >Issues<a href="#Issues" class="wiki-anchor">&para;</a></h1>
+
+
+	<ul class="toc right"><li><strong>目次</strong></li><li><a href="#Issues">Issues</a><ul><li><a href="#Listing-issues">Listing issues</a></li><li><a href="#Showing-an-issue">Showing an issue</a></li><li><a href="#Creating-an-issue">Creating an issue</a></li><li><a href="#Updating-an-issue">Updating an issue</a></li><li><a href="#Deleting-an-issue">Deleting an issue</a></li><li><a href="#Adding-a-watcher">Adding a watcher</a></li><li><a href="#Removing-a-watcher">Removing a watcher</a></li></ul></li></ul>
+
+
+	<a name="Listing-issues"></a>
+<h2 >Listing issues<a href="#Listing-issues" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>GET /issues.[format]</code></pre>
+
+
+	<p>Returns a paginated list of issues. By default, it returns open issues only.</p>
+
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>offset</code>: skip this number of issues in response (optional)</li>
+		<li><code>limit</code>: number of issues per page (optional)</li>
+		<li><code>sort</code>: column to sort with. Append <code>:desc</code> to invert the order.</li>
+		<li><code>include</code>: fetch associated data (optional, use comma to fetch multiple associations). Possible values:
+
+	<ul>
+	<li><code>attachments</code> - Since 3.4.0</li>
+		<li><code>relations</code></li>
+	</ul></li>
+	</ul>
+
+
+	<p>Optional filters:</p>
+
+
+	<ul>
+	<li><code>issue_id</code>: get issue with the given id or multiple issues by id using ',' to separate id.</li>
+		<li><code>project_id</code>: get issues from the project with the given id (a numeric value, not a project identifier).</li>
+		<li><code>subproject_id</code>: get issues from the subproject with the given id. You can use <code>project_id=XXX&#38;subproject_id=!*</code> to get only the issues of a given project and none of its subprojects.</li>
+		<li><code>tracker_id</code>: get issues from the tracker with the given id</li>
+		<li><code>status_id</code>: get issues with the given status id only. Possible values: <code>open</code>, <code>closed</code>, <code>*</code> to get open and closed issues, status id</li>
+		<li><code>assigned_to_id</code>: get issues which are assigned to the given user id. <code>me</code> can be used instead an ID to fetch all issues from the logged in user (via API key or HTTP auth)</li>
+		<li><code>parent_id</code>: get issues whose parent issue is given id.</li>
+		<li><code>cf_x</code>: get issues with the given value for custom field with an ID of <code>x</code>. (Custom field must have 'used as a filter' checked.)</li>
+		<li>...</li>
+	</ul>
+
+
+	<p>NB: operators containing ">", "<" or "=" should be hex-encoded so they're parsed correctly. Most evolved API clients will do that for you by default, but for the sake of clarity the following examples have been written with no such magic feature in mind.</p>
+
+
+	<p><ins>Examples</ins>:</p>
+
+
+<pre>
+GET /issues.xml
+GET /issues.xml?issue_id=1
+GET /issues.xml?issue_id=1,2
+GET /issues.xml?project_id=2
+GET /issues.xml?project_id=2&#38;tracker_id=1
+GET /issues.xml?assigned_to_id=6
+GET /issues.xml?assigned_to_id=me
+GET /issues.xml?status_id=closed
+GET /issues.xml?status_id=*
+GET /issues.xml?cf_1=abcdef
+GET /issues.xml?sort=category:desc,updated_on
+
+Paging example:
+GET /issues.xml?offset=0&#38;limit=100
+GET /issues.xml?offset=100&#38;limit=100
+
+To fetch issues for a date range (uncrypted filter is "&gt;&lt;2012-03-01|2012-03-07") :
+GET /issues.xml?created_on=%3E%3C2012-03-01|2012-03-07
+
+To fetch issues created after a certain date (uncrypted filter is "&gt;=2012-03-01") :
+GET /issues.xml?created_on=%3E%3D2012-03-01
+
+Or before a certain date (uncrypted filter is "&lt;= 2012-03-07") :
+GET /issues.xml?created_on=%3C%3D2012-03-07
+
+To fetch issues created after a certain timestamp (uncrypted filter is "&gt;=2014-01-02T08:12:32Z") :
+GET /issues.xml?created_on=%3E%3D2014-01-02T08:12:32Z
+
+To fetch issues updated after a certain timestamp (uncrypted filter is "&gt;=2014-01-02T08:12:32Z") :
+GET /issues.xml?updated_on=%3E%3D2014-01-02T08:12:32Z
+
+To fetch issues for which custom field 4 contains the substring "foo" :
+GET /issues.xml?cf_4=~foo
+</pre>
+
+	<p><ins>Response</ins>:</p>
+
+
+<pre><code class="xml syntaxhl"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;issues</span> <span class="na">type=</span><span class="s">"array"</span> <span class="na">count=</span><span class="s">"1640"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;id&gt;</span>4326<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;project</span> <span class="na">name=</span><span class="s">"Redmine"</span> <span class="na">id=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;tracker</span> <span class="na">name=</span><span class="s">"Feature"</span> <span class="na">id=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;status</span> <span class="na">name=</span><span class="s">"New"</span> <span class="na">id=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;priority</span> <span class="na">name=</span><span class="s">"Normal"</span> <span class="na">id=</span><span class="s">"4"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;author</span> <span class="na">name=</span><span class="s">"John Smith"</span> <span class="na">id=</span><span class="s">"10106"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;category</span> <span class="na">name=</span><span class="s">"Email notifications"</span> <span class="na">id=</span><span class="s">"9"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;subject&gt;</span>
+      Aggregate Multiple Issue Changes for Email Notifications
+    <span class="nt">&lt;/subject&gt;</span>
+    <span class="nt">&lt;description&gt;</span>
+      This is not to be confused with another useful proposed feature that
+      would do digest emails for notifications.
+    <span class="nt">&lt;/description&gt;</span>
+    <span class="nt">&lt;start_date&gt;</span>2009-12-03<span class="nt">&lt;/start_date&gt;</span>
+    <span class="nt">&lt;due_date&gt;&lt;/due_date&gt;</span>
+    <span class="nt">&lt;done_ratio&gt;</span>0<span class="nt">&lt;/done_ratio&gt;</span>
+    <span class="nt">&lt;estimated_hours&gt;&lt;/estimated_hours&gt;</span>
+    <span class="nt">&lt;custom_fields&gt;</span>
+      <span class="nt">&lt;custom_field</span> <span class="na">name=</span><span class="s">"Resolution"</span> <span class="na">id=</span><span class="s">"2"</span><span class="nt">&gt;</span>Duplicate<span class="nt">&lt;/custom_field&gt;</span>
+      <span class="nt">&lt;custom_field</span> <span class="na">name=</span><span class="s">"Texte"</span> <span class="na">id=</span><span class="s">"5"</span><span class="nt">&gt;</span>Test<span class="nt">&lt;/custom_field&gt;</span>
+      <span class="nt">&lt;custom_field</span> <span class="na">name=</span><span class="s">"Boolean"</span> <span class="na">id=</span><span class="s">"6"</span><span class="nt">&gt;</span>1<span class="nt">&lt;/custom_field&gt;</span>
+      <span class="nt">&lt;custom_field</span> <span class="na">name=</span><span class="s">"Date"</span> <span class="na">id=</span><span class="s">"7"</span><span class="nt">&gt;</span>2010-01-12<span class="nt">&lt;/custom_field&gt;</span>
+    <span class="nt">&lt;/custom_fields&gt;</span>
+    <span class="nt">&lt;created_on&gt;</span>Thu Dec 03 15:02:12 +0100 2009<span class="nt">&lt;/created_on&gt;</span>
+    <span class="nt">&lt;updated_on&gt;</span>Sun Jan 03 12:08:41 +0100 2010<span class="nt">&lt;/updated_on&gt;</span>
+  <span class="nt">&lt;/issue&gt;</span>
+  <span class="nt">&lt;issue&gt;</span>
+    <span class="nt">&lt;id&gt;</span>4325<span class="nt">&lt;/id&gt;</span>
+    ...
+  <span class="nt">&lt;/issue&gt;</span>
+<span class="nt">&lt;/issues&gt;</span>
+</code></pre>
+
+	<a name="Showing-an-issue"></a>
+<h2 >Showing an issue<a href="#Showing-an-issue" class="wiki-anchor">&para;</a></h2>
+
+
+<pre>
+GET /issues/[id].[format]
+</pre>
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>include</code>: fetch associated data (optional, use comma to fetch multiple associations). Possible values:
+
+	<ul>
+	<li><code>children</code></li>
+		<li><code>attachments</code></li>
+		<li><code>relations</code></li>
+		<li><code>changesets</code></li>
+		<li><code>journals</code> - See <a class="wiki-page" href="/projects/redmine/wiki/Rest_IssueJournals">Issue journals</a> for more information.</li>
+		<li><code>watchers</code> - Since 2.3.0</li>
+		<li><code>allowed_statuses</code> - Since 5.0.x, Returns the available allowed statuses (the same values as provided in the issue edit form) based on:
+	<ul>
+	<li>the issue's current tracker, the issue's current status, and the member's role (the defined workflow);</li>
+		<li>the existence of any open subtask(s);</li>
+		<li>the existence of any open blocking issue(s);</li>
+		<li>the existence of a closed parent issue.</li>
+	</ul></li>
+	</ul></li>
+	</ul>
+
+
+	<p><ins>Examples</ins>:</p>
+
+
+<pre>
+GET /issues/2.xml
+GET /issues/2.json
+
+GET /issues/2.xml
+GET /issues/2.xml?include=attachments
+GET /issues/2.xml?include=attachments,journals
+</pre>
+
+	<a name="Creating-an-issue"></a>
+<h2 >Creating an issue<a href="#Creating-an-issue" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>POST /issues.[format]</code></pre>
+
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>issue</code> - A hash of the issue attributes:
+
+	<ul>
+	<li><code>project_id</code></li>
+		<li><code>tracker_id</code></li>
+		<li><code>status_id</code></li>
+		<li><code>priority_id</code></li>
+		<li><code>subject</code></li>
+		<li><code>description</code></li>
+		<li><code>category_id</code></li>
+		<li><code>fixed_version_id</code> - ID of the Target Versions (previously called 'Fixed Version' and still referred to as such in the API)</li>
+		<li><code>assigned_to_id</code> - ID of the user to assign the issue to (currently no mechanism to assign by name)</li>
+		<li><code>parent_issue_id</code> - ID of the parent issue</li>
+		<li><code>custom_fields</code> - See <a class="wiki-page" href="/projects/redmine/wiki/Rest_api#Working-with-custom-fields">Custom fields</a></li>
+		<li><code>watcher_user_ids</code> - Array of user ids to add as watchers (since 2.3.0)</li>
+		<li><code>is_private</code> - Use true or false to indicate whether the issue is private or not</li>
+		<li><code>estimated_hours</code> - Number of hours estimated for issue</li>
+	</ul></li>
+	</ul>
+
+
+	<p>Attachments can be added when you create an issue, see <a class="wiki-page" href="/projects/redmine/wiki/Rest_api#Attaching-files">Attaching files</a>.</p>
+
+
+	<p><ins>Examples</ins>:</p>
+
+
+<pre>
+POST /issues.xml
+</pre><br /><pre><code class="xml syntaxhl"><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="nt">&lt;issue&gt;</span>
+  <span class="nt">&lt;project_id&gt;</span>1<span class="nt">&lt;/project_id&gt;</span>
+  <span class="nt">&lt;subject&gt;</span>Example<span class="nt">&lt;/subject&gt;</span>
+  <span class="nt">&lt;priority_id&gt;</span>4<span class="nt">&lt;/priority_id&gt;</span>
+<span class="nt">&lt;/issue&gt;</span>
+</code></pre><br /><pre>
+POST /issues.json
+</pre><br /><pre><code class="json syntaxhl"><span class="p">{</span><span class="w">
+  </span><span class="nl">"issue"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"priority_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+	<a name="Updating-an-issue"></a>
+<h2 >Updating an issue<a href="#Updating-an-issue" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>PUT /issues/[id].[format]</code></pre>
+
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>issue</code> - A hash of the issue attributes
+
+	<ul>
+	<li><code>project_id</code></li>
+		<li><code>tracker_id</code></li>
+		<li><code>status_id</code></li>
+		<li><code>subject</code></li>
+		<li>...</li>
+		<li><code>notes</code> - Comments about the update</li>
+		<li><code>private_notes</code> - true if notes are private</li>
+	</ul></li>
+	</ul>
+
+
+	<p>Attachments can be added when you update an issue, see <a class="wiki-page" href="/projects/redmine/wiki/Rest_api#Attaching-files">Attaching files</a>.</p>
+
+
+	<p><ins>Examples</ins>:</p>
+
+
+<pre>
+PUT /issues/[id].xml
+</pre>
+
+<pre>
+<code class="xml syntaxhl"><span class="cp">&lt;?xml version="1.0"?&gt;</span>
+<span class="nt">&lt;issue&gt;</span>
+  <span class="nt">&lt;subject&gt;</span>Subject changed<span class="nt">&lt;/subject&gt;</span>
+  <span class="nt">&lt;notes&gt;</span>The subject was changed<span class="nt">&lt;/notes&gt;</span>
+<span class="nt">&lt;/issue&gt;</span>
+</code></pre>
+
+<pre>
+PUT /issues/[id].json
+</pre>
+
+<pre><code class="json syntaxhl"><span class="p">{</span><span class="w">
+  </span><span class="nl">"issue"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subject changed"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The subject was changed"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+	<a name="Deleting-an-issue"></a>
+<h2 >Deleting an issue<a href="#Deleting-an-issue" class="wiki-anchor">&para;</a></h2>
+
+
+	<pre><code>DELETE /issues/[id].[format]</code></pre>
+
+
+	<a name="Adding-a-watcher"></a>
+<h2 >Adding a watcher<a href="#Adding-a-watcher" class="wiki-anchor">&para;</a></h2>
+
+
+	<p><em>Added in 2.3.0</em></p>
+
+
+	<pre><code>POST /issues/[id]/watchers.[format]</code></pre>
+
+
+	<p><ins>Parameters</ins>:</p>
+
+
+	<ul>
+	<li><code>user_id</code> (required): id of the user to add as a watcher</li>
+	</ul>
+
+
+	<a name="Removing-a-watcher"></a>
+<h2 >Removing a watcher<a href="#Removing-a-watcher" class="wiki-anchor">&para;</a></h2>
+
+
+	<p><em>Added in 2.3.0</em></p>
+
+
+	<pre><code>DELETE /issues/[id]/watchers/[user_id].[format]</code></pre>
+
+
+	<p><ins>Parameters</ins>: <em>none</em></p></code></pre>
+</div>
+
+
+<fieldset class="collapsible collapsed hide-when-print">
+  <legend onclick="toggleFieldset(this);" class="icon icon-collapsed">ファイル (0)</legend>
+  <div style="display: none;">
+
+
+
+</div>
+</fieldset>
+
+<p class="wiki-update-info">
+    <a class="user active" href="/users/1565">Mischa The Evil</a> さんが<a title="2021-07-27 20:38" href="/projects/redmine/activity?from=2021-07-27">ほぼ4年</a>前に更新
+    · <a href="/projects/redmine/wiki/Rest_Issues/history">70件の履歴</a>
+</p>
+
+
+
+
+
+
+        <div style="clear:both;"></div>
+    </div>
+</div>
+<div id="footer">
+    Powered by <a href="https://www.redmine.org/">Redmine</a> &copy; 2006-2023 Jean-Philippe Lang
+</div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>ロード中...</span></div>
+<div id="ajax-modal" style="display:none;"></div>
+
+</div>
+</div>
+
+</body>
+</html>

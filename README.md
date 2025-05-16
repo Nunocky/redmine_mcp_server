@@ -33,9 +33,36 @@
 
 
 
-## Stable APIs
+## Cline
 
-| API                              | Status | Notes | Version |
-| -------------------------------- | ------ | ----- | ------- |
-| [Projects](Rest_Projects)        | Stable |       | 1.0     |
-| [Time Entries](Rest_TimeEntries) | Stable |       | 1.1     |
+```json
+    "Local Redmine": {
+      "disabled": false,
+      "timeout": 60,
+      "command": "uv",
+      "args": [
+        "--directory",
+        "<path_to_mcp_server>",
+        "run",
+        "main.py"
+      ],
+      "env": {
+        "REDMINE_URL": "http://***",
+        "REDMINE_API_KEY": "***"
+      },
+      "transportType": "stdio"
+    }
+```
+
+## Example
+
+### users
+
+```sh
+curl -H "X-Redmine-API-Key: ..." "http://...:8082/users.json?limit=25&amp;offset=0"
+```
+
+### membership
+```sh
+curl -H "X-Redmine-API-Key: ..." "http://.../projects/123/memberships.json?limit=25&amp;offset=0"
+```
