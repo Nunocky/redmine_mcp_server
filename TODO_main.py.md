@@ -16,7 +16,7 @@
 - `GetIssuesTool`の`run`は同期関数のため、`run_in_executor`でasync化している。他の同期ツールがあれば同様の対応が必要。
 
 ### 3. 環境変数取得の共通化
-- `os.environ.get("REDMINE_URL")`や`os.environ.get("REDMINE_API_KEY")`の取得処理が各関数で重複している。
+- `os.environ.get("REDMINE_URL")`や`os.environ.get("REDMINE_ADMIN_API_KEY")`の取得処理が各関数で重複している。
 - 共通関数化（例: `get_redmine_env()`）するとDRYになる。
 
 ### 4. 型アノテーションの明示
@@ -39,7 +39,7 @@ async def get_project(
 ) -> dict:
     """Redmineプロジェクト詳細を取得"""
     redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_API_KEY")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     tool = GetProjectTool()  # インスタンス化
     return await tool.run(
         project_id_or_identifier,

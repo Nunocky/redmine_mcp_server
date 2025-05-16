@@ -3,6 +3,7 @@
 import requests
 from fastmcp.tools.tool import Tool
 
+
 def add_watcher(
     redmine_url: str,
     api_key: str,
@@ -26,7 +27,7 @@ def add_watcher(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key, "Content-Type": "application/json"}
     url = f"{redmine_url.rstrip('/')}/issues/{issue_id}/watchers.json"
     data = {"user_id": user_id}
@@ -37,8 +38,5 @@ def add_watcher(
         "response_text": resp.text,
     }
 
-AddWatcherTool = Tool.from_function(
-    add_watcher,
-    name="add_watcher",
-    description="Redmine課題にウォッチャーを追加する"
-)
+
+AddWatcherTool = Tool.from_function(add_watcher, name="add_watcher", description="Redmine課題にウォッチャーを追加する")

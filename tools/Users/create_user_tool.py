@@ -1,6 +1,7 @@
 import requests
 from fastmcp.tools.tool import Tool
 
+
 def create_user(
     redmine_url: str,
     api_key: str,
@@ -14,24 +15,16 @@ def create_user(
     must_change_passwd: bool = None,
     generate_password: bool = None,
     custom_fields: list = None,
-    send_information: bool = None
+    send_information: bool = None,
 ):
     import os
 
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
-    headers = {
-        "X-Redmine-API-Key": api_key,
-        "Content-Type": "application/json"
-    }
-    user_data = {
-        "login": login,
-        "firstname": firstname,
-        "lastname": lastname,
-        "mail": mail
-    }
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
+    headers = {"X-Redmine-API-Key": api_key, "Content-Type": "application/json"}
+    user_data = {"login": login, "firstname": firstname, "lastname": lastname, "mail": mail}
     if password is not None:
         user_data["password"] = password
     if auth_source_id is not None:
@@ -54,8 +47,5 @@ def create_user(
     resp.raise_for_status()
     return resp.json()
 
-CreateUserTool = Tool.from_function(
-    create_user,
-    name="create_user",
-    description="Create a new user in Redmine."
-)
+
+CreateUserTool = Tool.from_function(create_user, name="create_user", description="Create a new user in Redmine.")

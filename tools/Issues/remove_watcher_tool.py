@@ -3,6 +3,7 @@
 import requests
 from fastmcp.tools.tool import Tool
 
+
 def remove_watcher(
     redmine_url: str,
     api_key: str,
@@ -26,7 +27,7 @@ def remove_watcher(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key}
     url = f"{redmine_url.rstrip('/')}/issues/{issue_id}/watchers/{user_id}.json"
     resp = requests.delete(url, headers=headers)
@@ -35,6 +36,7 @@ def remove_watcher(
         "status_code": resp.status_code,
         "response_text": resp.text,
     }
+
 
 RemoveWatcherTool = Tool.from_function(
     remove_watcher,

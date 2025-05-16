@@ -29,7 +29,7 @@ def get_user(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key}
     params = {}
     if include:

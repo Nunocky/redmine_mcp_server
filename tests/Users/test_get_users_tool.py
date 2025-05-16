@@ -14,10 +14,10 @@ def test_run_success(tool):
     実際のRedmineサーバーにアクセスしてユーザー一覧を取得し、基本的な項目を検証する。
     """
     # 環境変数の設定
-    os.environ["REDMINE_API_KEY"] = os.getenv("REDMINE_API_KEY", "")
+    os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
-    assert os.environ["REDMINE_API_KEY"], "REDMINE_API_KEY is not set in .env"
+    assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # 実行
@@ -37,10 +37,10 @@ def test_run_with_status_filter(tool):
     status フィルタを使用してユーザー一覧を取得し、結果を検証する。
     """
     # 環境変数の設定
-    os.environ["REDMINE_API_KEY"] = os.getenv("REDMINE_API_KEY", "")
+    os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
-    assert os.environ["REDMINE_API_KEY"], "REDMINE_API_KEY is not set in .env"
+    assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # 実行 (アクティブユーザーのみ)
@@ -62,10 +62,10 @@ def test_run_with_name_filter(tool):
     name フィルタを使用してユーザー一覧を取得し、結果を検証する。
     """
     # 環境変数の設定
-    os.environ["REDMINE_API_KEY"] = os.getenv("REDMINE_API_KEY", "")
+    os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
-    assert os.environ["REDMINE_API_KEY"], "REDMINE_API_KEY is not set in .env"
+    assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # テスト用のユーザー名（環境に合わせて変更）
@@ -102,10 +102,10 @@ def test_run_with_group_id_filter(tool):
     注: このテストはグループが存在する環境でのみ成功します。
     """
     # 環境変数の設定
-    os.environ["REDMINE_API_KEY"] = os.getenv("REDMINE_API_KEY", "")
+    os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
-    assert os.environ["REDMINE_API_KEY"], "REDMINE_API_KEY is not set in .env"
+    assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # テスト用のグループID（環境に合わせて変更）
@@ -128,10 +128,10 @@ def test_run_with_pagination(tool):
     limit と offset を使用したページネーションのテスト
     """
     # 環境変数の設定
-    os.environ["REDMINE_API_KEY"] = os.getenv("REDMINE_API_KEY", "")
+    os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
-    assert os.environ["REDMINE_API_KEY"], "REDMINE_API_KEY is not set in .env"
+    assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # 1ページ目を取得 (最初の2件)
@@ -162,10 +162,10 @@ def test_run_with_combined_filters(tool):
     複数のフィルタを組み合わせたテスト
     """
     # 環境変数の設定
-    os.environ["REDMINE_API_KEY"] = os.getenv("REDMINE_API_KEY", "")
+    os.environ["REDMINE_ADMIN_API_KEY"] = os.getenv("REDMINE_ADMIN_API_KEY", "")
     os.environ["REDMINE_URL"] = os.getenv("REDMINE_URL", "")
 
-    assert os.environ["REDMINE_API_KEY"], "REDMINE_API_KEY is not set in .env"
+    assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # テスト用のユーザー名（環境に合わせて変更）

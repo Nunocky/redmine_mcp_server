@@ -1,6 +1,7 @@
 import requests
 from fastmcp.tools.tool import Tool
 
+
 def create_time_entry(
     redmine_url: str,
     api_key: str,
@@ -17,7 +18,7 @@ def create_time_entry(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key, "Content-Type": "application/json"}
     time_entry_data = {}
     if issue_id is not None:
@@ -44,8 +45,7 @@ def create_time_entry(
         return {"error": str(e), "status_code": resp.status_code, "response": resp.text}
     return {"time_entry": resp.json().get("time_entry", {})}
 
+
 CreateTimeEntryTool = Tool.from_function(
-    create_time_entry,
-    name="create_time_entry",
-    description="Redmineで新しいタイムエントリを作成します。"
+    create_time_entry, name="create_time_entry", description="Redmineで新しいタイムエントリを作成します。"
 )

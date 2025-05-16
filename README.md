@@ -48,7 +48,7 @@
       ],
       "env": {
         "REDMINE_URL": "http://***",
-        "REDMINE_API_KEY": "***"
+        "REDMINE_ADMIN_API_KEY": "***"
       },
       "transportType": "stdio"
     }

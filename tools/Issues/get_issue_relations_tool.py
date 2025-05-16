@@ -17,7 +17,7 @@ def get_issue_relations(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key}
     params = {}
     if limit is not None:
@@ -38,8 +38,7 @@ def get_issue_relations(
         "offset": data.get("offset", offset if offset is not None else 0),
     }
 
+
 GetIssueRelationsTool = Tool.from_function(
-    get_issue_relations,
-    name="get_issue_relations",
-    description="Redmine課題のリレーション一覧を取得"
+    get_issue_relations, name="get_issue_relations", description="Redmine課題のリレーション一覧を取得"
 )

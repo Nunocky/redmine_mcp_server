@@ -72,7 +72,7 @@ async def get_news(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await GetNewsTool.run(
         {
             "redmine_url": redmine_url,
@@ -97,7 +97,7 @@ async def get_queries_tool(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
 
     result = await GetQueriesTool.run(
         {
@@ -123,7 +123,7 @@ async def get_versions(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetVersionTool.run(
         redmine_url,
         api_key,
@@ -143,7 +143,7 @@ async def get_wiki_pages(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetWikiPagesTool.run(
         redmine_url,
         api_key,
@@ -196,7 +196,7 @@ async def get_issue(
 ) -> dict:
     """Redmine課題詳細を取得"""
     redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_API_KEY")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
 
     return await GetIssueTool.run(
         {
@@ -233,7 +233,7 @@ async def add_watcher(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
 
     return AddWatcherTool.run(
         {
@@ -256,7 +256,7 @@ async def remove_watcher(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await RemoveWatcherTool.run(
         redmine_url,
         api_key,
@@ -275,7 +275,7 @@ async def delete_issue(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await DeleteIssueTool.run(
         redmine_url,
         api_key,
@@ -295,7 +295,7 @@ async def get_issue_relations(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
 
     return await GetIssueRelationsTool.run(
         {
@@ -330,7 +330,7 @@ async def update_issue(
 ) -> dict:
     """Redmine課題を更新"""
     redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_API_KEY")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await UpdateIssueTool.run(
         redmine_url,
         api_key,
@@ -364,7 +364,7 @@ async def archive_project(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await ArchiveProjectTool.run(
         project_id_or_identifier,
         redmine_url,
@@ -394,7 +394,7 @@ async def create_project(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await CreateProjectTool.run(
         name,
         identifier,
@@ -424,7 +424,7 @@ async def delete_project(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await DeleteProjectTool.run(
         project_id_or_identifier,
         redmine_url,
@@ -442,7 +442,7 @@ async def unarchive_project(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await UnarchiveProjectTool.run(
         project_id_or_identifier,
         redmine_url,
@@ -472,7 +472,7 @@ async def update_project(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await UpdateProjectTool.run(
         project_id_or_identifier,
         redmine_url,
@@ -499,7 +499,7 @@ async def get_project(
 ) -> dict:
     """Redmineプロジェクト詳細を取得"""
     redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_API_KEY")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetProjectTool.run(
         project_id_or_identifier,
         redmine_url,
@@ -522,7 +522,7 @@ async def get_projects_tool(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await GetProjectsTool.run(
         {
             "redmine_url": redmine_url,
@@ -553,7 +553,7 @@ async def create_time_entry(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await CreateTimeEntryTool.run(
         redmine_url,
         api_key,
@@ -580,7 +580,7 @@ async def get_time_entries(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetTimeEntriesTool.run(
         redmine_url,
         api_key,
@@ -611,7 +611,7 @@ async def create_user(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await CreateUserTool.run(
         redmine_url,
         api_key,
@@ -639,7 +639,7 @@ async def delete_user(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await DeleteUserTool.run(
         redmine_url,
         api_key,
@@ -657,7 +657,7 @@ async def get_user(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetUserTool.run(
         redmine_url,
         api_key,
@@ -679,7 +679,7 @@ async def get_users(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetUsersTool.run(
         redmine_url,
         api_key,
@@ -713,7 +713,7 @@ async def update_user(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await UpdateUserTool.run(
         redmine_url,
         api_key,

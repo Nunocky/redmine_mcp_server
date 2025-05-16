@@ -1,6 +1,7 @@
 import requests
 from fastmcp.tools.tool import Tool
 
+
 def update_user(
     redmine_url: str,
     api_key: str,
@@ -15,18 +16,15 @@ def update_user(
     must_change_passwd: bool = None,
     generate_password: bool = None,
     custom_fields: list = None,
-    admin: bool = None
+    admin: bool = None,
 ):
     import os
 
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
-    headers = {
-        "X-Redmine-API-Key": api_key,
-        "Content-Type": "application/json"
-    }
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
+    headers = {"X-Redmine-API-Key": api_key, "Content-Type": "application/json"}
     user_data = {}
     if login is not None:
         user_data["login"] = login
@@ -57,8 +55,5 @@ def update_user(
     resp.raise_for_status()
     return resp.json() if resp.content else {}
 
-UpdateUserTool = Tool.from_function(
-    update_user,
-    name="update_user",
-    description="Update a user in Redmine by user_id."
-)
+
+UpdateUserTool = Tool.from_function(update_user, name="update_user", description="Update a user in Redmine by user_id.")
