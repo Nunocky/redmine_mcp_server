@@ -1,6 +1,6 @@
-"""Redmineユーザー一覧取得ツール
+"""Redmine User List Retrieval Tool
 
-Redmineのユーザー一覧を取得するツールです。
+This tool retrieves a list of users from Redmine.
 """
 
 from typing import Any, Dict, Optional
@@ -9,17 +9,17 @@ from tools.redmine_api_client import RedmineAPIClient
 
 
 class GetUsersTool:
-    """Redmineのユーザー一覧取得ツール
+    """Redmine User List Retrieval Tool
 
     Attributes:
-        client (RedmineAPIClient): Redmine APIクライアント
+        client (RedmineAPIClient): Redmine API client
     """
 
     def __init__(self, client: Optional[RedmineAPIClient] = None) -> None:
-        """コンストラクタ
+        """Constructor
 
         Args:
-            client (RedmineAPIClient, optional): APIクライアント。未指定時は新規生成。
+            client (RedmineAPIClient, optional): API client. If not specified, a new one is generated.
         """
         self.client = client or RedmineAPIClient()
 
@@ -31,20 +31,20 @@ class GetUsersTool:
         name: Optional[str] = None,
         group_id: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """ユーザー一覧を取得する
+        """Get a list of users
 
         Args:
-            limit (int, optional): 取得件数
-            offset (int, optional): スキップ件数
-            status (int, optional): ユーザーステータス（1: アクティブ、2: 登録済み、3: ロック済み）
-            name (str, optional): ログイン名、姓名、メールアドレスでフィルタリング
-            group_id (int, optional): 特定グループに所属するユーザーでフィルタリング
+            limit (int, optional): Number of items to retrieve
+            offset (int, optional): Number of items to skip
+            status (int, optional): User status (1: active, 2: registered, 3: locked)
+            name (str, optional): Filter by login name, first name, last name, or email address
+            group_id (int, optional): Filter by users belonging to a specific group
 
         Returns:
-            dict: ユーザー一覧とページ情報
+            dict: User list and page information
 
         Raises:
-            Exception: APIリクエスト失敗時
+            Exception: When API request fails
         """
         params: Dict[str, Any] = {}
         if limit is not None:

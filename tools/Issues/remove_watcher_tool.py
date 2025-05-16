@@ -1,4 +1,4 @@
-"""Redmine課題からウォッチャーを削除するツール"""
+"""Tool to remove a watcher from a Redmine issue"""
 
 import requests
 from fastmcp.tools.tool import Tool
@@ -11,16 +11,16 @@ def remove_watcher(
     user_id: int,
 ):
     """
-    指定した課題(issue_id)からウォッチャー(user_id)を削除する
+    Remove a watcher (user_id) from the specified issue (issue_id)
 
     Args:
-        redmine_url (str): RedmineのベースURL
-        api_key (str): APIキー
-        issue_id (int): 課題ID
-        user_id (int): 削除するユーザーID
+        redmine_url (str): Base URL of Redmine
+        api_key (str): API key
+        issue_id (int): Issue ID
+        user_id (int): User ID to remove
 
     Returns:
-        dict: 成功可否とレスポンス情報
+        dict: Success status and response information
     """
     import os
 
@@ -41,5 +41,5 @@ def remove_watcher(
 RemoveWatcherTool = Tool.from_function(
     remove_watcher,
     name="remove_watcher",
-    description="Redmine課題からウォッチャーを削除する",
+    description="Remove a watcher from a Redmine issue",
 )

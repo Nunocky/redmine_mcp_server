@@ -1,26 +1,27 @@
-"""Redmineのプロジェクトアーカイブ解除ツール
+"""Redmine Project Unarchival Tool
 
-RedmineAPIClientを利用してプロジェクトのアーカイブを解除する。
+Unarchive a project using RedmineAPIClient.
 """
 
+from typing import Any, Dict, Optional
+
 from fastmcp.tools.tool import Tool
+
 from tools.redmine_api_client import RedmineAPIClient
-from typing import Optional, Dict, Any
+
 
 def unarchive_project(
-    project_id_or_identifier: str,
-    redmine_url: Optional[str] = None,
-    api_key: Optional[str] = None
+    project_id_or_identifier: str, redmine_url: Optional[str] = None, api_key: Optional[str] = None
 ) -> Dict[str, Any]:
-    """Redmineのプロジェクトのアーカイブを解除する
+    """Unarchive a Redmine project
 
     Args:
-        project_id_or_identifier (str): プロジェクトIDまたはidentifier
-        redmine_url (str, optional): RedmineサーバーのURL
-        api_key (str, optional): RedmineのAPIキー
+        project_id_or_identifier (str): Project ID or identifier
+        redmine_url (str, optional): URL of the Redmine server
+        api_key (str, optional): Redmine API key
 
     Returns:
-        dict: アーカイブ解除結果（status, message）
+        dict: Unarchival result (status, message)
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     endpoint = f"/projects/{project_id_or_identifier}/unarchive.json"
@@ -30,8 +31,7 @@ def unarchive_project(
     else:
         return {"status": "error", "message": resp.text, "status_code": resp.status_code}
 
+
 UnarchiveProjectTool = Tool.from_function(
-    unarchive_project,
-    name="unarchive_project",
-    description="Redmineプロジェクトをアンアーカイブする"
+    unarchive_project, name="unarchive_project", description="Unarchive a Redmine project"
 )

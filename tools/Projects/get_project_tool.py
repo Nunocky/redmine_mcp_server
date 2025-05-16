@@ -1,6 +1,6 @@
-"""Redmineのプロジェクト詳細取得ツール
+"""Redmine Project Details Retrieval Tool
 
-RedmineAPIClientを利用してプロジェクト詳細を取得する。
+Retrieve project details using RedmineAPIClient.
 """
 
 from typing import Any, Dict, Optional
@@ -16,16 +16,16 @@ def get_project(
     api_key: Optional[str] = None,
     include: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Redmineのプロジェクト詳細を取得する
+    """Get Redmine project details
 
     Args:
-        project_id_or_identifier (str): プロジェクトIDまたはidentifier
-        redmine_url (str, optional): RedmineサーバーのURL。未指定時は環境変数REDMINE_URLを利用
-        api_key (str, optional): RedmineのAPIキー。未指定時は環境変数REDMINE_ADMIN_API_KEYを利用
-        include (str, optional): 追加情報（カンマ区切り: trackers, issue_categories, enabled_modules, time_entry_activities, issue_custom_fields）
+        project_id_or_identifier (str): Project ID or identifier
+        redmine_url (str, optional): URL of the Redmine server. Uses environment variable REDMINE_URL if not specified.
+        api_key (str, optional): Redmine API key. Uses environment variable REDMINE_ADMIN_API_KEY if not specified.
+        include (str, optional): Additional information (comma-separated: trackers, issue_categories, enabled_modules, time_entry_activities, issue_custom_fields)
 
     Returns:
-        dict: プロジェクト詳細情報
+        dict: Project details information
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}
@@ -37,4 +37,4 @@ def get_project(
     return resp.json().get("project", {})
 
 
-GetProjectTool = Tool.from_function(get_project, name="get_project", description="Redmineプロジェクト情報を取得する")
+GetProjectTool = Tool.from_function(get_project, name="get_project", description="Get Redmine project information")

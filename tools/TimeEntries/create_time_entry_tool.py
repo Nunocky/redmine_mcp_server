@@ -41,11 +41,11 @@ def create_time_entry(
     try:
         resp.raise_for_status()
     except requests.HTTPError as e:
-        # レスポンスボディも返す
+        # Also return the response body
         return {"error": str(e), "status_code": resp.status_code, "response": resp.text}
     return {"time_entry": resp.json().get("time_entry", {})}
 
 
 CreateTimeEntryTool = Tool.from_function(
-    create_time_entry, name="create_time_entry", description="Redmineで新しいタイムエントリを作成します。"
+    create_time_entry, name="create_time_entry", description="Create a new time entry in Redmine."
 )

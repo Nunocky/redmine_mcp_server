@@ -11,16 +11,16 @@ load_dotenv()
 
 @pytest.mark.asyncio
 async def test_get_project():
-    """Redmineプロジェクト詳細取得APIの正常系テスト
+    """Normal case test for Redmine project details retrieval API
 
     Args:
-        なし
+        None
 
     Raises:
-        AssertionError: APIレスポンスが期待通りでない場合
+        AssertionError: If the API response is not as expected
 
     Note:
-        REDMINE_URL, REDMINE_ADMIN_API_KEY, REDMINE_PROJECT_ID は .env で設定してください。
+        Please set REDMINE_URL, REDMINE_ADMIN_API_KEY, and REDMINE_PROJECT_ID in .env.
     """
     project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
@@ -33,16 +33,16 @@ async def test_get_project():
 
 @pytest.mark.asyncio
 async def test_get_project_with_include():
-    """Redmineプロジェクト詳細取得API（include指定）の正常系テスト
+    """Normal case test for Redmine project details retrieval API (with include specified)
 
     Args:
-        なし
+        None
 
     Raises:
-        AssertionError: APIレスポンスが期待通りでない場合
+        AssertionError: If the API response is not as expected
 
     Note:
-        REDMINE_URL, REDMINE_ADMIN_API_KEY, REDMINE_PROJECT_ID は .env で設定してください。
+        Please set REDMINE_URL, REDMINE_ADMIN_API_KEY, and REDMINE_PROJECT_ID in .env.
     """
     project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
@@ -52,7 +52,7 @@ async def test_get_project_with_include():
     assert isinstance(result, dict)
     assert "id" in result
     assert "name" in result
-    # includeで指定した情報が含まれているか確認
+    # Check if the information specified by include is present
     if "trackers" in result:
         assert isinstance(result["trackers"], list)
     if "enabled_modules" in result:

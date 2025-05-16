@@ -10,19 +10,19 @@ def get_user(
     user_id: Union[int, str],
     include: Optional[str] = None,
 ):
-    """Redmineユーザー詳細を取得
+    """Get Redmine user details
 
     Args:
-        redmine_url (str): RedmineのURL
-        api_key (str): Redmine API キー
-        user_id (Union[int, str]): ユーザーID または 'current' (現在のユーザー)
-        include (Optional[str], optional): レスポンスに含める関連情報（memberships, groups）
+        redmine_url (str): Redmine URL
+        api_key (str): Redmine API key
+        user_id (Union[int, str]): User ID or 'current' (current user)
+        include (Optional[str], optional): Related information to include in the response (memberships, groups)
 
     Returns:
-        Dict[str, Any]: ユーザー詳細情報
+        Dict[str, Any]: User details information
 
     Raises:
-        requests.exceptions.HTTPError: APIリクエスト失敗時
+        requests.exceptions.HTTPError: When API request fails
     """
     import os
 
@@ -43,5 +43,5 @@ def get_user(
 GetUserTool = Tool.from_function(
     get_user,
     name="get_user",
-    description="Redmineユーザー詳細を取得",
+    description="Get Redmine user details",
 )

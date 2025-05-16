@@ -10,7 +10,7 @@ def get_issue_relations(
     offset: int = None,
 ):
     """
-    Redmine課題のリレーション一覧を取得
+    Get a list of Redmine issue relations
     """
     import os
 
@@ -40,5 +40,5 @@ def get_issue_relations(
 
 
 GetIssueRelationsTool = Tool.from_function(
-    get_issue_relations, name="get_issue_relations", description="Redmine課題のリレーション一覧を取得"
+    get_issue_relations, name="get_issue_relations", description="Get a list of Redmine issue relations"
 )

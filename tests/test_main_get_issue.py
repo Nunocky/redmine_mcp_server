@@ -12,31 +12,31 @@ load_dotenv()
 
 @pytest.mark.asyncio
 async def test_get_issue():
-    """Redmine課題取得APIの正常系テスト
+    """Normal case test for Redmine issue retrieval API
 
     Args:
-        なし
+        None
 
     Raises:
-        AssertionError: APIレスポンスが期待通りでない場合
+        AssertionError: If the API response is not as expected
 
     Note:
-        REDMINE_URL, REDMINE_ADMIN_API_KEY は .env で設定してください。
-        issue_id=1 は存在する課題IDに変更してください。
+        Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
+        Change issue_id=1 to an existing issue ID.
     """
-    issue_id = 1  # 存在する課題IDを指定してください
+    issue_id = 1  # Please specify an existing issue ID
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
     result = await get_issue(issue_id=issue_id)
-    # TextContent型のリストで返る場合に対応
+    # Handle cases where a list of TextContent type is returned
     if isinstance(result, list) and hasattr(result[0], 'text'):
         result_dict = json.loads(result[0].text)
     else:
         result_dict = result
     pprint(result_dict, stream=sys.stderr)
-    assert isinstance(result_dict, dict), "APIレスポンスがdict型ではありません"
-    assert "issue" in result_dict, "'issue'キーがレスポンスに存在しません"
-    assert result_dict["issue"]["id"] == issue_id, "取得した課題IDが一致しません"
+    assert isinstance(result_dict, dict), "API response is not a dict type"
+    assert "issue" in result_dict, "'issue' key does not exist in the response"
+    assert result_dict["issue"]["id"] == issue_id, "Retrieved issue ID does not match"

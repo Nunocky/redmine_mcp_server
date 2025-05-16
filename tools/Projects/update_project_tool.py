@@ -1,11 +1,14 @@
-"""Redmineのプロジェクト更新ツール
+"""Redmine Project Update Tool
 
-RedmineAPIClientを利用してプロジェクト情報を更新する。
+Update project information using RedmineAPIClient.
 """
 
+from typing import Any, Dict, List, Optional
+
 from fastmcp.tools.tool import Tool
+
 from tools.redmine_api_client import RedmineAPIClient
-from typing import Optional, List, Dict, Any
+
 
 def update_project(
     project_id_or_identifier: str,
@@ -22,29 +25,29 @@ def update_project(
     tracker_ids: Optional[List[int]] = None,
     enabled_module_names: Optional[List[str]] = None,
     issue_custom_field_ids: Optional[List[int]] = None,
-    custom_field_values: Optional[Dict[str, Any]] = None
+    custom_field_values: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Redmineのプロジェクト情報を更新する
+    """Update Redmine project information
 
     Args:
-        project_id_or_identifier (str): プロジェクトIDまたはidentifier
-        redmine_url (str, optional): RedmineサーバーのURL
-        api_key (str, optional): RedmineのAPIキー
-        name (str, optional): プロジェクト名
-        description (str, optional): 説明
-        homepage (str, optional): ホームページURL
-        is_public (bool, optional): 公開フラグ
-        parent_id (int, optional): 親プロジェクトID
-        inherit_members (bool, optional): メンバー継承
-        default_assigned_to_id (int, optional): デフォルト担当者ID
-        default_version_id (int, optional): デフォルトバージョンID
-        tracker_ids (List[int], optional): トラッカーIDリスト
-        enabled_module_names (List[str], optional): 有効モジュール名リスト
-        issue_custom_field_ids (List[int], optional): カスタムフィールドIDリスト
-        custom_field_values (Dict[str, Any], optional): カスタムフィールド値
+        project_id_or_identifier (str): Project ID or identifier
+        redmine_url (str, optional): URL of the Redmine server
+        api_key (str, optional): Redmine API key
+        name (str, optional): Project name
+        description (str, optional): Description
+        homepage (str, optional): Homepage URL
+        is_public (bool, optional): Public flag
+        parent_id (int, optional): Parent project ID
+        inherit_members (bool, optional): Inherit members
+        default_assigned_to_id (int, optional): Default assignee ID
+        default_version_id (int, optional): Default version ID
+        tracker_ids (List[int], optional): List of tracker IDs
+        enabled_module_names (List[str], optional): List of enabled module names
+        issue_custom_field_ids (List[int], optional): List of custom field IDs
+        custom_field_values (Dict[str, Any], optional): Custom field values
 
     Returns:
-        dict: 更新後のプロジェクト情報またはエラーメッセージ
+        dict: Updated project information or error message
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     project_data = {}
@@ -78,12 +81,9 @@ def update_project(
     resp = client.put(endpoint, json=payload)
     resp.raise_for_status()
     if resp.status_code == 204:
-        # No Content: 更新成功だがレスポンスボディなし
+        # No Content: Update successful but no response body
         return {}
     return resp.json().get("project", {})
 
-UpdateProjectTool = Tool.from_function(
-    update_project,
-    name="update_project",
-    description="Redmineプロジェクト情報を更新する"
-)
+
+UpdateProjectTool = Tool.from_function(update_project, name="update_project", description="Update Redmine project information")

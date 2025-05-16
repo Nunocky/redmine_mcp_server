@@ -1,4 +1,4 @@
-"""Redmine課題詳細取得ツール"""
+"""Redmine Issue Details Retrieval Tool"""
 
 import requests
 from fastmcp.tools.tool import Tool
@@ -11,16 +11,16 @@ def get_issue(
     include: str = None,
 ):
     """
-    指定した課題(issue_id)の詳細情報を取得する
+    Get detailed information for the specified issue (issue_id)
 
     Args:
-        redmine_url (str): RedmineのベースURL
-        api_key (str): APIキー
-        issue_id (int): 課題ID
-        include (str, optional): 追加情報（カンマ区切り）
+        redmine_url (str): Base URL of Redmine
+        api_key (str): API key
+        issue_id (int): Issue ID
+        include (str, optional): Additional information (comma-separated)
 
     Returns:
-        dict: 課題詳細情報
+        dict: Issue details information
     """
     import os
 
@@ -38,4 +38,4 @@ def get_issue(
     return resp.json()
 
 
-GetIssueTool = Tool.from_function(get_issue, name="get_issue", description="Redmine課題情報を取得する")
+GetIssueTool = Tool.from_function(get_issue, name="get_issue", description="Get Redmine issue information")

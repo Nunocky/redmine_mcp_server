@@ -1,4 +1,4 @@
-"""Redmine課題にウォッチャーを追加するツール"""
+"""Tool to add a watcher to a Redmine issue"""
 
 import requests
 from fastmcp.tools.tool import Tool
@@ -11,16 +11,16 @@ def add_watcher(
     user_id: int,
 ):
     """
-    指定した課題(issue_id)にウォッチャー(user_id)を追加する
+    Add a watcher (user_id) to the specified issue (issue_id)
 
     Args:
-        redmine_url (str): RedmineのベースURL
-        api_key (str): APIキー
-        issue_id (int): 課題ID
-        user_id (int): 追加するユーザーID
+        redmine_url (str): Base URL of Redmine
+        api_key (str): API key
+        issue_id (int): Issue ID
+        user_id (int): User ID to add
 
     Returns:
-        dict: 成功可否とレスポンス情報
+        dict: Success status and response information
     """
     import os
 
@@ -39,4 +39,4 @@ def add_watcher(
     }
 
 
-AddWatcherTool = Tool.from_function(add_watcher, name="add_watcher", description="Redmine課題にウォッチャーを追加する")
+AddWatcherTool = Tool.from_function(add_watcher, name="add_watcher", description="Add a watcher to a Redmine issue")

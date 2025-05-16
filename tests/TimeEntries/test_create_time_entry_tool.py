@@ -5,12 +5,12 @@ from dotenv import load_dotenv
 
 from tools.TimeEntries.create_time_entry_tool import create_time_entry
 
-# .envファイルの絶対パスを指定してロード
+# Load .env file by specifying its absolute path
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 def test_create_time_entry_real_redmine():
     """
-    実際のRedmineサーバー(.envのREDMINE_URL)に新しいタイムエントリを作成する統合テスト。
+    Integration test to create a new time entry on the actual Redmine server (REDMINE_URL in .env).
     """
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
@@ -20,7 +20,7 @@ def test_create_time_entry_real_redmine():
     spent_on = "2025-05-15"
     hours = 1.5
     activity_id = int(os.getenv("REDMINE_TEST_ACTIVITY_ID", "9"))
-    comments = "pytestによるタイムエントリ作成テスト"
+    comments = "Time entry creation test by pytest"
     result = create_time_entry(
         redmine_url,
         api_key,

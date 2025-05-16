@@ -1,11 +1,14 @@
-"""Redmineのプロジェクト作成ツール
+"""Redmine Project Creation Tool
 
-RedmineAPIClientを利用して新規プロジェクトを作成する。
+Create a new project using RedmineAPIClient.
 """
 
+from typing import Any, Dict, List, Optional
+
 from fastmcp.tools.tool import Tool
+
 from tools.redmine_api_client import RedmineAPIClient
-from typing import Optional, List, Dict, Any
+
 
 def create_project(
     name: str,
@@ -22,29 +25,29 @@ def create_project(
     tracker_ids: Optional[List[int]] = None,
     enabled_module_names: Optional[List[str]] = None,
     issue_custom_field_ids: Optional[List[int]] = None,
-    custom_field_values: Optional[Dict[str, Any]] = None
+    custom_field_values: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """Redmineの新規プロジェクトを作成する
+    """Create a new Redmine project
 
     Args:
-        name (str): プロジェクト名（必須）
-        identifier (str): プロジェクト識別子（必須）
-        redmine_url (str, optional): RedmineサーバーのURL
-        api_key (str, optional): RedmineのAPIキー
-        description (str, optional): 説明
-        homepage (str, optional): ホームページURL
-        is_public (bool, optional): 公開フラグ
-        parent_id (int, optional): 親プロジェクトID
-        inherit_members (bool, optional): メンバー継承
-        default_assigned_to_id (int, optional): デフォルト担当者ID
-        default_version_id (int, optional): デフォルトバージョンID
-        tracker_ids (List[int], optional): トラッカーIDリスト
-        enabled_module_names (List[str], optional): 有効モジュール名リスト
-        issue_custom_field_ids (List[int], optional): カスタムフィールドIDリスト
-        custom_field_values (Dict[str, Any], optional): カスタムフィールド値
+        name (str): Project name (required)
+        identifier (str): Project identifier (required)
+        redmine_url (str, optional): URL of the Redmine server
+        api_key (str, optional): Redmine API key
+        description (str, optional): Description
+        homepage (str, optional): Homepage URL
+        is_public (bool, optional): Public flag
+        parent_id (int, optional): Parent project ID
+        inherit_members (bool, optional): Inherit members
+        default_assigned_to_id (int, optional): Default assignee ID
+        default_version_id (int, optional): Default version ID
+        tracker_ids (List[int], optional): List of tracker IDs
+        enabled_module_names (List[str], optional): List of enabled module names
+        issue_custom_field_ids (List[int], optional): List of custom field IDs
+        custom_field_values (Dict[str, Any], optional): Custom field values
 
     Returns:
-        dict: 作成されたプロジェクト情報またはエラーメッセージ
+        dict: Information of the created project or error message
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     project_data = {
@@ -79,8 +82,5 @@ def create_project(
     resp.raise_for_status()
     return resp.json().get("project", {})
 
-CreateProjectTool = Tool.from_function(
-    create_project,
-    name="create_project",
-    description="Redmineプロジェクトを作成する"
-)
+
+CreateProjectTool = Tool.from_function(create_project, name="create_project", description="Create a Redmine project")

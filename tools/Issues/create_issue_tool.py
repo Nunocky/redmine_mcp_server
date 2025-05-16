@@ -1,23 +1,25 @@
-"""Redmine課題作成ツール
+"""Redmine Issue Creation Tool
 
-Redmineの課題（Issue）を新規作成するツールです。
+This tool creates a new Redmine issue.
 """
 
 from typing import Any, Dict, Optional
+
 from tools.redmine_api_client import RedmineAPIClient
 
+
 class CreateIssueTool:
-    """Redmineの課題作成ツール
+    """Redmine Issue Creation Tool
 
     Attributes:
-        client (RedmineAPIClient): Redmine APIクライアント
+        client (RedmineAPIClient): Redmine API client
     """
 
     def __init__(self, client: Optional[RedmineAPIClient] = None) -> None:
-        """コンストラクタ
+        """Constructor
 
         Args:
-            client (RedmineAPIClient, optional): APIクライアント。未指定時は新規生成。
+            client (RedmineAPIClient, optional): API client. If not specified, a new one is generated.
         """
         self.client = client or RedmineAPIClient()
 
@@ -39,30 +41,30 @@ class CreateIssueTool:
         estimated_hours: Optional[float] = None,
         uploads: Optional[Any] = None,
     ) -> Dict[str, Any]:
-        """課題を新規作成する
+        """Create a new issue
 
         Args:
-            project_id (str): プロジェクトID
-            subject (str): 題名
-            description (str, optional): 説明
-            tracker_id (int, optional): トラッカーID
-            status_id (int, optional): ステータスID
-            priority_id (int, optional): 優先度ID
-            category_id (int, optional): カテゴリID
-            fixed_version_id (int, optional): バージョンID
-            assigned_to_id (int, optional): 担当者ID
-            parent_issue_id (int, optional): 親課題ID
-            custom_fields (Any, optional): カスタムフィールド
-            watcher_user_ids (Any, optional): ウォッチャーIDリスト
-            is_private (bool, optional): プライベートフラグ
-            estimated_hours (float, optional): 予定工数
-            uploads (Any, optional): 添付ファイル
+            project_id (str): Project ID
+            subject (str): Subject
+            description (str, optional): Description
+            tracker_id (int, optional): Tracker ID
+            status_id (int, optional): Status ID
+            priority_id (int, optional): Priority ID
+            category_id (int, optional): Category ID
+            fixed_version_id (int, optional): Version ID
+            assigned_to_id (int, optional): Assignee ID
+            parent_issue_id (int, optional): Parent issue ID
+            custom_fields (Any, optional): Custom fields
+            watcher_user_ids (Any, optional): List of watcher IDs
+            is_private (bool, optional): Private flag
+            estimated_hours (float, optional): Estimated hours
+            uploads (Any, optional): Attached files
 
         Returns:
-            dict: 作成された課題情報
+            dict: Information of the created issue
 
         Raises:
-            Exception: APIリクエスト失敗時
+            Exception: When API request fails
         """
         issue_data: Dict[str, Any] = {
             "project_id": project_id,

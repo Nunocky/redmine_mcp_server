@@ -10,32 +10,32 @@ from tools.Projects.delete_project_tool import delete_project
 dotenv.load_dotenv()
 
 def random_identifier(prefix="testproj"):
-    """一意なidentifierを生成"""
+    """Generate a unique identifier"""
     return prefix + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
 def test_delete_project_real_api():
-    """実API: プロジェクト削除のテスト"""
+    """Real API: Test for project deletion"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     if not redmine_url or not api_key:
-        pytest.skip("REDMINE_URL, REDMINE_ADMIN_API_KEYが未設定のためスキップ")
+        pytest.skip("Skipping because REDMINE_URL and REDMINE_ADMIN_API_KEY are not set")
 
     identifier = random_identifier()
-    name = "テスト削除用プロジェクト_" + identifier
+    name = "Test Deletion Project_" + identifier
 
-    # プロジェクト作成
+    # Create project
     result_create = create_project(
         name=name,
         identifier=identifier,
         redmine_url=redmine_url,
         api_key=api_key,
-        description="削除テスト用プロジェクト"
+        description="Project for deletion test"
     )
     pprint.pprint(result_create)
     assert "id" in result_create
     assert result_create["identifier"] == identifier
 
-    # プロジェクト削除
+    # Delete project
     result_delete = delete_project(
         identifier,
         redmine_url=redmine_url,
@@ -46,16 +46,16 @@ def test_delete_project_real_api():
     assert result_delete["message"] == "Project deleted"
 
 def test_delete_nonexistent_project_real_api():
-    """実API: 存在しないプロジェクトの削除テスト"""
+    """Real API: Test for deleting a non-existent project"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     if not redmine_url or not api_key:
-        pytest.skip("REDMINE_URL, REDMINE_ADMIN_API_KEYが未設定のためスキップ")
+        pytest.skip("Skipping because REDMINE_URL and REDMINE_ADMIN_API_KEY are not set")
 
-    # 存在しないプロジェクトIDを指定
+    # Specify a non-existent project ID
     nonexistent_id = "nonexistent_project_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
-    # プロジェクト削除
+    # Delete project
     result_delete = delete_project(
         nonexistent_id,
         redmine_url=redmine_url,

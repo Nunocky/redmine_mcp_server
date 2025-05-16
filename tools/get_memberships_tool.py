@@ -1,6 +1,6 @@
-"""Redmineプロジェクトメンバーシップ一覧取得ツール
+"""Redmine Project Membership List Retrieval Tool
 
-Redmineのプロジェクトメンバーシップ一覧を取得するツールです。
+This tool retrieves a list of project memberships from Redmine.
 """
 
 from typing import Any, Dict, Optional
@@ -17,20 +17,20 @@ def get_memberships(
     limit: Optional[int] = None,
     offset: Optional[int] = None,
 ):
-    """プロジェクトメンバーシップ一覧を取得する
+    """Get a list of project memberships
 
     Args:
-        redmine_url (str): RedmineサーバーのURL
-        api_key (str): RedmineのAPIキー
-        project_id (str): プロジェクトID
-        limit (int, optional): 取得件数
-        offset (int, optional): スキップ件数
+        redmine_url (str): URL of the Redmine server
+        api_key (str): Redmine API key
+        project_id (str): Project ID
+        limit (int, optional): Number of items to retrieve
+        offset (int, optional): Number of items to skip
 
     Returns:
-        dict: メンバーシップ一覧とページ情報
+        dict: List of memberships and page information
 
     Raises:
-        Exception: APIリクエスト失敗時
+        Exception: When API request fails
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params: Dict[str, Any] = {}
@@ -56,5 +56,5 @@ def get_memberships(
 GetMembershipsTool = Tool.from_function(
     get_memberships,
     name="get_projects",
-    description="Redmineプロジェクトメンバーシップ一覧を取得する",
+    description="Get a list of Redmine project memberships",
 )
