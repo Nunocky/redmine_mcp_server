@@ -8,7 +8,7 @@ def delete_issue(redmine_url: str, api_key: str, issue_id: int):
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key}
     url = f"{redmine_url.rstrip('/')}/issues/{issue_id}.json"
     resp = requests.delete(url, headers=headers)

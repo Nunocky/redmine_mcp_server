@@ -21,14 +21,14 @@ async def test_get_issue():
         AssertionError: APIレスポンスが期待通りでない場合
 
     Note:
-        REDMINE_URL, REDMINE_API_KEY は .env で設定してください。
+        REDMINE_URL, REDMINE_ADMIN_API_KEY は .env で設定してください。
         issue_id=1 は存在する課題IDに変更してください。
     """
     issue_id = 1  # 存在する課題IDを指定してください
     redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_API_KEY")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_API_KEY is not set in .env"
+    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
     result = await get_issue(issue_id=issue_id)
     # TextContent型のリストで返る場合に対応

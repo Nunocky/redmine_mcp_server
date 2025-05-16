@@ -14,7 +14,7 @@ def get_news(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key}
     params = {}
     if project_id:
@@ -34,8 +34,5 @@ def get_news(
         "offset": data.get("offset", offset if offset is not None else 0),
     }
 
-GetNewsTool = Tool.from_function(
-    get_news,
-    name="get_news",
-    description="Get a list of news from Redmine."
-)
+
+GetNewsTool = Tool.from_function(get_news, name="get_news", description="Get a list of news from Redmine.")

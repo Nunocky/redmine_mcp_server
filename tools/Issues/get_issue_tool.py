@@ -3,6 +3,7 @@
 import requests
 from fastmcp.tools.tool import Tool
 
+
 def get_issue(
     redmine_url: str,
     api_key: str,
@@ -26,7 +27,7 @@ def get_issue(
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
-        api_key = os.environ.get("REDMINE_API_KEY")
+        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     headers = {"X-Redmine-API-Key": api_key}
     params = {}
     if include:
@@ -36,8 +37,5 @@ def get_issue(
     resp.raise_for_status()
     return resp.json()
 
-GetIssueTool = Tool.from_function(
-    get_issue,
-    name="get_issue",
-    description="Redmine課題情報を取得する"
-)
+
+GetIssueTool = Tool.from_function(get_issue, name="get_issue", description="Redmine課題情報を取得する")

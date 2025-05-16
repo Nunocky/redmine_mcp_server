@@ -13,9 +13,9 @@ def test_create_issue_real_redmine():
     """
     実際のRedmineサーバー(.envのREDMINE_URL)に新しいissueを作成する統合テスト。
     """
-    api_key = os.getenv("REDMINE_API_KEY")
+    api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
-    assert api_key, "REDMINE_API_KEY is not set in .env"
+    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert redmine_url, "REDMINE_URL is not set in .env"
     project_id = "testproject"
     subject = "テスト課題 (pytest)"

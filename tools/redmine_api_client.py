@@ -4,8 +4,10 @@ RedmineのREST APIへの共通アクセス処理を提供するクラス。
 """
 
 import os
-import requests
 from typing import Any, Dict, Optional, Union
+
+import requests
+
 
 class RedmineAPIClient:
     """Redmine APIクライアント
@@ -23,7 +25,7 @@ class RedmineAPIClient:
             api_key (str, optional): RedmineのAPIキー
         """
         self.base_url = base_url or os.environ.get("REDMINE_URL")
-        self.api_key = api_key or os.environ.get("REDMINE_API_KEY")
+        self.api_key = api_key or os.environ.get("REDMINE_ADMIN_API_KEY")
         if not self.base_url or not self.api_key:
             raise ValueError("RedmineのURLまたはAPIキーが設定されていません。")
 
@@ -87,7 +89,9 @@ class RedmineAPIClient:
         """
         return self._request("GET", endpoint, params=params)
 
-    def post(self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None) -> requests.Response:
+    def post(
+        self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
+    ) -> requests.Response:
         """POSTリクエスト
 
         Args:
@@ -100,7 +104,9 @@ class RedmineAPIClient:
         """
         return self._request("POST", endpoint, data=data, json=json)
 
-    def put(self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None) -> requests.Response:
+    def put(
+        self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
+    ) -> requests.Response:
         """PUTリクエスト
 
         Args:

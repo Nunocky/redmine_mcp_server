@@ -16,9 +16,9 @@ def random_identifier(prefix="testproj"):
 def test_create_and_delete_project_real_api():
     """実API: プロジェクト作成→削除"""
     redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_API_KEY")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     if not redmine_url or not api_key:
-        pytest.skip("REDMINE_URL, REDMINE_API_KEYが未設定のためスキップ")
+        pytest.skip("REDMINE_URL, REDMINE_ADMIN_API_KEYが未設定のためスキップ")
 
     identifier = random_identifier()
     name = "テストプロジェクト_" + identifier

@@ -16,9 +16,9 @@ def test_delete_issue_real_redmine():
     """
     実際のRedmineサーバーの情報を.envから取得し、課題を作成し削除する統合テスト。
     """
-    api_key = os.getenv("REDMINE_API_KEY")
+    api_key = os.getenv("REDMINE_ADMIN_API_KEY")
     redmine_url = os.getenv("REDMINE_URL")
-    assert api_key, "REDMINE_API_KEY is not set in .env"
+    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert redmine_url, "REDMINE_URL is not set in .env"
     project_id = "testproject"
     subject = "削除テスト課題 (pytest)"

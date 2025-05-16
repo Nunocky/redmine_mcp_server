@@ -12,14 +12,16 @@ load_dotenv()
 @pytest.mark.asyncio
 async def test_get_news_real():
     redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_API_KEY")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
+    project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_API_KEY is not set in .env"
+    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
+    assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
     result = await get_news(
         redmine_url=redmine_url,
         api_key=api_key,
-        project_id=None,
+        project_id=project_id,
         limit=5,
         offset=0
     )
