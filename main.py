@@ -373,9 +373,7 @@ async def archive_project(
         }
     )
     # TextContentでラップされている場合はアンラップ
-    if isinstance(result, list) and len(result) == 1 and hasattr(result[0], "text"):
-        return json.loads(result[0].text)
-    return result
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
