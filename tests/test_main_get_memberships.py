@@ -2,10 +2,10 @@ import os
 import sys
 from pprint import pprint
 
-from main import get_memberships
 import pytest
 from dotenv import load_dotenv
 
+from main import get_memberships
 
 load_dotenv()
 

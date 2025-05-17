@@ -1,12 +1,15 @@
 import os
-import pytest
 import pprint
+
 import dotenv
+import pytest
+
 from tests.random_identifier import random_identifier
 from tools.Projects.create_project_tool import create_project
 from tools.Projects.delete_project_tool import delete_project
 
 dotenv.load_dotenv()
+
 
 def test_create_and_delete_project_real_api():
     """Real API: Create project -> Delete"""
@@ -20,21 +23,13 @@ def test_create_and_delete_project_real_api():
 
     # Create project
     result_create = create_project(
-        name=name,
-        identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key,
-        description="Project for automated testing"
+        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description="Project for automated testing"
     )
     pprint.pprint(result_create)
     assert "id" in result_create
     assert result_create["identifier"] == identifier
 
     # Delete project
-    result_delete = delete_project(
-        identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_delete = delete_project(identifier, redmine_url=redmine_url, api_key=api_key)
     pprint.pprint(result_delete)
     assert result_delete["status"] == "success"

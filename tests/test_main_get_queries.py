@@ -2,11 +2,13 @@ import os
 import sys
 from pprint import pprint
 
-from main import get_queries_tool
 import pytest
 from dotenv import load_dotenv
 
+from main import get_queries_tool
+
 load_dotenv()
+
 
 @pytest.mark.asyncio
 async def test_get_queries_real():
@@ -15,10 +17,7 @@ async def test_get_queries_real():
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
-    result = await get_queries_tool(
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result = await get_queries_tool(redmine_url=redmine_url, api_key=api_key)
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "queries" in result

@@ -1,13 +1,16 @@
 import os
-from pprint import pprint
 import sys
+from pprint import pprint
+
 import pytest
 
 from tools.Users.update_user_tool import update_user
 
+
 @pytest.fixture
 def tool():
     return update_user
+
 
 def test_update_user_success(tool):
     """
@@ -18,16 +21,11 @@ def test_update_user_success(tool):
     user_id = os.getenv("REDMINE_TEST_USER_ID", "1")
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert redmine_url, "REDMINE_URL is not set in .env"
-    result = tool(
-        redmine_url,
-        api_key,
-        user_id=user_id,
-        firstname="Updated",
-        lastname="User"
-    )
+    result = tool(redmine_url, api_key, user_id=user_id, firstname="Updated", lastname="User")
     pprint(result, stream=sys.stderr)
     # Redmine's PUT /users/:id.json may return an empty response
     assert isinstance(result, dict)
+
 
 def test_update_user_not_found(tool):
     """
@@ -38,10 +36,4 @@ def test_update_user_not_found(tool):
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert redmine_url, "REDMINE_URL is not set in .env"
     with pytest.raises(Exception):
-        tool(
-            redmine_url,
-            api_key,
-            user_id=99999999,
-            firstname="No",
-            lastname="User"
-        )
+        tool(redmine_url, api_key, user_id=99999999, firstname="No", lastname="User")

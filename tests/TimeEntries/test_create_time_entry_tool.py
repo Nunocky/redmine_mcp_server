@@ -8,6 +8,7 @@ from tools.TimeEntries.create_time_entry_tool import create_time_entry
 # Load .env file by specifying its absolute path
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
+
 def test_create_time_entry_real_redmine():
     """
     Integration test to create a new time entry on the actual Redmine server (REDMINE_URL in .env).

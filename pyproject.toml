@@ -10,3 +10,14 @@ dependencies = [
     "pytest-asyncio>=0.26.0",
     "requests>=2.0.0",
 ]
+
+[tool.ruff]
+line-length = 128
+fix = true
+
+[tool.ruff.lint]
+select = [
+    # "E", # pycodestyle
+    # "F", # pyflakes
+    "I", # isort (importの整理)
+]

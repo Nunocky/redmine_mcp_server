@@ -9,6 +9,7 @@ from main import get_project
 
 load_dotenv()
 
+
 @pytest.mark.asyncio
 async def test_get_project():
     """Normal case test for Redmine project details retrieval API
@@ -30,6 +31,7 @@ async def test_get_project():
     assert isinstance(result, dict)
     assert "id" in result
     assert "name" in result
+
 
 @pytest.mark.asyncio
 async def test_get_project_with_include():
