@@ -15,7 +15,7 @@ def create_membership(
     api_key: Optional[str] = None,
     project_id: str = "",
     user_id: int = 0,
-    role_ids: List[int] = [],
+    role_ids: Optional[List[int]] = None,
 ):
     """Create a new project membership in Redmine
 
