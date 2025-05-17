@@ -1,19 +1,14 @@
 import os
 import sys
-import random
-import string
 from pprint import pprint
 
 import pytest
 from dotenv import load_dotenv
 
 from main import create_project, archive_project, unarchive_project, delete_project
+from tests.random_identifier import random_identifier
 
 load_dotenv()
-
-def random_identifier(prefix="testproj"):
-    """Generate a unique identifier"""
-    return prefix + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
 @pytest.mark.asyncio
 async def test_create_archive_unarchive_delete_project():
