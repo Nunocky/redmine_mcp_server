@@ -20,6 +20,7 @@ from tools.Issues.get_issue_tool import GetIssueTool
 from tools.Issues.get_issues_tool import GetIssuesTool
 from tools.Issues.remove_watcher_tool import RemoveWatcherTool
 from tools.Issues.update_issue_tool import UpdateIssueTool
+from tools.ProjectMemberships.create_membership_tool import CreateProjectMembershipTool
 from tools.ProjectMemberships.get_memberships_tool import GetMembershipsTool
 from tools.Projects.archive_project_tool import ArchiveProjectTool
 from tools.Projects.create_project_tool import CreateProjectTool
@@ -52,6 +53,27 @@ async def get_memberships(
             "redmine_url": redmine_url,
             "api_key": api_key,
             "project_id": project_id,
+        }
+    )
+    return unwrap_text_content(result)
+
+
+@mcp.tool()
+async def create_project_membership(
+    redmine_url: str,
+    api_key: str,
+    project_id: str,
+    user_id: int,
+    role_ids: list[int],
+) -> dict:
+    """Create a new project membership"""
+    result = await CreateProjectMembershipTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "project_id": project_id,
+            "user_id": user_id,
+            "role_ids": role_ids,
         }
     )
     return unwrap_text_content(result)
