@@ -5,7 +5,6 @@ import pytest
 
 from tools.Users.update_user_tool import update_user
 
-
 @pytest.fixture
 def tool():
     return update_user
