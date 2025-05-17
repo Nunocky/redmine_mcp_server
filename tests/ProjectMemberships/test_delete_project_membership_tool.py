@@ -10,7 +10,6 @@ import pytest
 from tools.ProjectMemberships.delete_project_membership_tool import DeleteProjectMembershipTool
 
 
-@pytest.mark.skip(reason="500 Server Error is returned when deleting a membership.")
 def test_execute_success():
     """Test successful deletion of membership from real Redmine server.
 
