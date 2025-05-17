@@ -66,4 +66,4 @@ class UpdateProjectMembershipTool:
                 raise Exception(f"Invalid API response: 'membership' key not found. Response content: {data}")
             return data["membership"]
         except Exception as e:
-            raise Exception(f"Failed to update project membership (ID: {membership_id}, roles: {role_ids}): {e}")
+            raise Exception(f"Failed to update project membership (ID: {membership_id}, roles: {role_ids}): {e}") from e
