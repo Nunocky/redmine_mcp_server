@@ -16,4 +16,8 @@ line-length = 128
 fix = true
 
 [tool.ruff.lint]
-select = ["I"] # I: isort (import sorting)
+select = [
+    # "E", # pycodestyle
+    # "F", # pyflakes
+    "I", # isort (importの整理)
+]

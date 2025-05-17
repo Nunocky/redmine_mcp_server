@@ -2,9 +2,10 @@ import os
 import sys
 from pprint import pprint
 
-from main import get_queries_tool
 import pytest
 from dotenv import load_dotenv
+
+from main import get_queries_tool
 
 load_dotenv()
 

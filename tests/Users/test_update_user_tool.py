@@ -1,9 +1,11 @@
 import os
-from pprint import pprint
 import sys
+from pprint import pprint
+
 import pytest
 
 from tools.Users.update_user_tool import update_user
+
 
 @pytest.fixture
 def tool():

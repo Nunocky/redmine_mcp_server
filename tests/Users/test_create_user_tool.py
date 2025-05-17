@@ -1,9 +1,10 @@
 import os
-from pprint import pprint
-import sys
-import pytest
 import random
 import string
+import sys
+from pprint import pprint
+
+import pytest
 
 from tools.Users.create_user_tool import create_user
 

@@ -4,8 +4,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from tools.Issues.create_issue_tool import CreateIssueTool
-from tools.Issues.update_issue_tool import update_issue
 from tools.Issues.delete_issue_tool import delete_issue
+from tools.Issues.update_issue_tool import update_issue
 
 
 def setup_module(module):

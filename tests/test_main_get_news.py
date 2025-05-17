@@ -1,11 +1,11 @@
 import os
-from pprint import pprint
 import sys
+from pprint import pprint
 
-
-from main import get_news
 import pytest
 from dotenv import load_dotenv
+
+from main import get_news
 
 load_dotenv()
 

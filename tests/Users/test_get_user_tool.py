@@ -1,6 +1,7 @@
 import os
-from pprint import pprint
 import sys
+from pprint import pprint
+
 import pytest
 
 from tools.Users.get_user_tool import get_user

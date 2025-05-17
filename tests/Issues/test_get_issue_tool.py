@@ -1,8 +1,9 @@
 import os
-import pytest
-from tools.Issues.get_issue_tool import get_issue
 
+import pytest
 from dotenv import load_dotenv
+
+from tools.Issues.get_issue_tool import get_issue
 
 load_dotenv()
 

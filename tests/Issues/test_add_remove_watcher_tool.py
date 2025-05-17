@@ -3,9 +3,9 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from tools.Issues.add_watcher_tool import add_watcher
 from tools.Issues.create_issue_tool import CreateIssueTool
 from tools.Issues.delete_issue_tool import delete_issue
-from tools.Issues.add_watcher_tool import add_watcher
 from tools.Issues.remove_watcher_tool import remove_watcher
 
 

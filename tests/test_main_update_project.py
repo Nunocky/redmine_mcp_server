@@ -5,7 +5,7 @@ from pprint import pprint
 import pytest
 from dotenv import load_dotenv
 
-from main import create_project, update_project, delete_project
+from main import create_project, delete_project, update_project
 from tests.random_identifier import random_identifier
 
 load_dotenv()
