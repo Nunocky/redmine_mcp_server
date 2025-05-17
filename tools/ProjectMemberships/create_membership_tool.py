@@ -39,7 +39,7 @@ def create_membership(
     try:
         response = client.post(
             endpoint=endpoint,
-            data=payload,
+            json=payload,
         )
         response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
         return response.json()  # Should be 201 Created for successful membership creation
