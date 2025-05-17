@@ -30,7 +30,7 @@ jobs:
           pip install ruff
 
       - name: Run Ruff Check
-        run: ruff check --line-length=128 --exclude migrations/ --exclude tests/
+        run: ruff check --line-length=128
 
       - name: Run Ruff Format Check
-        run: ruff format --check --diff --line-length=128 --exclude migrations/ --exclude tests/
+        run: ruff format --check --diff --line-length=128
