@@ -83,11 +83,11 @@ Redmine APIの `/projects/:project_id/memberships` および `/memberships/:id` 
 ### 2.3. クラス構成
 
 各機能は、個別のツールとして実装する。
-共通のRedmine APIアクセス処理は `RedmineApiClient` クラス（既存または新規作成）に集約する。
+共通のRedmine APIアクセス処理は `RedmineAPIClient` クラス（既存または新規作成）に集約する。
 
 ```mermaid
 classDiagram
-    class RedmineApiClient {
+    class RedmineAPIClient {
         - redmine_url: string
         - api_key: string
         + get(path: string, params: dict)
