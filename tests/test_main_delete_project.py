@@ -12,6 +12,7 @@ from tests.random_identifier import random_identifier
 
 load_dotenv()
 
+
 @pytest.mark.asyncio
 async def test_delete_project():
     """Normal case test for Redmine project deletion API
@@ -35,11 +36,7 @@ async def test_delete_project():
 
     # Create project
     result_create = await create_project(
-        name=name,
-        identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key,
-        description="Project for deletion test"
+        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description="Project for deletion test"
     )
     pprint(result_create, stream=sys.stderr)
     assert isinstance(result_create, dict)
@@ -47,13 +44,10 @@ async def test_delete_project():
     assert result_create["identifier"] == identifier
 
     # Delete project
-    result_delete = await delete_project(
-        project_id_or_identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_delete = await delete_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"
+
 
 @pytest.mark.asyncio
 async def test_delete_nonexistent_project():
@@ -74,14 +68,10 @@ async def test_delete_nonexistent_project():
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
     # Specify a non-existent project ID
-    nonexistent_id = "nonexistent_project_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+    nonexistent_id = "nonexistent_project_" + "".join(random.choices(string.ascii_lowercase + string.digits, k=8))
 
     # Delete project
-    result_delete = await delete_project(
-        project_id_or_identifier=nonexistent_id,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_delete = await delete_project(project_id_or_identifier=nonexistent_id, redmine_url=redmine_url, api_key=api_key)
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "error"
     assert "status_code" in result_delete

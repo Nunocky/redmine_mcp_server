@@ -22,6 +22,7 @@ def test_get_projects_real_api():
     assert isinstance(result["projects"], list)
     assert isinstance(result["total_count"], int)
 
+
 def test_get_projects_with_params_real_api():
     """Real API: Specify limit, offset, and include parameters"""
     redmine_url = os.environ.get("REDMINE_URL")

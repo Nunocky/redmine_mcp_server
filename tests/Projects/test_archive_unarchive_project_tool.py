@@ -10,6 +10,7 @@ from tools.Projects.delete_project_tool import delete_project
 
 dotenv.load_dotenv()
 
+
 def test_create_archive_unarchive_delete_project_real_api():
     """Real API: Create project -> Archive -> Unarchive -> Delete"""
     redmine_url = os.environ.get("REDMINE_URL")
@@ -22,39 +23,23 @@ def test_create_archive_unarchive_delete_project_real_api():
 
     # Create project
     result_create = create_project(
-        name=name,
-        identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key,
-        description="Project for automated testing"
+        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description="Project for automated testing"
     )
     pprint.pprint(result_create)
     assert "id" in result_create
     assert result_create["identifier"] == identifier
 
     # Archive project
-    result_archive = archive_project(
-        identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_archive = archive_project(identifier, redmine_url=redmine_url, api_key=api_key)
     pprint.pprint(result_archive)
     assert result_archive["status"] == "success"
 
     # Unarchive project
-    result_unarchive = unarchive_project(
-        identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_unarchive = unarchive_project(identifier, redmine_url=redmine_url, api_key=api_key)
     pprint.pprint(result_unarchive)
     assert result_unarchive["status"] == "success"
 
     # Delete project
-    result_delete = delete_project(
-        identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_delete = delete_project(identifier, redmine_url=redmine_url, api_key=api_key)
     pprint.pprint(result_delete)
     assert result_delete["status"] == "success"

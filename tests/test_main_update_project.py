@@ -10,6 +10,7 @@ from tests.random_identifier import random_identifier
 
 load_dotenv()
 
+
 @pytest.mark.asyncio
 async def test_create_update_delete_project():
     """Normal case test for Redmine project creation, update, and deletion APIs
@@ -34,11 +35,7 @@ async def test_create_update_delete_project():
 
     # Create project
     result_create = await create_project(
-        name=name,
-        identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key,
-        description=description
+        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description=description
     )
     pprint(result_create, stream=sys.stderr)
     assert isinstance(result_create, dict)
@@ -55,7 +52,7 @@ async def test_create_update_delete_project():
         redmine_url=redmine_url,
         api_key=api_key,
         name=new_name,
-        description=new_description
+        description=new_description,
     )
     pprint(result_update, stream=sys.stderr)
     # According to Redmine's specification, an empty dict is returned for 204 No Content
@@ -67,10 +64,6 @@ async def test_create_update_delete_project():
             assert result_update["description"] == new_description
 
     # Delete project
-    result_delete = await delete_project(
-        project_id_or_identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_delete = await delete_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"

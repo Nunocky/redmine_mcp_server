@@ -9,6 +9,7 @@ from tools.Projects.delete_project_tool import delete_project
 
 dotenv.load_dotenv()
 
+
 def test_create_update_delete_project_real_api():
     """Real API: Create project -> Update -> Delete"""
     redmine_url = os.environ.get("REDMINE_URL")
@@ -21,11 +22,7 @@ def test_create_update_delete_project_real_api():
 
     # Create project
     result_create = create_project(
-        name=name,
-        identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key,
-        description="Project for automated testing"
+        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description="Project for automated testing"
     )
     pprint.pprint(result_create)
     assert "id" in result_create
@@ -35,11 +32,7 @@ def test_create_update_delete_project_real_api():
     new_name = name + "_Updated"
     new_description = "Updated description"
     result_update = update_project(
-        identifier,
-        redmine_url=redmine_url,
-        api_key=api_key,
-        name=new_name,
-        description=new_description
+        identifier, redmine_url=redmine_url, api_key=api_key, name=new_name, description=new_description
     )
     pprint.pprint(result_update)
     # According to Redmine's specification, an empty dict is returned for 204 No Content
@@ -52,10 +45,6 @@ def test_create_update_delete_project_real_api():
         assert result_update == {}
 
     # Delete project
-    result_delete = delete_project(
-        identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_delete = delete_project(identifier, redmine_url=redmine_url, api_key=api_key)
     pprint.pprint(result_delete)
     assert result_delete["status"] == "success"

@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 @pytest.mark.asyncio
 async def test_get_news_real():
     redmine_url = os.environ.get("REDMINE_URL")
@@ -18,13 +19,7 @@ async def test_get_news_real():
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
-    result = await get_news(
-        redmine_url=redmine_url,
-        api_key=api_key,
-        project_id=project_id,
-        limit=5,
-        offset=0
-    )
+    result = await get_news(redmine_url=redmine_url, api_key=api_key, project_id=project_id, limit=5, offset=0)
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "news" in result

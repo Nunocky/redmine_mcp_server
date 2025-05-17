@@ -10,6 +10,7 @@ from tests.random_identifier import random_identifier
 
 load_dotenv()
 
+
 @pytest.mark.asyncio
 async def test_create_and_delete_project():
     """Normal case test for Redmine project creation and deletion APIs
@@ -34,11 +35,7 @@ async def test_create_and_delete_project():
 
     # Create project
     result_create = await create_project(
-        name=name,
-        identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key,
-        description=description
+        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description=description
     )
     pprint(result_create, stream=sys.stderr)
     assert isinstance(result_create, dict)
@@ -48,10 +45,6 @@ async def test_create_and_delete_project():
     assert result_create["description"] == description
 
     # Delete project
-    result_delete = await delete_project(
-        project_id_or_identifier=identifier,
-        redmine_url=redmine_url,
-        api_key=api_key
-    )
+    result_delete = await delete_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"

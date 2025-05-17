@@ -10,6 +10,7 @@ from main import get_issue
 
 load_dotenv()
 
+
 @pytest.mark.asyncio
 async def test_get_issue():
     """Normal case test for Redmine issue retrieval API
@@ -32,7 +33,7 @@ async def test_get_issue():
 
     result = await get_issue(issue_id=issue_id)
     # Handle cases where a list of TextContent type is returned
-    if isinstance(result, list) and hasattr(result[0], 'text'):
+    if isinstance(result, list) and hasattr(result[0], "text"):
         result_dict = json.loads(result[0].text)
     else:
         result_dict = result

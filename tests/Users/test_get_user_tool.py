@@ -5,9 +5,11 @@ import pytest
 
 from tools.Users.get_user_tool import get_user
 
+
 @pytest.fixture
 def tool():
     return get_user
+
 
 def test_run_success(tool):
     """
@@ -24,6 +26,7 @@ def test_run_success(tool):
     assert "id" in result["user"]
     assert "login" in result["user"]
 
+
 def test_run_http_error(tool):
     """
     Verify that an HTTP error (Exception) occurs when requesting with a non-existent user ID.
@@ -34,6 +37,7 @@ def test_run_http_error(tool):
     assert redmine_url, "REDMINE_URL is not set in .env"
     with pytest.raises(Exception):
         tool(redmine_url, api_key, 99999999)
+
 
 def test_run_with_current_user(tool):
     """
@@ -50,6 +54,7 @@ def test_run_with_current_user(tool):
     assert "login" in result["user"]
     assert "api_key" in result["user"]  # User's own information includes api_key
 
+
 def test_run_with_include_memberships(tool):
     """
     Use the include=memberships parameter to retrieve user information and verify that membership information is included.
@@ -64,6 +69,7 @@ def test_run_with_include_memberships(tool):
     assert "user" in result
     assert "memberships" in result["user"]
 
+
 def test_run_with_include_groups(tool):
     """
     Use the include=groups parameter to retrieve user information and verify that group information is included.
@@ -77,6 +83,7 @@ def test_run_with_include_groups(tool):
     pprint(result, stream=sys.stderr)
     assert "user" in result
     assert "groups" in result["user"]
+
 
 def test_run_with_include_memberships_and_groups(tool):
     """
@@ -93,6 +100,7 @@ def test_run_with_include_memberships_and_groups(tool):
     assert "user" in result
     assert "memberships" in result["user"]
     assert "groups" in result["user"]
+
 
 def test_run_locked_user_returns_404(tool):
     """

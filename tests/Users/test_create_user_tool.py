@@ -7,12 +7,15 @@ import string
 
 from tools.Users.create_user_tool import create_user
 
+
 @pytest.fixture
 def tool():
     return create_user
 
+
 def random_login():
-    return "testuser_" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
+    return "testuser_" + "".join(random.choices(string.ascii_lowercase + string.digits, k=8))
+
 
 def test_create_user_success(tool):
     """
@@ -30,11 +33,12 @@ def test_create_user_success(tool):
         firstname="Test",
         lastname="User",
         mail=f"{login}@example.com",
-        password="password123"
+        password="password123",
     )
     pprint(result, stream=sys.stderr)
     assert "user" in result
     assert result["user"]["login"] == login
+
 
 def test_create_user_missing_required(tool):
     """
@@ -45,11 +49,4 @@ def test_create_user_missing_required(tool):
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert redmine_url, "REDMINE_URL is not set in .env"
     with pytest.raises(Exception):
-        tool(
-            redmine_url,
-            api_key,
-            login="",
-            firstname="",
-            lastname="",
-            mail=""
-        )
+        tool(redmine_url, api_key, login="", firstname="", lastname="", mail="")

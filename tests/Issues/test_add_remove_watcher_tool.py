@@ -8,9 +8,11 @@ from tools.Issues.delete_issue_tool import delete_issue
 from tools.Issues.add_watcher_tool import add_watcher
 from tools.Issues.remove_watcher_tool import remove_watcher
 
+
 def setup_module(module):
     # Load .env file by specifying its absolute path
     load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
+
 
 def test_add_remove_watcher_real_redmine():
     """

@@ -5,9 +5,11 @@ import pytest
 
 from tools.Users.get_users_tool import GetUsersTool
 
+
 @pytest.fixture
 def tool():
     return GetUsersTool()
+
 
 def test_run_success(tool):
     """
@@ -31,6 +33,7 @@ def test_run_success(tool):
     assert "limit" in result
     assert "offset" in result
     assert result["limit"] == 5
+
 
 def test_run_with_status_filter(tool):
     """
@@ -56,6 +59,7 @@ def test_run_with_status_filter(tool):
     for user in result["users"]:
         if "status" in user:
             assert user["status"] == 1
+
 
 def test_run_with_name_filter(tool):
     """
@@ -86,15 +90,16 @@ def test_run_with_name_filter(tool):
     found = False
     for user in result["users"]:
         if (
-            test_name.lower() in user.get("login", "").lower() or
-            test_name.lower() in user.get("firstname", "").lower() or
-            test_name.lower() in user.get("lastname", "").lower() or
-            test_name.lower() in user.get("mail", "").lower()
+            test_name.lower() in user.get("login", "").lower()
+            or test_name.lower() in user.get("firstname", "").lower()
+            or test_name.lower() in user.get("lastname", "").lower()
+            or test_name.lower() in user.get("mail", "").lower()
         ):
             found = True
             break
 
     assert found, f"Search results do not include '{test_name}'"
+
 
 def test_run_with_group_id_filter(tool):
     """
@@ -122,6 +127,7 @@ def test_run_with_group_id_filter(tool):
     # Verify
     assert "users" in result
     assert isinstance(result["users"], list)
+
 
 def test_run_with_pagination(tool):
     """
@@ -157,6 +163,7 @@ def test_run_with_pagination(tool):
         if "id" in result_page1["users"][0] and "id" in result_page2["users"][0]:
             assert result_page1["users"][0]["id"] != result_page2["users"][0]["id"]
 
+
 def test_run_with_combined_filters(tool):
     """
     Test combining multiple filters
@@ -189,10 +196,10 @@ def test_run_with_combined_filters(tool):
             # Confirm that the name is included
             found = False
             if (
-                test_name.lower() in user.get("login", "").lower() or
-                test_name.lower() in user.get("firstname", "").lower() or
-                test_name.lower() in user.get("lastname", "").lower() or
-                test_name.lower() in user.get("mail", "").lower()
+                test_name.lower() in user.get("login", "").lower()
+                or test_name.lower() in user.get("firstname", "").lower()
+                or test_name.lower() in user.get("lastname", "").lower()
+                or test_name.lower() in user.get("mail", "").lower()
             ):
                 found = True
 
