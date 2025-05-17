@@ -27,10 +27,10 @@ def create_membership(
         role_ids (List[int]): List of role IDs to assign
 
     Returns:
-        dict: Created membership information or error details
+        dict: Created membership information on success, or error details on failure.
 
-    Raises:
-        Exception: When API request fails
+    Note:
+        If the API request fails, returns a dict with error details instead of raising an Exception.
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     payload: Dict[str, Any] = {"membership": {"user_id": user_id, "role_ids": role_ids}}

@@ -8,6 +8,7 @@ import os
 import pytest
 
 from tools.ProjectMemberships.get_project_membership_tool import GetProjectMembershipTool
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def test_execute_success():
@@ -15,8 +16,21 @@ def test_execute_success():
 
     Note: Set REDMINE_URL, REDMINE_API_KEY, and a valid membership_id before running.
     """
-    membership_id = int(os.getenv("TEST_REDMINE_MEMBERSHIP_ID"))
-    tool = GetProjectMembershipTool()
+    redmine_url = os.getenv("REDMINE_URL")
+    api_key = os.getenv("REDMINE_ADMIN_API_KEY")
+    tool = GetProjectMembershipTool(
+        client=RedmineAPIClient(redmine_url, api_key),
+    )
+
+    # get membership id from projects/{project_id}/memberships.json
+    project_id = int(os.getenv("REDMINE_TEST_PROJECT_ID"))
+    path = f"/projects/{project_id}/memberships.json"
+    resp = tool.client.get(path)
+    data = resp.json()
+    membership_id = data["memberships"][0]["id"]
+    if not membership_id:
+        raise ValueError("No membership ID found in the response.")
+
     result = tool.execute(membership_id)
     assert result["id"] == membership_id
     assert "project" in result

@@ -48,7 +48,6 @@ def cleanup_membership(redmine_url: str, api_key: str, project_id: str, user_id:
         print(f"Error during cleanup: {e}", file=sys.stderr)
 
 
-@pytest.mark.skip(reason="Skipping due to Redmine server-side 500 error, needs investigation.")
 def test_create_membership_success(redmine_credentials):
     redmine_url, api_key = redmine_credentials
 
@@ -67,9 +66,7 @@ def test_create_membership_success(redmine_credentials):
     assert isinstance(result, dict)
     assert "membership" in result, f"Unexpected response format: {result}"
     created_membership = result["membership"]
-    assert (
-        created_membership["project"]["id"] == TEST_PROJECT_ID or created_membership["project"]["identifier"] == TEST_PROJECT_ID
-    )
+    assert int(created_membership["project"]["id"]) == int(TEST_PROJECT_ID)
     assert created_membership["user"]["id"] == TEST_USER_ID
     assert all(role["id"] in TEST_ROLE_IDS for role in created_membership["roles"])
 
@@ -83,9 +80,6 @@ def test_create_membership_success(redmine_credentials):
     cleanup_membership(redmine_url, api_key, TEST_PROJECT_ID, TEST_USER_ID)
 
 
-# This test is expected to pass if the user is already a member,
-# resulting in a specific error from Redmine (typically 422).
-@pytest.mark.skip(reason="Skipping due to Redmine server-side 500 error, needs investigation.")
 def test_create_membership_user_already_exists(redmine_credentials):
     redmine_url, api_key = redmine_credentials
 
