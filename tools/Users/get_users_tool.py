@@ -10,7 +10,7 @@ from fastmcp.tools.tool import Tool
 from tools.redmine_api_client import RedmineAPIClient
 
 
-def get_users(
+async def get_users(
     redmine_url: Optional[str] = None,
     api_key: Optional[str] = None,
     limit: Optional[int] = None,
