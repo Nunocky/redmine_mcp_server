@@ -710,13 +710,15 @@ async def get_users(
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetUsersTool.run(
-        redmine_url,
-        api_key,
-        name,
-        group_id,
-        status,
-        limit,
-        offset,
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "name": name,
+            "group_id": group_id,
+            "status": status,
+            "limit": limit,
+            "offset": offset,
+        }
     )
 
 
