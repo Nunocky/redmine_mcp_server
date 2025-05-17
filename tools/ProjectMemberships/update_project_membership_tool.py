@@ -15,11 +15,15 @@ class UpdateProjectMembershipTool:
     """Tool to update roles of a project membership in Redmine.
 
     Attributes:
-        client (RedmineAPIClient): The API client for Redmine.
+        client (RedmineAPIClient): Redmine API client instance.
+
+    Example:
+        tool = UpdateProjectMembershipTool()
+        result = tool.execute(membership_id=1, role_ids=[2, 3])
     """
 
     def __init__(self, client=None):
-        """Initialize the tool with Redmine API client.
+        """Initialize UpdateProjectMembershipTool.
 
         Args:
             client (RedmineAPIClient, optional): Injected API client for testing.
@@ -37,11 +41,11 @@ class UpdateProjectMembershipTool:
         """Update the roles of a project membership.
 
         Args:
-            membership_id (int): The ID of the membership to update.
-            role_ids (List[int]): The list of role IDs to assign.
+            membership_id (int): Membership ID to update.
+            role_ids (List[int]): List of role IDs to assign.
 
         Returns:
-            dict: The updated membership information.
+            dict: Updated membership information.
 
         Raises:
             Exception: If the API call fails or returns an error.
@@ -50,16 +54,16 @@ class UpdateProjectMembershipTool:
         payload = {"membership": {"role_ids": role_ids}}
         try:
             resp = self.client.put(path, json=payload)
-            # Redmineの仕様上、204 No Contentの場合は更新成功
+            # According to Redmine API, 204 No Content means update succeeded.
             if resp.status_code == 204:
-                # 最新情報を取得して返す
+                # Retrieve latest membership info after update.
                 from tools.ProjectMemberships.get_project_membership_tool import GetProjectMembershipTool
 
                 get_tool = GetProjectMembershipTool(client=self.client)
                 return get_tool.execute(membership_id)
             data = resp.json()
             if "membership" not in data:
-                raise Exception("Invalid response: 'membership' key not found.")
+                raise Exception(f"Invalid API response: 'membership' key not found. Response content: {data}")
             return data["membership"]
         except Exception as e:
-            raise Exception(f"Failed to update project membership: {e}")
+            raise Exception(f"Failed to update project membership (ID: {membership_id}, roles: {role_ids}): {e}")
