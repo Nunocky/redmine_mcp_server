@@ -44,7 +44,11 @@ def get_news(
     if offset is not None:
         params["offset"] = offset
 
-    url = f"{redmine_url.rstrip('/')}/news.json"
+    # Select endpoint based on project_id
+    if project_id:
+        url = f"{redmine_url.rstrip('/')}/projects/{project_id}/news.json"
+    else:
+        url = f"{redmine_url.rstrip('/')}/news.json"
 
     try:
         resp = requests.get(url, headers=headers, params=params, timeout=10)
