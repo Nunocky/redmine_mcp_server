@@ -8,7 +8,6 @@ import os
 
 from fastmcp.server import FastMCP
 
-from tools.get_memberships_tool import GetMembershipsTool
 from tools.get_news_tool import GetNewsTool
 from tools.get_queries_tool import GetQueriesTool
 from tools.get_versions_tool import GetVersionTool
@@ -21,6 +20,7 @@ from tools.Issues.get_issue_tool import GetIssueTool
 from tools.Issues.get_issues_tool import GetIssuesTool
 from tools.Issues.remove_watcher_tool import RemoveWatcherTool
 from tools.Issues.update_issue_tool import UpdateIssueTool
+from tools.ProjectMemberships.get_memberships_tool import GetMembershipsTool
 from tools.Projects.archive_project_tool import ArchiveProjectTool
 from tools.Projects.create_project_tool import CreateProjectTool
 from tools.Projects.delete_project_tool import DeleteProjectTool
