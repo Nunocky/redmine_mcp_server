@@ -7,10 +7,6 @@ import pytest
 from tools.Users.get_users_tool import GetUsersTool
 from unwrap_text_content import unwrap_text_content
 
-# @pytest.fixture
-# def tool():
-#     return GetUsersTool
-
 
 @pytest.mark.asyncio
 async def test_run_success():
@@ -128,8 +124,7 @@ async def test_run_with_group_id_filter():
     test_group_id = 3  # non member group ID
 
     # Execute
-    tool = GetUsersTool
-    result = await tool.run({"group_id": int(test_group_id)})
+    result = await GetUsersTool.run({"group_id": int(test_group_id)})
     result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
 
@@ -151,13 +146,12 @@ async def test_run_with_pagination():
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Get the first page (first 2 items)
-    tool = GetUsersTool
-    result_page1 = await tool.run({"limit": 2, "offset": 0})
+    result_page1 = await GetUsersTool.run({"limit": 2, "offset": 0})
     result_page1 = unwrap_text_content(result_page1)
     pprint(result_page1, stream=sys.stderr)
 
     # Get the second page (next 2 items)
-    result_page2 = await tool.run({"limit": 2, "offset": 2})
+    result_page2 = await GetUsersTool.run({"limit": 2, "offset": 2})
     result_page2 = unwrap_text_content(result_page2)
     pprint(result_page2, stream=sys.stderr)
 
@@ -193,8 +187,7 @@ async def test_run_with_combined_filters():
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
     # Execute (active users with a specific name)
-    tool = GetUsersTool
-    result = await tool.run({"status": 1, "name": test_name, "limit": 5})
+    result = await GetUsersTool.run({"status": 1, "name": test_name, "limit": 5})
     result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
 
