@@ -56,7 +56,7 @@ def get_news(
         data = resp.json()
     except requests.RequestException as e:
         # Log the error or handle as needed
-        raise requests.RequestException(f"Failed to fetch news from Redmine: {e}")
+        raise requests.RequestException(f"Failed to fetch news from Redmine: {e}") from e
 
     return {
         "news": data.get("news", []),

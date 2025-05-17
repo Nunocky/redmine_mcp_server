@@ -32,7 +32,7 @@ uv sync
 - [x] Project Memberships
 - [x] Users
 - [x] Time Entries
-- [ ] News
+- [x] News
 - [ ] Issue Relations
 - [ ] Versions
 - [ ] Wiki Pages
