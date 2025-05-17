@@ -164,5 +164,5 @@ DELETE /memberships/2.xml
 
 **レスポンス:**
 
-*   `200 OK`: メンバーシップが削除されました
+*   `204 No Content`: メンバーシップが削除されました
 *   `422 Unprocessable Entity`: メンバーシップが削除されませんでした
