@@ -4,7 +4,7 @@ from pprint import pprint
 
 import pytest
 
-from tools.Users.get_users_tool import GetUsersTool, get_users
+from tools.Users.get_users_tool import get_users
 
 
 def test_run_success():
