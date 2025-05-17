@@ -1,6 +1,6 @@
 """Redmine User List Retrieval Tool
 
-RedmineAPIClient を利用してユーザー一覧を取得します。
+Retrieves a list of users using RedmineAPIClient.
 """
 
 from typing import Any, Dict, Optional
@@ -19,23 +19,23 @@ def get_users(
     name: Optional[str] = None,
     group_id: Optional[int] = None,
 ) -> Dict[str, Any]:
-    """Redmineのユーザー一覧を取得
+    """Retrieve a list of Redmine users.
 
     Args:
-        redmine_url (str, optional): RedmineサーバーのURL。指定しない場合は環境変数 REDMINE_URL を利用
-        api_key (str, optional): Redmine APIキー。指定しない場合は環境変数 REDMINE_ADMIN_API_KEY を利用
-        limit (int, optional): 取得件数
-        offset (int, optional): スキップ件数
-        status (int, optional): ユーザーステータス (1: active, 2: registered, 3: locked)
-        name (str, optional): ログイン名、氏名、メールアドレスでフィルタ
-        group_id (int, optional): 指定グループに所属するユーザーでフィルタ
+        redmine_url (str, optional): Redmine server URL. If not specified, the REDMINE_URL environment variable is used.
+        api_key (str, optional): Redmine API key. If not specified, the REDMINE_ADMIN_API_KEY environment variable is used.
+        limit (int, optional): Number of records to retrieve.
+        offset (int, optional): Number of records to skip.
+        status (int, optional): User status (1: active, 2: registered, 3: locked).
+        name (str, optional): Filter by login, name, or email address.
+        group_id (int, optional): Filter users belonging to the specified group.
 
     Returns:
-        dict: ユーザー一覧情報
-            - users (list): ユーザー情報リスト
-            - total_count (int): 総件数
-            - limit (int): 取得件数
-            - offset (int): オフセット
+        dict: User list information
+            - users (list): List of user information
+            - total_count (int): Total number of users
+            - limit (int): Number of records retrieved
+            - offset (int): Offset
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}
@@ -63,5 +63,5 @@ def get_users(
 GetUsersTool = Tool.from_function(
     get_users,
     name="get_users",
-    description="Redmineのユーザー一覧を取得する",
+    description="Retrieve a list of users from Redmine.",
 )
