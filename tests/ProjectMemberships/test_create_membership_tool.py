@@ -12,9 +12,9 @@ from tools.redmine_api_client import RedmineAPIClient  # For cleanup
 load_dotenv()
 
 # Constants for testing - will be loaded from environment variables
-TEST_PROJECT_ID = os.environ.get("REDMINE_TEST_PROJECT_ID", "1")  # Default to "1" if not set
-TEST_USER_ID = int(os.environ.get("REDMINE_ADMIN_ID", "1"))  # Default to 1 if not set
-TEST_ROLE_IDS = [int(os.environ.get("ROLE_DEVELOPER", "4"))]  # Defaulting to role ID 4 (Developer)
+TEST_PROJECT_ID = os.environ.get("REDMINE_TEST_PROJECT_ID")
+TEST_USER_ID = int(os.environ.get("REDMINE_ADMIN_ID"))
+TEST_ROLE_IDS = [int(os.environ.get("ROLE_DEVELOPER"))]
 
 
 @pytest.fixture(scope="module")
@@ -23,6 +23,9 @@ def redmine_credentials():
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
+    assert TEST_PROJECT_ID, "REDMINE_TEST_PROJECT_ID is not set in .env"
+    assert TEST_USER_ID, "REDMINE_ADMIN_ID is not set in .env"
+    assert TEST_ROLE_IDS, "ROLE_DEVELOPER is not set in .env"
     return redmine_url, api_key
 
 
@@ -80,11 +83,15 @@ def test_create_membership_success(redmine_credentials):
     cleanup_membership(redmine_url, api_key, TEST_PROJECT_ID, TEST_USER_ID)
 
 
+# This test is expected to pass if the user is already a member,
+# resulting in a specific error from Redmine (typically 422).
 @pytest.mark.skip(reason="Skipping due to Redmine server-side 500 error, needs investigation.")
 def test_create_membership_user_already_exists(redmine_credentials):
     redmine_url, api_key = redmine_credentials
 
-    # First, ensure the user is a member
+    # First, ensure the user is a member by attempting to create the membership.
+    # This initial creation might fail with a 500 error if the server issue persists,
+    # but the subsequent attempt to re-add is the core of this test.
     create_membership(
         redmine_url=redmine_url,
         api_key=api_key,
@@ -106,11 +113,14 @@ def test_create_membership_user_already_exists(redmine_credentials):
     assert isinstance(result, dict)
     assert "error" in result
     assert "status_code" in result["error"]
-    # Redmine typically returns 422 for unprocessable entity if user is already a member
-    # or if roles are invalid, etc.
-    # However, with the current 500 error, we can't reliably check for 422.
-    # For now, we'll check that the error structure is as expected.
-    assert "redmine_error" in result["error"]
+    # Redmine typically returns 422 if the user is already a member.
+    # If the server issue (500 error) is resolved, this assertion should target status_code 422.
+    # For now, we check the error structure.
+    if "status_code" in result["error"] and result["error"]["status_code"] == 422:
+        assert "errors" in result["error"]["redmine_error"]  # Check for Redmine's specific error messages
+    else:
+        # If it's still a 500 or other error, just check the basic error structure
+        assert "redmine_error" in result["error"]
 
     # Cleanup
     cleanup_membership(redmine_url, api_key, TEST_PROJECT_ID, TEST_USER_ID)
