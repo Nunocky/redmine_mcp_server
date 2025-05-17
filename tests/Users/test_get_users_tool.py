@@ -5,14 +5,16 @@ from pprint import pprint
 import pytest
 
 from tools.Users.get_users_tool import GetUsersTool
+from unwrap_text_content import unwrap_text_content
 
 
 @pytest.fixture
 def tool():
-    return GetUsersTool()
+    return GetUsersTool
 
 
-def test_run_success(tool):
+@pytest.mark.asyncio
+async def test_run_success(tool):
     """
     Access the actual Redmine server to retrieve the user list and verify basic items.
     """
@@ -24,7 +26,8 @@ def test_run_success(tool):
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Execute
-    result = tool.run(limit=5)
+    result = await tool.run({"limit": 5})
+    result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -36,7 +39,8 @@ def test_run_success(tool):
     assert result["limit"] == 5
 
 
-def test_run_with_status_filter(tool):
+@pytest.mark.asyncio
+async def test_run_with_status_filter(tool):
     """
     Use the status filter to retrieve the user list and verify the results.
     """
@@ -48,7 +52,8 @@ def test_run_with_status_filter(tool):
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Execute (active users only)
-    result = tool.run(status=1, limit=5)
+    result = await tool.run({"status": 1, "limit": 5})
+    result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -62,7 +67,8 @@ def test_run_with_status_filter(tool):
             assert user["status"] == 1
 
 
-def test_run_with_name_filter(tool):
+@pytest.mark.asyncio
+async def test_run_with_name_filter(tool):
     """
     Use the name filter to retrieve the user list and verify the results.
     """
@@ -77,7 +83,8 @@ def test_run_with_name_filter(tool):
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
     # Execute
-    result = tool.run(name=test_name)
+    result = await tool.run({"name": test_name})
+    result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -102,7 +109,8 @@ def test_run_with_name_filter(tool):
     assert found, f"Search results do not include '{test_name}'"
 
 
-def test_run_with_group_id_filter(tool):
+@pytest.mark.asyncio
+async def test_run_with_group_id_filter(tool):
     """
     Use the group_id filter to retrieve the user list and verify the results.
     Note: This test will only succeed in an environment where groups exist.
@@ -122,7 +130,8 @@ def test_run_with_group_id_filter(tool):
         pytest.skip("REDMINE_TEST_GROUP_ID is not set in .env")
 
     # Execute
-    result = tool.run(group_id=int(test_group_id))
+    result = await tool.run({"group_id": int(test_group_id)})
+    result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -130,7 +139,8 @@ def test_run_with_group_id_filter(tool):
     assert isinstance(result["users"], list)
 
 
-def test_run_with_pagination(tool):
+@pytest.mark.asyncio
+async def test_run_with_pagination(tool):
     """
     Test pagination using limit and offset
     """
@@ -142,11 +152,13 @@ def test_run_with_pagination(tool):
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Get the first page (first 2 items)
-    result_page1 = tool.run(limit=2, offset=0)
+    result_page1 = await tool.run({"limit": 2, "offset": 0})
+    result_page1 = unwrap_text_content(result_page1)
     pprint(result_page1, stream=sys.stderr)
 
     # Get the second page (next 2 items)
-    result_page2 = tool.run(limit=2, offset=2)
+    result_page2 = await tool.run({"limit": 2, "offset": 2})
+    result_page2 = unwrap_text_content(result_page2)
     pprint(result_page2, stream=sys.stderr)
 
     # Verify
@@ -165,7 +177,8 @@ def test_run_with_pagination(tool):
             assert result_page1["users"][0]["id"] != result_page2["users"][0]["id"]
 
 
-def test_run_with_combined_filters(tool):
+@pytest.mark.asyncio
+async def test_run_with_combined_filters(tool):
     """
     Test combining multiple filters
     """
@@ -180,7 +193,8 @@ def test_run_with_combined_filters(tool):
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
     # Execute (active users with a specific name)
-    result = tool.run(status=1, name=test_name, limit=5)
+    result = await tool.run({"status": 1, "name": test_name, "limit": 5})
+    result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
 
     # Verify
