@@ -7,14 +7,13 @@ import pytest
 from tools.Users.get_users_tool import GetUsersTool
 from unwrap_text_content import unwrap_text_content
 
-
-@pytest.fixture
-def tool():
-    return GetUsersTool
+# @pytest.fixture
+# def tool():
+#     return GetUsersTool
 
 
 @pytest.mark.asyncio
-async def test_run_success(tool):
+async def test_run_success():
     """
     Access the actual Redmine server to retrieve the user list and verify basic items.
     """
@@ -26,6 +25,7 @@ async def test_run_success(tool):
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Execute
+    tool = GetUsersTool
     result = await tool.run({"limit": 5})
     result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
@@ -40,7 +40,7 @@ async def test_run_success(tool):
 
 
 @pytest.mark.asyncio
-async def test_run_with_status_filter(tool):
+async def test_run_with_status_filter():
     """
     Use the status filter to retrieve the user list and verify the results.
     """
@@ -52,6 +52,7 @@ async def test_run_with_status_filter(tool):
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Execute (active users only)
+    tool = GetUsersTool
     result = await tool.run({"status": 1, "limit": 5})
     result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
@@ -68,7 +69,7 @@ async def test_run_with_status_filter(tool):
 
 
 @pytest.mark.asyncio
-async def test_run_with_name_filter(tool):
+async def test_run_with_name_filter():
     """
     Use the name filter to retrieve the user list and verify the results.
     """
@@ -83,6 +84,7 @@ async def test_run_with_name_filter(tool):
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
     # Execute
+    tool = GetUsersTool
     result = await tool.run({"name": test_name})
     result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
@@ -110,7 +112,7 @@ async def test_run_with_name_filter(tool):
 
 
 @pytest.mark.asyncio
-async def test_run_with_group_id_filter(tool):
+async def test_run_with_group_id_filter():
     """
     Use the group_id filter to retrieve the user list and verify the results.
     Note: This test will only succeed in an environment where groups exist.
@@ -122,14 +124,11 @@ async def test_run_with_group_id_filter(tool):
     assert os.environ["REDMINE_ADMIN_API_KEY"], "REDMINE_ADMIN_API_KEY is not set in .env"
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
-    # Test group ID (change according to your environment)
-    test_group_id = os.getenv("REDMINE_TEST_GROUP_ID")
-
-    # Skip if group ID is not set
-    if not test_group_id:
-        pytest.skip("REDMINE_TEST_GROUP_ID is not set in .env")
+    # Test group ID
+    test_group_id = 3  # non member group ID
 
     # Execute
+    tool = GetUsersTool
     result = await tool.run({"group_id": int(test_group_id)})
     result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
@@ -140,7 +139,7 @@ async def test_run_with_group_id_filter(tool):
 
 
 @pytest.mark.asyncio
-async def test_run_with_pagination(tool):
+async def test_run_with_pagination():
     """
     Test pagination using limit and offset
     """
@@ -152,6 +151,7 @@ async def test_run_with_pagination(tool):
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Get the first page (first 2 items)
+    tool = GetUsersTool
     result_page1 = await tool.run({"limit": 2, "offset": 0})
     result_page1 = unwrap_text_content(result_page1)
     pprint(result_page1, stream=sys.stderr)
@@ -178,7 +178,7 @@ async def test_run_with_pagination(tool):
 
 
 @pytest.mark.asyncio
-async def test_run_with_combined_filters(tool):
+async def test_run_with_combined_filters():
     """
     Test combining multiple filters
     """
@@ -193,6 +193,7 @@ async def test_run_with_combined_filters(tool):
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
     # Execute (active users with a specific name)
+    tool = GetUsersTool
     result = await tool.run({"status": 1, "name": test_name, "limit": 5})
     result = unwrap_text_content(result)
     pprint(result, stream=sys.stderr)
