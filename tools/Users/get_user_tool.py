@@ -1,7 +1,22 @@
-from typing import Optional, Union
+"""Redmine User Details Retrieval Tool
+
+Get user details using RedmineAPIClient.
+APIレスポンスをそのまま返却（userキー含む場合も含まない場合も）。
+404や他HTTPエラー時はException送出。
+
+Returns:
+    dict: APIレスポンスそのまま
+
+Raises:
+    Exception: When API request fails (including 404 errors)
+"""
+
+from typing import Any, Dict, Optional, Union
 
 import requests
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_user(
@@ -9,33 +24,27 @@ def get_user(
     api_key: str,
     user_id: Union[int, str],
     include: Optional[str] = None,
-):
+) -> Dict[str, Any]:
     """Get Redmine user details
 
     Args:
-        redmine_url (str): Redmine URL
-        api_key (str): Redmine API key
-        user_id (Union[int, str]): User ID or 'current' (current user)
-        include (Optional[str], optional): Related information to include in the response (memberships, groups)
+        redmine_url: Redmine URL
+        api_key: Redmine API key
+        user_id: User ID or 'current' (current user)
+        include: Related information to include in the response (memberships, groups)
 
     Returns:
-        Dict[str, Any]: User details information
+        APIレスポンスそのまま
 
     Raises:
-        requests.exceptions.HTTPError: When API request fails
+        Exception: When API request fails (including 404 errors)
     """
-    import os
-
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    headers = {"X-Redmine-API-Key": api_key}
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}
     if include:
         params["include"] = include
-    url = f"{redmine_url.rstrip('/')}/users/{user_id}.json"
-    resp = requests.get(url, headers=headers, params=params)
+    endpoint = f"/users/{user_id}.json"
+    resp = client.get(endpoint, params=params)
     resp.raise_for_status()
     return resp.json()
 

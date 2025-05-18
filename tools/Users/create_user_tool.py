@@ -1,5 +1,21 @@
+"""Redmine User Creation Tool
+
+Create a new user using RedmineAPIClient.
+404エラー時は空dict、他エラーは例外送出。
+
+Returns:
+    dict: APIレスポンスそのまま（userキー含む場合も含まない場合も）
+
+Raises:
+    Exception: When API request fails (excluding 404 errors)
+"""
+
+from typing import Any, Dict, List, Optional
+
 import requests
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def create_user(
@@ -9,22 +25,44 @@ def create_user(
     firstname: str,
     lastname: str,
     mail: str,
-    password: str = None,
-    auth_source_id: int = None,
-    mail_notification: str = None,
-    must_change_passwd: bool = None,
-    generate_password: bool = None,
-    custom_fields: list = None,
-    send_information: bool = None,
-):
-    import os
+    password: Optional[str] = None,
+    auth_source_id: Optional[int] = None,
+    mail_notification: Optional[str] = None,
+    must_change_passwd: Optional[bool] = None,
+    generate_password: Optional[bool] = None,
+    custom_fields: Optional[List[Any]] = None,
+    send_information: Optional[bool] = None,
+) -> Dict[str, Any]:
+    """Create a new user in Redmine
 
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    headers = {"X-Redmine-API-Key": api_key, "Content-Type": "application/json"}
-    user_data = {"login": login, "firstname": firstname, "lastname": lastname, "mail": mail}
+    Args:
+        redmine_url: URL of the Redmine server
+        api_key: Redmine API key
+        login: User login
+        firstname: First name
+        lastname: Last name
+        mail: Email address
+        password: Password
+        auth_source_id: Auth source ID
+        mail_notification: Mail notification setting
+        must_change_passwd: Must change password flag
+        generate_password: Generate password flag
+        custom_fields: Custom fields
+        send_information: Send information flag
+
+    Returns:
+        APIレスポンスそのまま（userキー含む場合も含まない場合も）
+
+    Raises:
+        Exception: When API request fails (excluding 404 errors)
+    """
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
+    user_data = {
+        "login": login,
+        "firstname": firstname,
+        "lastname": lastname,
+        "mail": mail,
+    }
     if password is not None:
         user_data["password"] = password
     if auth_source_id is not None:
@@ -42,10 +80,17 @@ def create_user(
     if send_information is not None:
         payload["send_information"] = send_information
 
-    url = f"{redmine_url.rstrip('/')}/users.json"
-    resp = requests.post(url, headers=headers, json=payload)
-    resp.raise_for_status()
-    return resp.json()
+    try:
+        resp = client.post("/users.json", json=payload)
+        return resp.json()
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            return {}
+        raise
 
 
-CreateUserTool = Tool.from_function(create_user, name="create_user", description="Create a new user in Redmine.")
+CreateUserTool = Tool.from_function(
+    create_user,
+    name="create_user",
+    description="Create a new user in Redmine.",
+)

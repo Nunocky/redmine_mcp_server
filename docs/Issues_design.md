@@ -33,6 +33,7 @@ Redmineの「チケット（Issue）」に関するREST APIの設計ドキュメ
     - [主なパラメータ](#主なパラメータ-3)
     - [リクエスト例](#リクエスト例-3)
     - [curl例](#curl例-3)
+    - [設計・実装方針](#設計実装方針)
   - [DELETE /issues/:id](#delete-issuesid)
     - [概要](#概要-5)
     - [リクエスト例](#リクエスト例-4)
@@ -204,6 +205,16 @@ PUT /issues/2.json
 ```bash
 curl -H "X-Redmine-API-Key: YOUR_API_KEY" -H "Content-Type: application/json" -X PUT -d '{"issue":{"subject":"Subject changed","notes":"The subject was changed"}}' http://your-redmine-instance/issues/2.json
 ```
+
+### 設計・実装方針
+
+- fastmcpのToolとして実装する
+- APIクライアントはRedmineAPIClientを利用する
+- パラメータはNoneを除外し、必要なもののみリクエストボディに含める
+- 404エラー時は空辞書を返す
+- その他のHTTPエラーは例外送出
+- レスポンスはAPIの返却内容をそのまま返す（204の場合はsuccessのみ返す）
+- PEP8・GoogleスタイルDocstring・英語コメントを徹底する
 
 ---
 

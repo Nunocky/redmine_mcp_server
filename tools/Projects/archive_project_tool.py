@@ -12,7 +12,9 @@ from tools.redmine_api_client import RedmineAPIClient
 
 
 def archive_project(
-    project_id_or_identifier: str, redmine_url: Optional[str] = None, api_key: Optional[str] = None
+    redmine_url: str,
+    api_key: str,
+    project_id_or_identifier: str,
 ) -> Dict[str, Any]:
     """Archive a Redmine project
 
@@ -45,4 +47,8 @@ def archive_project(
         }
 
 
-ArchiveProjectTool = Tool.from_function(archive_project, name="archive_project", description="Archive a Redmine project")
+ArchiveProjectTool = Tool.from_function(
+    archive_project,
+    name="archive_project",
+    description="Archive a Redmine project",
+)

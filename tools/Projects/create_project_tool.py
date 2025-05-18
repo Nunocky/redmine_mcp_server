@@ -1,10 +1,18 @@
 """Redmine Project Creation Tool
 
 Create a new project using RedmineAPIClient.
+Returns an empty dict for non-existent resources (404 error).
+
+Returns:
+    dict: Created project information
+
+Raises:
+    Exception: When API request fails (excluding 404 errors)
 """
 
 from typing import Any, Dict, List, Optional
 
+import requests
 from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -30,24 +38,28 @@ def create_project(
     """Create a new Redmine project
 
     Args:
-        name (str): Project name (required)
-        identifier (str): Project identifier (required)
-        redmine_url (str, optional): URL of the Redmine server
-        api_key (str, optional): Redmine API key
-        description (str, optional): Description
-        homepage (str, optional): Homepage URL
-        is_public (bool, optional): Public flag
-        parent_id (int, optional): Parent project ID
-        inherit_members (bool, optional): Inherit members
-        default_assigned_to_id (int, optional): Default assignee ID
-        default_version_id (int, optional): Default version ID
-        tracker_ids (List[int], optional): List of tracker IDs
-        enabled_module_names (List[str], optional): List of enabled module names
-        issue_custom_field_ids (List[int], optional): List of custom field IDs
-        custom_field_values (Dict[str, Any], optional): Custom field values
+        name: Project name (required)
+        identifier: Project identifier (required)
+        redmine_url: URL of the Redmine server
+        api_key: Redmine API key
+        description: Description
+        homepage: Homepage URL
+        is_public: Public flag
+        parent_id: Parent project ID
+        inherit_members: Inherit members
+        default_assigned_to_id: Default assignee ID
+        default_version_id: Default version ID
+        tracker_ids: List of tracker IDs
+        enabled_module_names: List of enabled module names
+        issue_custom_field_ids: List of custom field IDs
+        custom_field_values: Custom field values
 
     Returns:
-        dict: Information of the created project or error message
+        Created project information as dict.
+        Returns empty dict for non-existent resources (404 error).
+
+    Raises:
+        Exception: When API request fails (excluding 404 errors)
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     project_data = {
@@ -78,9 +90,17 @@ def create_project(
         project_data["custom_field_values"] = custom_field_values
 
     payload = {"project": project_data}
-    resp = client.post("/projects.json", json=payload)
-    resp.raise_for_status()
-    return resp.json().get("project", {})
+    try:
+        resp = client.post("/projects.json", json=payload)
+        return resp.json().get("project", {})
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            return {}
+        raise
 
 
-CreateProjectTool = Tool.from_function(create_project, name="create_project", description="Create a Redmine project")
+CreateProjectTool = Tool.from_function(
+    create_project,
+    name="create_project",
+    description="Create a Redmine project",
+)
