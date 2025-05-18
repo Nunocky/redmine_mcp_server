@@ -597,21 +597,20 @@ async def get_time_entries(
     to_date: str = None,
 ) -> dict:
     """Get a list of Redmine time entries"""
-    loop = asyncio.get_event_loop()
-    return await loop.run_in_executor(
-        None,
-        lambda: GetTimeEntriesTool().run(
-            redmine_url=redmine_url,
-            api_key=api_key,
-            offset=offset,
-            limit=limit,
-            user_id=user_id,
-            project_id=project_id,
-            spent_on=spent_on,
-            from_date=from_date,
-            to_date=to_date,
-        ),
+    result = await GetTimeEntriesTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "offset": offset,
+            "limit": limit,
+            "user_id": user_id,
+            "project_id": project_id,
+            "spent_on": spent_on,
+            "from_date": from_date,
+            "to_date": to_date,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()
