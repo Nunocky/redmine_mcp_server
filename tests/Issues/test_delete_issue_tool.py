@@ -9,7 +9,7 @@ def setup_module(module):
     pass
 
 
-def test_delete_issue_redmine():
+async def test_delete_issue_redmine():
     """
     Integration test that retrieves information from the actual Redmine server from .env, creates an issue, and deletes it.
     """
@@ -21,8 +21,17 @@ def test_delete_issue_redmine():
     subject = "Deletion Test Issue (pytest)"
     description = "Issue for deletion test by pytest"
     # First, create an issue
-    issue_tool = CreateIssueTool()
-    issue = issue_tool.run(project_id, subject, description=description)["issue"]
+    issue = (
+        await CreateIssueTool.run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "project_id": project_id,
+                "subject": subject,
+                "description": description,
+            }
+        )
+    )["issue"]
     issue_id = issue["id"]
     # Execute deletion
     result = delete_issue(redmine_url, api_key, issue_id)

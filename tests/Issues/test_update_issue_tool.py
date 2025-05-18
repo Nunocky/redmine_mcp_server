@@ -10,7 +10,7 @@ def setup_module(module):
     pass
 
 
-def test_update_issue_redmine():
+async def test_update_issue_redmine():
     """
     Integration test that retrieves information from the actual Redmine server from .env, creates an issue, and updates it.
     """
@@ -22,8 +22,17 @@ def test_update_issue_redmine():
     subject = "Update Test Issue (pytest)"
     description = "Issue for update test by pytest"
     # First, create an issue
-    issue_tool = CreateIssueTool()
-    issue = issue_tool.run(project_id, subject, description=description)["issue"]
+    issue = (
+        await CreateIssueTool.run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "project_id": project_id,
+                "subject": subject,
+                "description": description,
+            }
+        )
+    )["issue"]
     issue_id = issue["id"]
     # Update content
     new_subject = "Updated Issue Title (pytest)"

@@ -11,7 +11,7 @@ def setup_module(module):
     pass
 
 
-def test_add_remove_watcher_redmine():
+async def test_add_remove_watcher_redmine():
     """
     Integration test to add and remove a watcher from an issue on a real Redmine server.
     """
@@ -25,8 +25,17 @@ def test_add_remove_watcher_redmine():
     subject = "Watcher Test Issue (pytest)"
     description = "Issue for testing watcher addition and removal by pytest"
     # Create issue
-    issue_tool = CreateIssueTool()
-    issue = issue_tool.run(project_id, subject, description=description)["issue"]
+    issue = (
+        await CreateIssueTool.run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "project_id": project_id,
+                "subject": subject,
+                "description": description,
+            }
+        )
+    )["issue"]
     issue_id = issue["id"]
     # Add watcher
     add_result = add_watcher(redmine_url, api_key, issue_id, int(watcher_user_id))

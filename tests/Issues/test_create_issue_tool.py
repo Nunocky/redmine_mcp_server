@@ -4,7 +4,7 @@ from pathlib import Path
 from tools.Issues.create_issue_tool import CreateIssueTool
 
 
-def test_create_issue_redmine():
+async def test_create_issue_redmine():
     """
     Integration test to create a new issue on the actual Redmine server (REDMINE_URL in .env).
     """
@@ -15,7 +15,15 @@ def test_create_issue_redmine():
     project_id = "testproject"
     subject = "Test Issue (pytest)"
     description = "Automated test creation by pytest"
-    result = CreateIssueTool().run(project_id, subject, description=description)
+    result = await CreateIssueTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "project_id": project_id,
+            "subject": subject,
+            "description": description,
+        }
+    )
     assert "issue" in result
     assert isinstance(result["issue"], dict)
     assert result["issue"].get("subject") == subject
