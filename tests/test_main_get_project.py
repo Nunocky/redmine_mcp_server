@@ -4,11 +4,10 @@ from pprint import pprint
 
 import pytest
 
-from main import get_project
+from tools.Projects.get_project_tool import get_project
 
 
-@pytest.mark.asyncio
-async def test_get_project():
+def test_get_project():
     """Normal case test for Redmine project details retrieval API
 
     Args:
@@ -25,15 +24,18 @@ async def test_get_project():
     project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
-    result = await get_project(redmine_url=redmine_url, api_key=api_key, project_id_or_identifier=project_id)
+    result = get_project(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        project_id_or_identifier=project_id,
+    )
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "id" in result
     assert "name" in result
 
 
-@pytest.mark.asyncio
-async def test_get_project_with_include():
+def test_get_project_with_include():
     """Normal case test for Redmine project details retrieval API (with include specified)
 
     Args:
@@ -50,8 +52,11 @@ async def test_get_project_with_include():
     project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
-    result = await get_project(
-        redmine_url=redmine_url, api_key=api_key, project_id_or_identifier=project_id, include="trackers,enabled_modules"
+    result = get_project(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        project_id_or_identifier=project_id,
+        include="trackers,enabled_modules",
     )
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)

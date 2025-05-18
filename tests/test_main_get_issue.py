@@ -3,13 +3,10 @@ import os
 import sys
 from pprint import pprint
 
-import pytest
-
-from main import get_issue
+from tools.Issues.get_issue_tool import get_issue
 
 
-@pytest.mark.asyncio
-async def test_get_issue():
+def test_get_issue():
     """Normal case test for Redmine issue retrieval API
 
     Args:
@@ -28,7 +25,7 @@ async def test_get_issue():
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
-    result = await get_issue(
+    result = get_issue(
         redmine_url=redmine_url,
         api_key=api_key,
         issue_id=issue_id,
@@ -45,8 +42,7 @@ async def test_get_issue():
     assert result_dict["issue"]["id"] == issue_id, "Retrieved issue ID does not match"
 
 
-@pytest.mark.asyncio
-async def test_get_issue_notfound():
+def test_get_issue_notfound():
     """Test for non-existent issue_id (should return {'issue': None})"""
     issue_id = 999999  # unlikely to exist
     redmine_url = os.environ.get("REDMINE_URL")
@@ -54,7 +50,7 @@ async def test_get_issue_notfound():
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
-    result = await get_issue(
+    result = get_issue(
         redmine_url=redmine_url,
         api_key=api_key,
         issue_id=issue_id,

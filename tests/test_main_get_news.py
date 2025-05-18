@@ -4,11 +4,10 @@ from pprint import pprint
 
 import pytest
 
-from main import get_news
+from tools.News.get_news_tool import get_news
 
 
-@pytest.mark.asyncio
-async def test_get_news():
+def test_get_news():
     """Test get_news for all projects with real Redmine server.
 
     This test requires the following environment variables:
@@ -26,7 +25,7 @@ async def test_get_news():
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
     # Fetch news for all projects (project_id is not used for all-projects)
-    result = await get_news(
+    result = get_news(
         redmine_url=redmine_url,
         api_key=api_key,
         limit=5,
@@ -41,8 +40,7 @@ async def test_get_news():
     assert "offset" in result
 
 
-@pytest.mark.asyncio
-async def test_get_news_project():
+def test_get_news_project():
     """Test get_news for a specific project with real Redmine server.
 
     This test requires the following environment variables:
@@ -60,7 +58,7 @@ async def test_get_news_project():
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
     # Fetch news for the specified project
-    result = await get_news(
+    result = get_news(
         redmine_url=redmine_url,
         api_key=api_key,
         project_id=project_id,
