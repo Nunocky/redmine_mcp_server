@@ -1,5 +1,5 @@
-import dotenv
+import os
 
+from dotenv import load_dotenv
 
-def pytest_configure():
-    dotenv.load_dotenv()
+load_dotenv()

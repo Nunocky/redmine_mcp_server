@@ -598,25 +598,37 @@ async def create_time_entry(
 
 @mcp.tool()
 async def get_time_entries(
+    redmine_url: str = None,
+    api_key: str = None,
     project_id: str = None,
     user_id: int = None,
     limit: int = None,
     offset: int = None,
-    redmine_url: str = None,
-    api_key: str = None,
+    spent_on: str = None,
+    from_date: str = None,
+    to_date: str = None,
 ) -> dict:
     """Get a list of Redmine time entries"""
+    import asyncio
+
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await GetTimeEntriesTool.run(
-        redmine_url,
-        api_key,
-        project_id,
-        user_id,
-        limit,
-        offset,
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: GetTimeEntriesTool().run(
+            redmine_url=redmine_url,
+            api_key=api_key,
+            offset=offset,
+            limit=limit,
+            user_id=user_id,
+            project_id=project_id,
+            spent_on=spent_on,
+            from_date=from_date,
+            to_date=to_date,
+        ),
     )
 
 
