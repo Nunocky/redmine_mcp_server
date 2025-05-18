@@ -81,17 +81,13 @@ async def create_project_membership(
 
 @mcp.tool()
 async def get_news(
-    redmine_url: str = None,
-    api_key: str = None,
+    redmine_url: str,
+    api_key: str,
     project_id: str = None,
     limit: int = None,
     offset: int = None,
 ) -> dict:
     """Get a list of Redmine news"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await GetNewsTool.run(
         {
             "redmine_url": redmine_url,
@@ -106,15 +102,10 @@ async def get_news(
 
 @mcp.tool()
 async def get_queries_tool(
-    redmine_url: str = None,
-    api_key: str = None,
+    redmine_url: str,
+    api_key: str,
 ) -> dict:
     """Get a list of Redmine queries"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-
     result = await GetQueriesTool.run(
         {
             "redmine_url": redmine_url,
@@ -126,17 +117,13 @@ async def get_queries_tool(
 
 @mcp.tool()
 async def get_versions(
-    redmine_url: str = None,
-    api_key: str = None,
+    redmine_url: str,
+    api_key: str,
     project_id: str = None,
     limit: int = None,
     offset: int = None,
 ) -> dict:
     """Get a list of Redmine versions"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetVersionTool.run(
         redmine_url,
         api_key,
@@ -148,15 +135,11 @@ async def get_versions(
 
 @mcp.tool()
 async def get_wiki_pages(
-    redmine_url: str = None,
-    api_key: str = None,
+    redmine_url: str,
+    api_key: str,
     project_id: str = None,
 ) -> dict:
     """Get a list of Redmine Wiki pages"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetWikiPagesTool.run(
         redmine_url,
         api_key,
@@ -166,6 +149,8 @@ async def get_wiki_pages(
 
 @mcp.tool()
 async def create_issue(
+    redmine_url: str,
+    api_key: str,
     project_id: str,
     subject: str,
     description: str = None,
@@ -183,34 +168,37 @@ async def create_issue(
     uploads=None,
 ) -> dict:
     """Create a Redmine issue"""
-    return CreateIssueTool().run(
-        project_id,
-        subject,
-        description,
-        tracker_id,
-        status_id,
-        priority_id,
-        category_id,
-        fixed_version_id,
-        assigned_to_id,
-        parent_issue_id,
-        custom_fields,
-        watcher_user_ids,
-        is_private,
-        estimated_hours,
-        uploads,
+    return await CreateIssueTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "project_id": project_id,
+            "subject": subject,
+            "description": description,
+            "tracker_id": tracker_id,
+            "status_id": status_id,
+            "priority_id": priority_id,
+            "category_id": category_id,
+            "fixed_version_id": fixed_version_id,
+            "assigned_to_id": assigned_to_id,
+            "parent_issue_id": parent_issue_id,
+            "custom_fields": custom_fields,
+            "watcher_user_ids": watcher_user_ids,
+            "is_private": is_private,
+            "estimated_hours": estimated_hours,
+            "uploads": uploads,
+        }
     )
 
 
 @mcp.tool()
 async def get_issue(
+    redmine_url: str,
+    api_key: str,
     issue_id: int,
     include: str = None,
 ) -> dict:
     """Get Redmine issue details"""
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-
     return await GetIssueTool.run(
         {
             "redmine_url": redmine_url,
@@ -223,6 +211,8 @@ async def get_issue(
 
 @mcp.tool()
 async def get_issues(
+    redmine_url: str,
+    api_key: str,
     offset: int = None,
     limit: int = None,
     sort: str = None,
@@ -230,24 +220,20 @@ async def get_issues(
     filters: dict = None,
 ) -> dict:
     """Get a list of Redmine issues"""
-    # Since run is a synchronous function, execute it in a thread for async compatibility
     loop = asyncio.get_event_loop()
-    return await loop.run_in_executor(None, lambda: GetIssuesTool().run(offset, limit, sort, include, filters))
+    return await loop.run_in_executor(
+        None, lambda: GetIssuesTool().run(redmine_url, api_key, offset, limit, sort, include, filters)
+    )
 
 
 @mcp.tool()
 async def add_watcher(
+    redmine_url: str,
+    api_key: str,
     issue_id: int,
     user_id: int,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Add a watcher to a Redmine issue"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-
     return AddWatcherTool.run(
         {
             "redmine_url": redmine_url,
@@ -260,16 +246,12 @@ async def add_watcher(
 
 @mcp.tool()
 async def remove_watcher(
+    redmine_url: str,
+    api_key: str,
     issue_id: int,
     user_id: int,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Remove a watcher from a Redmine issue"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await RemoveWatcherTool.run(
         redmine_url,
         api_key,
@@ -280,15 +262,11 @@ async def remove_watcher(
 
 @mcp.tool()
 async def delete_issue(
+    redmine_url: str,
+    api_key: str,
     issue_id: int,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Delete a Redmine issue"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await DeleteIssueTool.run(
         redmine_url,
         api_key,
@@ -298,18 +276,13 @@ async def delete_issue(
 
 @mcp.tool()
 async def get_issue_relations(
+    redmine_url: str,
+    api_key: str,
     issue_id: int = None,
     limit: int = None,
     offset: int = None,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Get a list of Redmine issue relations"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-
     return await GetIssueRelationsTool.run(
         {
             "redmine_url": redmine_url,
@@ -323,6 +296,8 @@ async def get_issue_relations(
 
 @mcp.tool()
 async def update_issue(
+    redmine_url: str,
+    api_key: str,
     issue_id: int,
     subject: str = None,
     description: str = None,
@@ -342,8 +317,6 @@ async def update_issue(
     uploads=None,
 ) -> dict:
     """Update a Redmine issue"""
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await UpdateIssueTool.run(
         redmine_url,
         api_key,
@@ -369,15 +342,11 @@ async def update_issue(
 
 @mcp.tool()
 async def archive_project(
+    redmine_url: str,
+    api_key: str,
     project_id_or_identifier: str,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Archive a Redmine project"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await ArchiveProjectTool.run(
         {
             "project_id_or_identifier": project_id_or_identifier,
@@ -390,10 +359,10 @@ async def archive_project(
 
 @mcp.tool()
 async def create_project(
+    redmine_url: str,
+    api_key: str,
     name: str,
     identifier: str,
-    redmine_url: str = None,
-    api_key: str = None,
     description: str = None,
     homepage: str = None,
     is_public: bool = None,
@@ -407,10 +376,6 @@ async def create_project(
     custom_field_values=None,
 ) -> dict:
     """Create a Redmine project"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await CreateProjectTool.run(
         {
             "name": name,
@@ -435,15 +400,11 @@ async def create_project(
 
 @mcp.tool()
 async def delete_project(
+    redmine_url: str,
+    api_key: str,
     project_id_or_identifier: str,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Delete a Redmine project"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await DeleteProjectTool.run(
         {
             "project_id_or_identifier": project_id_or_identifier,
@@ -456,15 +417,11 @@ async def delete_project(
 
 @mcp.tool()
 async def unarchive_project(
+    redmine_url: str,
+    api_key: str,
     project_id_or_identifier: str,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Unarchive a Redmine project"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await UnarchiveProjectTool.run(
         {
             "project_id_or_identifier": project_id_or_identifier,
@@ -477,9 +434,9 @@ async def unarchive_project(
 
 @mcp.tool()
 async def update_project(
+    redmine_url: str,
+    api_key: str,
     project_id_or_identifier: str,
-    redmine_url: str = None,
-    api_key: str = None,
     name: str = None,
     description: str = None,
     homepage: str = None,
@@ -494,10 +451,6 @@ async def update_project(
     custom_field_values=None,
 ) -> dict:
     """Update a Redmine project"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await UpdateProjectTool.run(
         {
             "project_id_or_identifier": project_id_or_identifier,
@@ -522,17 +475,17 @@ async def update_project(
 
 @mcp.tool()
 async def get_project(
+    redmine_url: str,
+    api_key: str,
     project_id_or_identifier: str,
     include: str = None,
 ) -> dict:
     """Get Redmine project details"""
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await GetProjectTool.run(
         {
-            "project_id_or_identifier": project_id_or_identifier,
             "redmine_url": redmine_url,
             "api_key": api_key,
+            "project_id_or_identifier": project_id_or_identifier,
             "include": include,
         }
     )
@@ -541,19 +494,13 @@ async def get_project(
 
 @mcp.tool()
 async def get_projects_tool(
-    redmine_url: str = None,
-    api_key: str = None,
+    redmine_url: str,
+    api_key: str,
     include: str = None,
     limit: int = None,
     offset: int = None,
 ) -> dict:
     """Get a list of Redmine projects"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     result = await GetProjectsTool.run(
         {
             "redmine_url": redmine_url,
@@ -568,6 +515,8 @@ async def get_projects_tool(
 
 @mcp.tool()
 async def create_time_entry(
+    redmine_url: str,
+    api_key: str,
     issue_id: int = None,
     project_id: str = None,
     spent_on: str = None,
@@ -575,31 +524,29 @@ async def create_time_entry(
     activity_id: int = None,
     comments: str = None,
     user_id: int = None,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Create a new time entry in Redmine"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    return await CreateTimeEntryTool.run(
-        redmine_url,
-        api_key,
-        issue_id,
-        project_id,
-        spent_on,
-        hours,
-        activity_id,
-        comments,
-        user_id,
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: CreateTimeEntryTool().run(
+            redmine_url=redmine_url,
+            api_key=api_key,
+            issue_id=issue_id,
+            project_id=project_id,
+            spent_on=spent_on,
+            hours=hours,
+            activity_id=activity_id,
+            comments=comments,
+            user_id=user_id,
+        ),
     )
 
 
 @mcp.tool()
 async def get_time_entries(
-    redmine_url: str = None,
-    api_key: str = None,
+    redmine_url: str,
+    api_key: str,
     project_id: str = None,
     user_id: int = None,
     limit: int = None,
@@ -609,12 +556,6 @@ async def get_time_entries(
     to_date: str = None,
 ) -> dict:
     """Get a list of Redmine time entries"""
-    import asyncio
-
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(
         None,
@@ -634,6 +575,8 @@ async def get_time_entries(
 
 @mcp.tool()
 async def create_user(
+    redmine_url: str,
+    api_key: str,
     login: str,
     firstname: str,
     lastname: str,
@@ -645,14 +588,8 @@ async def create_user(
     generate_password: bool = None,
     custom_fields: list = None,
     send_information: bool = None,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Create a Redmine user"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await CreateUserTool.run(
         redmine_url,
         api_key,
@@ -672,15 +609,11 @@ async def create_user(
 
 @mcp.tool()
 async def delete_user(
+    redmine_url: str,
+    api_key: str,
     user_id: int,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Delete a Redmine user"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await DeleteUserTool.run(
         redmine_url,
         api_key,
@@ -690,15 +623,11 @@ async def delete_user(
 
 @mcp.tool()
 async def get_user(
+    redmine_url: str,
+    api_key: str,
     user_id: int,
-    redmine_url: str = None,
-    api_key: str = None,
 ) -> dict:
     """Get Redmine user information"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetUserTool.run(
         redmine_url,
         api_key,
@@ -708,8 +637,8 @@ async def get_user(
 
 @mcp.tool()
 async def get_users(
-    redmine_url: str = None,
-    api_key: str = None,
+    redmine_url: str,
+    api_key: str,
     name: str = None,
     group_id: int = None,
     status: int = None,
@@ -717,10 +646,6 @@ async def get_users(
     offset: int = None,
 ) -> dict:
     """Get a list of Redmine users"""
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await GetUsersTool.run(
         {
             "redmine_url": redmine_url,
@@ -736,9 +661,9 @@ async def get_users(
 
 @mcp.tool()
 async def update_user(
+    redmine_url: str,
+    api_key: str,
     user_id: int,
-    redmine_url: str = None,
-    api_key: str = None,
     login: str = None,
     firstname: str = None,
     lastname: str = None,
@@ -752,11 +677,6 @@ async def update_user(
     status: int = None,
 ) -> dict:
     """Update Redmine user information"""
-
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     return await UpdateUserTool.run(
         redmine_url,
         api_key,

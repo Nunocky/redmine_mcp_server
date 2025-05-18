@@ -11,9 +11,9 @@ from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_project(
+    redmine_url: str,
+    api_key: str,
     project_id_or_identifier: str,
-    redmine_url: Optional[str] = None,
-    api_key: Optional[str] = None,
     include: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Get Redmine project details

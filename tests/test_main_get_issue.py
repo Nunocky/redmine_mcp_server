@@ -31,7 +31,11 @@ async def test_get_issue():
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
-    result = await get_issue(issue_id=issue_id)
+    result = await get_issue(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        issue_id=issue_id,
+    )
     # Handle cases where a list of TextContent type is returned
     if isinstance(result, list) and hasattr(result[0], "text"):
         result_dict = json.loads(result[0].text)
