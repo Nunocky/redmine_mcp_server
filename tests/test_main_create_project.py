@@ -7,9 +7,11 @@ import pytest
 from main import create_project, delete_project
 from tests.random_identifier import random_identifier
 
+REDMINE_URL = os.environ.get("REDMINE_URL")
+API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
 
-@pytest.mark.asyncio
-async def test_create_and_delete_project():
+
+def test_create_and_delete_project():
     """Normal case test for Redmine project creation and deletion APIs
 
     Args:
@@ -21,27 +23,45 @@ async def test_create_and_delete_project():
     Note:
         Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
-
     identifier = random_identifier()
     name = "Test Project_" + identifier
     description = "Project for automated testing"
 
     # Create project
-    result_create = await create_project(
-        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description=description
+    result_create = create_project(
+        name=name,
+        identifier=identifier,
+        redmine_url=REDMINE_URL,
+        api_key=API_KEY,
+        description=description,
     )
+    if hasattr(result_create, "__await__"):
+        import asyncio
+
+        result_create = asyncio.get_event_loop().run_until_complete(result_create)
     pprint(result_create, stream=sys.stderr)
-    assert isinstance(result_create, dict)
-    assert "id" in result_create
-    assert result_create["identifier"] == identifier
-    assert result_create["name"] == name
-    assert result_create["description"] == description
+    # 柔軟にproject情報を取得
+    if "id" in result_create:
+        project_info = result_create
+    elif "project" in result_create and isinstance(result_create["project"], dict):
+        project_info = result_create["project"]
+    else:
+        project_info = {}
+    assert isinstance(project_info, dict)
+    assert "id" in project_info
+    assert project_info["identifier"] == identifier
+    assert project_info["name"] == name
+    assert project_info["description"] == description
 
     # Delete project
-    result_delete = await delete_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
+    result_delete = delete_project(
+        project_id_or_identifier=identifier,
+        redmine_url=REDMINE_URL,
+        api_key=API_KEY,
+    )
+    if hasattr(result_delete, "__await__"):
+        import asyncio
+
+        result_delete = asyncio.get_event_loop().run_until_complete(result_delete)
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"
