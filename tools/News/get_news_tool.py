@@ -1,8 +1,9 @@
 import os
-from typing import Optional
+from typing import Any, Dict, Optional
 
-import requests
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_news(
@@ -11,7 +12,7 @@ def get_news(
     project_id: Optional[str] = None,
     limit: Optional[int] = None,
     offset: Optional[int] = None,
-):
+) -> Dict[str, Any]:
     """Get a list of news from Redmine.
 
     Args:
@@ -26,10 +27,8 @@ def get_news(
 
     Raises:
         ValueError: If required parameters are missing.
-        requests.RequestException: If the HTTP request fails.
-
+        Exception: When API request fails (excluding 404 errors)
     """
-    # Use environment variables if parameters are not provided
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -37,33 +36,38 @@ def get_news(
     if not redmine_url or not api_key:
         raise ValueError("redmine_url and api_key are required.")
 
-    headers = {"X-Redmine-API-Key": api_key}
-    params = {}
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
+    params: Dict[str, Any] = {}
     if limit is not None:
         params["limit"] = limit
     if offset is not None:
         params["offset"] = offset
 
-    # Select endpoint based on project_id
     if project_id:
-        url = f"{redmine_url.rstrip('/')}/projects/{project_id}/news.json"
+        endpoint = f"/projects/{project_id}/news.json"
     else:
-        url = f"{redmine_url.rstrip('/')}/news.json"
+        endpoint = "/news.json"
 
     try:
-        resp = requests.get(url, headers=headers, params=params, timeout=10)
-        resp.raise_for_status()
-        data = resp.json()
-    except requests.RequestException as e:
-        # Log the error or handle as needed
-        raise requests.RequestException(f"Failed to fetch news from Redmine: {e}") from e
-
-    return {
-        "news": data.get("news", []),
-        "total_count": data.get("total_count", 0),
-        "limit": data.get("limit", limit if limit is not None else 25),
-        "offset": data.get("offset", offset if offset is not None else 0),
-    }
+        response = client.get(
+            endpoint=endpoint,
+            params=params,
+        )
+        data = response.json()
+        # Ensure offset/limit are present in the result
+        if "offset" not in data:
+            data["offset"] = params.get("offset", 0)
+        if "limit" not in data:
+            data["limit"] = params.get("limit", 25)
+        return data
+    except Exception as e:
+        # Return an empty result for 404 errors
+        if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
+            return {"news": [], "total_count": 0, "offset": 0, "limit": 0}
+        raise
 
 
 GetNewsTool = Tool.from_function(
