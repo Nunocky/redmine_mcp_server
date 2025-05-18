@@ -1,5 +1,6 @@
-import requests
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_issue_relations(
@@ -12,31 +13,36 @@ def get_issue_relations(
     """
     Get a list of Redmine issue relations
     """
-    import os
-
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    headers = {"X-Redmine-API-Key": api_key}
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
     params = {}
     if limit is not None:
         params["limit"] = limit
     if offset is not None:
         params["offset"] = offset
     if issue_id:
-        url = f"{redmine_url.rstrip('/')}/issues/{issue_id}/relations.json"
+        endpoint = f"/issues/{issue_id}/relations.json"
     else:
-        url = f"{redmine_url.rstrip('/')}/relations.json"
-    resp = requests.get(url, headers=headers, params=params)
-    resp.raise_for_status()
-    data = resp.json()
-    return {
-        "relations": data.get("relations", []),
-        "total_count": data.get("total_count", 0),
-        "limit": data.get("limit", limit if limit is not None else 25),
-        "offset": data.get("offset", offset if offset is not None else 0),
-    }
+        endpoint = "/relations.json"
+    try:
+        resp = client.get(endpoint=endpoint, params=params)
+        data = resp.json()
+        return {
+            "relations": data.get("relations", []),
+            "total_count": data.get("total_count", 0),
+            "limit": data.get("limit", limit if limit is not None else 25),
+            "offset": data.get("offset", offset if offset is not None else 0),
+        }
+    except Exception as e:
+        return {
+            "relations": [],
+            "total_count": 0,
+            "limit": limit if limit is not None else 25,
+            "offset": offset if offset is not None else 0,
+            "error": str(e),
+        }
 
 
 GetIssueRelationsTool = Tool.from_function(
