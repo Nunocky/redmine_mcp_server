@@ -2,11 +2,8 @@ import os
 import pprint
 
 import pytest
-from dotenv import load_dotenv
 
 from tools.Projects.get_projects_tool import get_projects
-
-load_dotenv()
 
 
 def test_get_projects_real_api():

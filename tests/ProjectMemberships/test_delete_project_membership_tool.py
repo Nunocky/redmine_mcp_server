@@ -1,11 +1,6 @@
-"""Integration test for DeleteProjectMembershipTool.
-
-Author: Cline
-"""
+"""Integration test for DeleteProjectMembershipTool."""
 
 import os
-
-import pytest
 
 from tools.ProjectMemberships.delete_project_membership_tool import DeleteProjectMembershipTool
 

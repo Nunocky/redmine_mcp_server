@@ -5,11 +5,7 @@ Verify the behavior of the Redmine issue list retrieval API using GetIssuesTool.
 
 import os
 
-from dotenv import load_dotenv
-
 from tools.Issues.get_issues_tool import get_issues
-
-load_dotenv()
 
 
 def test_get_issues_basic():

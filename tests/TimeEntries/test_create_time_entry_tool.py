@@ -1,12 +1,6 @@
 import os
-from pathlib import Path
-
-from dotenv import load_dotenv
 
 from tools.TimeEntries.create_time_entry_tool import create_time_entry
-
-# Load .env file by specifying its absolute path
-load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 
 def test_create_time_entry_real_redmine():

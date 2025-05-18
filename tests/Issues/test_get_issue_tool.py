@@ -1,10 +1,6 @@
 import os
 
-from dotenv import load_dotenv
-
 from tools.Issues.get_issue_tool import get_issue
-
-load_dotenv()
 
 REDMINE_URL = os.environ.get("REDMINE_URL")
 API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")

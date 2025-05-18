@@ -1,8 +1,6 @@
 """Tool for deleting a project membership in Redmine.
 
 This tool uses the RedmineAPIClient to delete a specific membership.
-
-Author: Cline
 """
 
 import os

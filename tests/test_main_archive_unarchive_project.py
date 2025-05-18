@@ -3,12 +3,9 @@ import sys
 from pprint import pprint
 
 import pytest
-from dotenv import load_dotenv
 
 from main import archive_project, create_project, delete_project, unarchive_project
 from tests.random_identifier import random_identifier
-
-load_dotenv()
 
 
 @pytest.mark.asyncio

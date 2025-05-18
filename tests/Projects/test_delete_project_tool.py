@@ -3,14 +3,11 @@ import pprint
 import random
 import string
 
-import dotenv
 import pytest
 
 from tests.random_identifier import random_identifier
 from tools.Projects.create_project_tool import create_project
 from tools.Projects.delete_project_tool import delete_project
-
-dotenv.load_dotenv()
 
 
 def test_delete_project_real_api():

@@ -3,11 +3,8 @@ import sys
 from pprint import pprint
 
 import pytest
-from dotenv import load_dotenv
 
 from main import get_project
-
-load_dotenv()
 
 
 @pytest.mark.asyncio

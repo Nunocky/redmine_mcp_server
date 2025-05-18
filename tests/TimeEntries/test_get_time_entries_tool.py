@@ -1,14 +1,8 @@
 """Tests for GetTimeEntriesTool."""
 
 import os
-from pathlib import Path
-
-import pytest
-from dotenv import load_dotenv
 
 from tools.TimeEntries.get_time_entries_tool import GetTimeEntriesTool
-
-load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 
 def test_get_time_entries_success():

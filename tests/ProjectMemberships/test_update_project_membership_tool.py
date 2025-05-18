@@ -1,7 +1,4 @@
-"""Integration test for UpdateProjectMembershipTool.
-
-Author: Cline
-"""
+"""Integration test for UpdateProjectMembershipTool."""
 
 import os
 
