@@ -11,7 +11,7 @@ def setup_module(module):
     pass
 
 
-def test_add_remove_watcher_real_redmine():
+def test_add_remove_watcher_redmine():
     """
     Integration test to add and remove a watcher from an issue on a real Redmine server.
     """

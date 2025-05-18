@@ -10,7 +10,7 @@ from tools.Projects.create_project_tool import create_project
 from tools.Projects.delete_project_tool import delete_project
 
 
-def test_delete_project_real_api():
+def test_delete_project_api():
     """Real API: Test for project deletion"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
@@ -35,7 +35,7 @@ def test_delete_project_real_api():
     assert result_delete["message"] == "Project deleted"
 
 
-def test_delete_nonexistent_project_real_api():
+def test_delete_nonexistent_project_api():
     """Real API: Test for deleting a non-existent project"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")

@@ -8,7 +8,7 @@ from main import get_queries_tool
 
 
 @pytest.mark.asyncio
-async def test_get_queries_real():
+async def test_get_queries():
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     assert redmine_url, "REDMINE_URL is not set in .env"

@@ -4,7 +4,7 @@ from pathlib import Path
 from tools.Issues.create_issue_tool import CreateIssueTool
 
 
-def test_create_issue_real_redmine():
+def test_create_issue_redmine():
     """
     Integration test to create a new issue on the actual Redmine server (REDMINE_URL in .env).
     """

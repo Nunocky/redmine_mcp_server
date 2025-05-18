@@ -6,7 +6,7 @@ import pytest
 from tools.Projects.get_project_tool import get_project
 
 
-def test_get_project_by_id_real_api():
+def test_get_project_by_id_api():
     """Real API: Get details by project ID"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
@@ -20,7 +20,7 @@ def test_get_project_by_id_real_api():
     assert "name" in result
 
 
-def test_get_project_by_identifier_real_api():
+def test_get_project_by_identifier_api():
     """Real API: Get details by project identifier"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
@@ -36,7 +36,7 @@ def test_get_project_by_identifier_real_api():
     assert "name" in result
 
 
-def test_get_project_with_include_real_api():
+def test_get_project_with_include_api():
     """Real API: Get details with include parameter specified"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")

@@ -9,7 +9,7 @@ from tools.Projects.delete_project_tool import delete_project
 from tools.Projects.update_project_tool import update_project
 
 
-def test_create_update_delete_project_real_api():
+def test_create_update_delete_project_api():
     """Real API: Create project -> Update -> Delete"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")

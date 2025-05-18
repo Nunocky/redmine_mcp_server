@@ -10,7 +10,7 @@ from tools.Projects.delete_project_tool import delete_project
 from tools.Projects.unarchive_project_tool import unarchive_project
 
 
-def test_create_archive_unarchive_delete_project_real_api():
+def test_create_archive_unarchive_delete_project_api():
     """Real API: Create project -> Archive -> Unarchive -> Delete"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")

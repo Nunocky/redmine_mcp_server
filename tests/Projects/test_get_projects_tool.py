@@ -6,7 +6,7 @@ import pytest
 from tools.Projects.get_projects_tool import get_projects
 
 
-def test_get_projects_real_api():
+def test_get_projects_api():
     """Real API: Get project list without parameters"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
@@ -20,7 +20,7 @@ def test_get_projects_real_api():
     assert isinstance(result["total_count"], int)
 
 
-def test_get_projects_with_params_real_api():
+def test_get_projects_with_params_api():
     """Real API: Specify limit, offset, and include parameters"""
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")

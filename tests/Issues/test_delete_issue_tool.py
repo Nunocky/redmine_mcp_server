@@ -9,7 +9,7 @@ def setup_module(module):
     pass
 
 
-def test_delete_issue_real_redmine():
+def test_delete_issue_redmine():
     """
     Integration test that retrieves information from the actual Redmine server from .env, creates an issue, and deletes it.
     """

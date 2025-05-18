@@ -3,7 +3,7 @@ import os
 from tools.TimeEntries.create_time_entry_tool import create_time_entry
 
 
-def test_create_time_entry_real_redmine():
+def test_create_time_entry_redmine():
     """
     Integration test to create a new time entry on the actual Redmine server (REDMINE_URL in .env).
     """
