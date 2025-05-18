@@ -38,7 +38,7 @@ def test_create_and_delete_project():
     if hasattr(result_create, "__await__"):
         import asyncio
 
-        result_create = asyncio.get_event_loop().run_until_complete(result_create)
+        result_create = asyncio.run(result_create)
     pprint(result_create, stream=sys.stderr)
     # 柔軟にproject情報を取得
     if "id" in result_create:
@@ -62,6 +62,6 @@ def test_create_and_delete_project():
     if hasattr(result_delete, "__await__"):
         import asyncio
 
-        result_delete = asyncio.get_event_loop().run_until_complete(result_delete)
+        result_delete = asyncio.run(result_delete)
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"
