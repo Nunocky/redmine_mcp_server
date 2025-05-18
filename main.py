@@ -21,12 +21,16 @@ from tools.Issues.update_issue_tool import UpdateIssueTool
 from tools.News.get_news_tool import GetNewsTool
 from tools.ProjectMemberships.create_membership_tool import CreateProjectMembershipTool
 from tools.ProjectMemberships.get_memberships_tool import GetMembershipsTool
-from tools.Projects.archive_project_tool import ArchiveProjectTool
+
+# TODO ArchiveToolを使うように修正する
+from tools.Projects.archive_project_tool import archive_project as archive_project_func
 from tools.Projects.create_project_tool import CreateProjectTool
 from tools.Projects.delete_project_tool import DeleteProjectTool
 from tools.Projects.get_project_tool import GetProjectTool
 from tools.Projects.get_projects_tool import GetProjectsTool
-from tools.Projects.unarchive_project_tool import UnarchiveProjectTool
+
+# TODO UnarchiveToolを使うように修正する
+from tools.Projects.unarchive_project_tool import unarchive_project as unarchive_project_func
 from tools.Projects.update_project_tool import UpdateProjectTool
 from tools.TimeEntries.create_time_entry_tool import CreateTimeEntryTool
 from tools.TimeEntries.get_time_entries_tool import GetTimeEntriesTool
@@ -357,12 +361,15 @@ async def archive_project(
     project_id_or_identifier: str,
 ) -> dict:
     """Archive a Redmine project"""
-    result = await ArchiveProjectTool.run(
-        {
-            "project_id_or_identifier": project_id_or_identifier,
-            "redmine_url": redmine_url,
-            "api_key": api_key,
-        }
+
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(
+        None,
+        lambda: archive_project_func(
+            project_id_or_identifier=project_id_or_identifier,
+            redmine_url=redmine_url,
+            api_key=api_key,
+        ),
     )
     return unwrap_text_content(result)
 
@@ -432,12 +439,15 @@ async def unarchive_project(
     project_id_or_identifier: str,
 ) -> dict:
     """Unarchive a Redmine project"""
-    result = await UnarchiveProjectTool.run(
-        {
-            "project_id_or_identifier": project_id_or_identifier,
-            "redmine_url": redmine_url,
-            "api_key": api_key,
-        }
+
+    loop = asyncio.get_event_loop()
+    result = await loop.run_in_executor(
+        None,
+        lambda: unarchive_project_func(
+            redmine_url=redmine_url,
+            api_key=api_key,
+            project_id_or_identifier=project_id_or_identifier,
+        ),
     )
     return unwrap_text_content(result)
 
