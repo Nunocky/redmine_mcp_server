@@ -222,7 +222,18 @@ async def get_issues(
     """Get a list of Redmine issues"""
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(
-        None, lambda: GetIssuesTool().run(redmine_url, api_key, offset, limit, sort, include, filters)
+        None,
+        lambda: GetIssuesTool().run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "offset": offset,
+                "limit": limit,
+                "sort": sort,
+                "include": include,
+                "filters": filters,
+            }
+        ),
     )
 
 
@@ -240,7 +251,7 @@ async def add_watcher(
             "api_key": api_key,
             "issue_id": issue_id,
             "user_id": user_id,
-        }
+        },
     )
 
 
