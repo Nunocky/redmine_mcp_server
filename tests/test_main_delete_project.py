@@ -4,14 +4,15 @@ import string
 import sys
 from pprint import pprint
 
-import pytest
-
-from main import create_project, delete_project
 from tests.random_identifier import random_identifier
+from tools.Projects.create_project_tool import create_project
+from tools.Projects.delete_project_tool import delete_project
+
+REDMINE_URL = os.environ.get("REDMINE_URL")
+API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
 
 
-@pytest.mark.asyncio
-async def test_delete_project():
+def test_delete_project():
     """Normal case test for Redmine project deletion API
 
     Args:
@@ -23,17 +24,16 @@ async def test_delete_project():
     Note:
         Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
-
     identifier = random_identifier()
     name = "Project for deletion test_" + identifier
 
     # Create project
-    result_create = await create_project(
-        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description="Project for deletion test"
+    result_create = create_project(
+        name=name,
+        identifier=identifier,
+        redmine_url=REDMINE_URL,
+        api_key=API_KEY,
+        description="Project for deletion test",
     )
     pprint(result_create, stream=sys.stderr)
     assert isinstance(result_create, dict)
@@ -41,13 +41,16 @@ async def test_delete_project():
     assert result_create["identifier"] == identifier
 
     # Delete project
-    result_delete = await delete_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
+    result_delete = delete_project(
+        project_id_or_identifier=identifier,
+        redmine_url=REDMINE_URL,
+        api_key=API_KEY,
+    )
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"
 
 
-@pytest.mark.asyncio
-async def test_delete_nonexistent_project():
+def test_delete_nonexistent_project():
     """Test for deleting a non-existent Redmine project API
 
     Args:
@@ -59,16 +62,17 @@ async def test_delete_nonexistent_project():
     Note:
         Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
-
     # Specify a non-existent project ID
-    nonexistent_id = "nonexistent_project_" + "".join(random.choices(string.ascii_lowercase + string.digits, k=8))
+    nonexistent_id = "nonexistent_project_" + "".join(
+        random.choices(string.ascii_lowercase + string.digits, k=8),
+    )
 
     # Delete project
-    result_delete = await delete_project(project_id_or_identifier=nonexistent_id, redmine_url=redmine_url, api_key=api_key)
+    result_delete = delete_project(
+        project_id_or_identifier=nonexistent_id,
+        redmine_url=REDMINE_URL,
+        api_key=API_KEY,
+    )
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "error"
     assert "status_code" in result_delete
