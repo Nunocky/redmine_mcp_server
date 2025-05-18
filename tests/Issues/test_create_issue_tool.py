@@ -1,28 +1,24 @@
 import os
-from pathlib import Path
 
-from tools.Issues.create_issue_tool import CreateIssueTool
+from tools.Issues.create_issue_tool import create_issue
+
+REDMINE_URL = os.environ.get("REDMINE_URL")
+API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
 
 
-async def test_create_issue_redmine():
+def test_create_issue_redmine():
     """
     Integration test to create a new issue on the actual Redmine server (REDMINE_URL in .env).
     """
-    api_key = os.getenv("REDMINE_ADMIN_API_KEY")
-    redmine_url = os.getenv("REDMINE_URL")
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
-    assert redmine_url, "REDMINE_URL is not set in .env"
     project_id = "testproject"
     subject = "Test Issue (pytest)"
     description = "Automated test creation by pytest"
-    result = await CreateIssueTool.run(
-        {
-            "redmine_url": redmine_url,
-            "api_key": api_key,
-            "project_id": project_id,
-            "subject": subject,
-            "description": description,
-        }
+    result = create_issue(
+        redmine_url=REDMINE_URL,
+        api_key=API_KEY,
+        project_id=project_id,
+        subject=subject,
+        description=description,
     )
     assert "issue" in result
     assert isinstance(result["issue"], dict)

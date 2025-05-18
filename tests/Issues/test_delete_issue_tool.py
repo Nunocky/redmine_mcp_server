@@ -1,38 +1,35 @@
 import os
-from pathlib import Path
 
-from tools.Issues.create_issue_tool import CreateIssueTool
+from tools.Issues.create_issue_tool import create_issue
 from tools.Issues.delete_issue_tool import delete_issue
 
+REDMINE_URL = os.environ.get("REDMINE_URL")
+API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
 
-def setup_module(module):
-    pass
 
-
-async def test_delete_issue_redmine():
+def test_delete_issue_redmine():
     """
     Integration test that retrieves information from the actual Redmine server from .env, creates an issue, and deletes it.
     """
-    api_key = os.getenv("REDMINE_ADMIN_API_KEY")
-    redmine_url = os.getenv("REDMINE_URL")
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
-    assert redmine_url, "REDMINE_URL is not set in .env"
     project_id = "testproject"
     subject = "Deletion Test Issue (pytest)"
     description = "Issue for deletion test by pytest"
+
     # First, create an issue
-    issue = (
-        await CreateIssueTool.run(
-            {
-                "redmine_url": redmine_url,
-                "api_key": api_key,
-                "project_id": project_id,
-                "subject": subject,
-                "description": description,
-            }
-        )
-    )["issue"]
+    result = create_issue(
+        redmine_url=REDMINE_URL,
+        api_key=API_KEY,
+        project_id=project_id,
+        subject=subject,
+        description=description,
+    )
+    issue = result["issue"]
     issue_id = issue["id"]
+
     # Execute deletion
-    result = delete_issue(redmine_url, api_key, issue_id)
+    result = delete_issue(
+        REDMINE_URL,
+        API_KEY,
+        issue_id,
+    )
     assert result["success"] is True
