@@ -1,7 +1,8 @@
 """Tool to remove a watcher from a Redmine issue"""
 
-import requests
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def remove_watcher(
@@ -22,20 +23,23 @@ def remove_watcher(
     Returns:
         dict: Success status and response information
     """
-    import os
-
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    headers = {"X-Redmine-API-Key": api_key}
-    url = f"{redmine_url.rstrip('/')}/issues/{issue_id}/watchers/{user_id}.json"
-    resp = requests.delete(url, headers=headers)
-    return {
-        "success": resp.status_code in (200, 204),
-        "status_code": resp.status_code,
-        "response_text": resp.text,
-    }
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
+    endpoint = f"/issues/{issue_id}/watchers/{user_id}.json"
+    try:
+        resp = client.delete(endpoint=endpoint)
+        return {
+            "success": resp.status_code in (200, 204),
+            "status_code": resp.status_code,
+            "response_text": resp.text,
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+        }
 
 
 RemoveWatcherTool = Tool.from_function(
