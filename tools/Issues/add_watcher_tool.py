@@ -39,4 +39,8 @@ def add_watcher(
     }
 
 
-AddWatcherTool = Tool.from_function(add_watcher, name="add_watcher", description="Add a watcher to a Redmine issue")
+AddWatcherTool = Tool.from_function(
+    add_watcher,
+    name="add_watcher",
+    description="Add a watcher to a Redmine issue",
+)
