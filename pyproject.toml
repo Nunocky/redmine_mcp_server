@@ -14,6 +14,7 @@ dependencies = [
 [tool.ruff]
 line-length = 128
 fix = true
+skip-magic-trailing-comma = false
 
 [tool.ruff.lint]
 select = [

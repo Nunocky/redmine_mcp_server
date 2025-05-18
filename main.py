@@ -4,7 +4,6 @@ Registers all API tools under tools as Redmine MCP server using @mcp.tool() and 
 """
 
 import asyncio
-import os
 
 from fastmcp.server import FastMCP
 

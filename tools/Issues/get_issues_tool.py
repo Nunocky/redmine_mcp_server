@@ -19,6 +19,8 @@ from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_issues(
+    redmine_url: str,
+    api_key: str,
     offset: Optional[int] = None,
     limit: Optional[int] = None,
     sort: Optional[str] = None,
@@ -42,7 +44,10 @@ def get_issues(
         Exception: When API request fails (excluding 404 errors)
     """
     # Call the API directly using RedmineAPIClient
-    client = RedmineAPIClient()
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
     params: Dict[str, Any] = {}
     if offset is not None:
         params["offset"] = offset
@@ -53,14 +58,22 @@ def get_issues(
     if include is not None:
         params["include"] = include
     if filters:
-        params.update(filters)
+        # Convert all filter values to str and expand into params
+        for k, v in filters.items():
+            params[k] = str(v)
 
     try:
         response = client.get(
             endpoint="/issues.json",
             params=params,
         )
-        return response.json()
+        data = response.json()
+        # Ensure offset/limit are present in the result
+        if "offset" not in data:
+            data["offset"] = params.get("offset", 0)
+        if "limit" not in data:
+            data["limit"] = params.get("limit", 25)
+        return data
     except requests.exceptions.HTTPError as e:
         # Return an empty result for 404 errors
         if e.response.status_code == 404:
