@@ -50,9 +50,7 @@ def create_membership(
             json=payload,
         )
         data = response.json()
-        return {
-            "membership": data.get("membership", {}),
-        }
+        return data
     except requests.exceptions.HTTPError as e:
         # Return error details for HTTP errors
         error_details = {"message": str(e)}
