@@ -1,12 +1,7 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
 from tools.Issues.create_issue_tool import CreateIssueTool
-
-# Load .env file by specifying its absolute path
-load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 
 def test_create_issue_real_redmine():

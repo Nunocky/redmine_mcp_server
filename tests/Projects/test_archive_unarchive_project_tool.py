@@ -1,7 +1,6 @@
 import os
 import pprint
 
-import dotenv
 import pytest
 
 from tests.random_identifier import random_identifier
@@ -9,8 +8,6 @@ from tools.Projects.archive_project_tool import archive_project
 from tools.Projects.create_project_tool import create_project
 from tools.Projects.delete_project_tool import delete_project
 from tools.Projects.unarchive_project_tool import unarchive_project
-
-dotenv.load_dotenv()
 
 
 def test_create_archive_unarchive_delete_project_real_api():

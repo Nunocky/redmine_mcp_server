@@ -1,15 +1,12 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
 from tools.Issues.create_issue_tool import CreateIssueTool
 from tools.Issues.delete_issue_tool import delete_issue
 
 
 def setup_module(module):
-    # Load .env file by specifying its absolute path
-    load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
+    pass
 
 
 def test_delete_issue_real_redmine():

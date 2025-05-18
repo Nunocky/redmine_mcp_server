@@ -2,11 +2,7 @@ import os
 import sys
 from pprint import pprint
 
-from dotenv import load_dotenv
-
 from tools.ProjectMemberships.get_memberships_tool import get_memberships
-
-load_dotenv()
 
 
 def test_get_memberships():

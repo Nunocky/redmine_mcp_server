@@ -5,8 +5,6 @@ Author: Cline
 
 import os
 
-import pytest
-
 from tools.ProjectMemberships.delete_project_membership_tool import DeleteProjectMembershipTool
 
 

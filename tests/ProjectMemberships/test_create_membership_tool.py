@@ -3,13 +3,10 @@ import sys
 from pprint import pprint
 
 import pytest
-from dotenv import load_dotenv
 
 from tools.ProjectMemberships.create_membership_tool import create_membership
 from tools.ProjectMemberships.get_memberships_tool import get_memberships  # For verification
 from tools.redmine_api_client import RedmineAPIClient  # For cleanup
-
-load_dotenv()
 
 # Constants for testing - will be loaded from environment variables
 TEST_PROJECT_ID = os.environ.get("REDMINE_TEST_PROJECT_ID")
