@@ -1,5 +1,7 @@
+from unittest.mock import MagicMock, patch
+
 import pytest
-from unittest.mock import patch, MagicMock
+
 from tools.Projects.unarchive_project_tool import unarchive_project
 
 # test_unarchive_project_tool.py
