@@ -1,7 +1,4 @@
-"""Integration test for DeleteProjectMembershipTool.
-
-Author: Cline
-"""
+"""Integration test for DeleteProjectMembershipTool."""
 
 import os
 

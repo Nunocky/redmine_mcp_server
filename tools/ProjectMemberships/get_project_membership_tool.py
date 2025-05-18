@@ -2,8 +2,6 @@
 
 This tool uses the RedmineApiClient to access the Redmine REST API and fetch
 membership details by membership ID.
-
-Author: Cline
 """
 
 import os

@@ -1,8 +1,6 @@
 """Tool for updating a project membership's roles in Redmine.
 
 This tool uses the RedmineAPIClient to update the roles of a specific membership.
-
-Author: Cline
 """
 
 import os
