@@ -5,7 +5,6 @@ from tools.Projects.unarchive_project_tool import unarchive_project
 # test_unarchive_project_tool.py
 
 
-
 def test_unarchive_project_success():
     with patch("tools.Projects.unarchive_project_tool.requests.put") as mock_put:
         mock_resp = MagicMock()
@@ -16,6 +15,7 @@ def test_unarchive_project_success():
         result = unarchive_project("http://example.com", "dummykey", "testproj")
         assert result["status"] == "success"
         assert result["message"] == "Project unarchived"
+
 
 def test_unarchive_project_error():
     with patch("tools.Projects.unarchive_project_tool.requests.put") as mock_put:
