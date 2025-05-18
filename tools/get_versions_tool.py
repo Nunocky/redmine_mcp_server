@@ -1,5 +1,8 @@
-import requests
+import os
+
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_versions(
@@ -9,31 +12,37 @@ def get_versions(
     limit: int = None,
     offset: int = None,
 ):
-    import os
-
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    headers = {"X-Redmine-API-Key": api_key}
+    if not redmine_url or not api_key:
+        raise ValueError("redmine_url and api_key are required.")
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}
     if limit is not None:
         params["limit"] = limit
     if offset is not None:
         params["offset"] = offset
     if project_id:
-        url = f"{redmine_url.rstrip('/')}/projects/{project_id}/versions.json"
+        endpoint = f"/projects/{project_id}/versions.json"
     else:
-        url = f"{redmine_url.rstrip('/')}/versions.json"
-    resp = requests.get(url, headers=headers, params=params)
-    resp.raise_for_status()
-    data = resp.json()
-    return {
-        "versions": data.get("versions", []),
-        "total_count": data.get("total_count", 0),
-        "limit": data.get("limit", limit if limit is not None else 25),
-        "offset": data.get("offset", offset if offset is not None else 0),
-    }
+        endpoint = "/versions.json"
+    try:
+        response = client.get(endpoint=endpoint, params=params)
+        data = response.json()
+        return {
+            "versions": data.get("versions", []),
+            "total_count": data.get("total_count", 0),
+            "limit": data.get("limit", limit if limit is not None else 25),
+            "offset": data.get("offset", offset if offset is not None else 0),
+        }
+    except Exception as e:
+        import requests
+
+        if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
+            return {"versions": [], "total_count": 0, "limit": 0, "offset": 0}
+        raise
 
 
 GetVersionTool = Tool.from_function(
