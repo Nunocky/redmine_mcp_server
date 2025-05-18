@@ -49,16 +49,19 @@ async def get_memberships(
     limit: int = None,
 ) -> dict:
     """Get a list of memberships for the specified project"""
-    result = await GetMembershipsTool.run(
-        {
-            "redmine_url": redmine_url,
-            "api_key": api_key,
-            "project_id": project_id,
-            "offset": offset,
-            "limit": limit,
-        }
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: GetMembershipsTool().run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "project_id": project_id,
+                "offset": offset,
+                "limit": limit,
+            }
+        ),
     )
-    return unwrap_text_content(result)
 
 
 @mcp.tool()
