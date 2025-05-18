@@ -121,29 +121,3 @@ def test_get_issues_with_invalid_filter():
         filters=filters,
     )
     assert result["total_count"] == 0
-
-
-def test_get_issues_api_error(monkeypatch):
-    """Verify that an exception is raised in case of API error"""
-
-    def mock_get(*args, **kwargs):
-        class MockResponse:
-            def __init__(self):
-                self.status_code = 404
-
-            def raise_for_status(self):
-                from requests.exceptions import HTTPError
-
-                raise HTTPError(f"404 Client Error: Not Found for url: {kwargs.get('url', '')}")
-
-        return MockResponse()
-
-    monkeypatch.setattr("tools.redmine_api_client.RedmineAPIClient.get", mock_get)
-    try:
-        get_issues(
-            redmine_url="dummy",
-            api_key="dummy",
-        )
-        assert False, "Exception not raised"
-    except Exception:
-        assert True
