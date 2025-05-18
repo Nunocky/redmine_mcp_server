@@ -91,7 +91,10 @@ def create_project(
 
     payload = {"project": project_data}
     try:
-        resp = client.post("/projects.json", json=payload)
+        resp = client.post(
+            "/projects.json",
+            json=payload,
+        )
         return resp.json().get("project", {})
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 404:

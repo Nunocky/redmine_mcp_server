@@ -91,10 +91,15 @@ def update_project(
     payload = {"project": project_data}
     endpoint = f"/projects/{project_id_or_identifier}.json"
     try:
-        resp = client.put(endpoint, json=payload)
+        resp = client.put(
+            endpoint,
+            json=payload,
+        )
         if resp.status_code == 204:
             # 更新後の最新情報を取得して返す
-            get_resp = client.get(endpoint)
+            get_resp = client.get(
+                endpoint,
+            )
             return get_resp.json().get("project", {})
         return resp.json().get("project", {})
     except requests.exceptions.HTTPError as e:

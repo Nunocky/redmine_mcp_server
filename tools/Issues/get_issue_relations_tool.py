@@ -27,7 +27,10 @@ def get_issue_relations(
     else:
         endpoint = "/relations.json"
     try:
-        resp = client.get(endpoint=endpoint, params=params)
+        resp = client.get(
+            endpoint=endpoint,
+            params=params,
+        )
         data = resp.json()
         return {
             "relations": data.get("relations", []),

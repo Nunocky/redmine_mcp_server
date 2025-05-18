@@ -21,15 +21,11 @@ from tools.Issues.update_issue_tool import UpdateIssueTool
 from tools.News.get_news_tool import GetNewsTool
 from tools.ProjectMemberships.create_membership_tool import CreateProjectMembershipTool
 from tools.ProjectMemberships.get_memberships_tool import GetMembershipsTool
-
-# TODO ArchiveToolを使うように修正する
 from tools.Projects.archive_project_tool import ArchiveProjectTool
 from tools.Projects.create_project_tool import CreateProjectTool
 from tools.Projects.delete_project_tool import DeleteProjectTool
 from tools.Projects.get_project_tool import GetProjectTool
 from tools.Projects.get_projects_tool import GetProjectsTool
-
-# TODO UnarchiveToolを使うように修正する
 from tools.Projects.unarchive_project_tool import UnarchiveProjectTool
 from tools.Projects.update_project_tool import UpdateProjectTool
 from tools.TimeEntries.create_time_entry_tool import CreateTimeEntryTool
