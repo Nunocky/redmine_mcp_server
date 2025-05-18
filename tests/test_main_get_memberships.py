@@ -21,6 +21,8 @@ async def test_get_memberships_tool():
         redmine_url=redmine_url,
         api_key=api_key,
         project_id=project_id,
+        offset=None,
+        limit=None,
     )
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)

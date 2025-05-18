@@ -22,20 +22,20 @@ def get_memberships(
     redmine_url: str,
     api_key: str,
     project_id: str,
-    limit: Optional[int] = None,
     offset: Optional[int] = None,
+    limit: Optional[int] = None,
 ) -> Dict[str, Any]:
-    """Get a list of project memberships
+    """Get a list of Redmine project memberships
 
     Args:
         redmine_url: URL of the Redmine server
         api_key: Redmine API key
         project_id: Project ID or identifier
-        limit: Number of items to retrieve
         offset: Number of items to skip
+        limit: Number of items to retrieve
 
     Returns:
-        Membership list and page information
+        dict: Membership list and page information
         Returns an empty result for non-existent resources (404 error)
 
     Raises:
@@ -61,12 +61,8 @@ def get_memberships(
             data["offset"] = params.get("offset", 0)
         if "limit" not in data:
             data["limit"] = params.get("limit", 25)
-        return {
-            "memberships": data.get("memberships", []),
-            "total_count": data.get("total_count", 0),
-            "limit": data["limit"],
-            "offset": data["offset"],
-        }
+        # Return the API response as is, ensuring offset/limit are present
+        return data
     except requests.exceptions.HTTPError as e:
         # Return an empty result for 404 errors
         if e.response.status_code == 404:

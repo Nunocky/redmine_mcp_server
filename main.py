@@ -49,6 +49,8 @@ async def get_memberships(
     redmine_url: str,
     api_key: str,
     project_id: str,
+    offset: int = None,
+    limit: int = None,
 ) -> dict:
     """Get a list of memberships for the specified project"""
     result = await GetMembershipsTool.run(
@@ -56,6 +58,8 @@ async def get_memberships(
             "redmine_url": redmine_url,
             "api_key": api_key,
             "project_id": project_id,
+            "offset": offset,
+            "limit": limit,
         }
     )
     return unwrap_text_content(result)
