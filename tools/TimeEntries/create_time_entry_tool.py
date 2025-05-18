@@ -13,12 +13,7 @@ def create_time_entry(
     comments: str = None,
     user_id: int = None,
 ):
-    import os
-
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
+    """Create a new time entry in Redmine."""
     headers = {"X-Redmine-API-Key": api_key, "Content-Type": "application/json"}
     time_entry_data = {}
     if issue_id is not None:
@@ -47,5 +42,7 @@ def create_time_entry(
 
 
 CreateTimeEntryTool = Tool.from_function(
-    create_time_entry, name="create_time_entry", description="Create a new time entry in Redmine."
+    create_time_entry,
+    name="create_time_entry",
+    description="Create a new time entry in Redmine.",
 )

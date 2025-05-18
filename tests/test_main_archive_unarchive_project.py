@@ -35,7 +35,11 @@ async def test_create_archive_unarchive_delete_project():
 
     # Create project
     result_create = await create_project(
-        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description=description
+        name=name,
+        identifier=identifier,
+        redmine_url=redmine_url,
+        api_key=api_key,
+        description=description,
     )
     pprint(result_create, stream=sys.stderr)
     assert isinstance(result_create, dict)
@@ -45,16 +49,28 @@ async def test_create_archive_unarchive_delete_project():
     assert result_create["description"] == description
 
     # Archive project
-    result_archive = await archive_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
+    result_archive = await archive_project(
+        project_id_or_identifier=identifier,
+        redmine_url=redmine_url,
+        api_key=api_key,
+    )
     pprint(result_archive, stream=sys.stderr)
     assert result_archive["status"] == "success"
 
     # Unarchive project
-    result_unarchive = await unarchive_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
+    result_unarchive = await unarchive_project(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        project_id_or_identifier=identifier,
+    )
     pprint(result_unarchive, stream=sys.stderr)
     assert result_unarchive["status"] == "success"
 
     # Delete project
-    result_delete = await delete_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
+    result_delete = await delete_project(
+        project_id_or_identifier=identifier,
+        redmine_url=redmine_url,
+        api_key=api_key,
+    )
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"

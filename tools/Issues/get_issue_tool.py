@@ -3,6 +3,8 @@
 import requests
 from fastmcp.tools.tool import Tool
 
+from tools.redmine_api_client import RedmineAPIClient
+
 
 def get_issue(
     redmine_url: str,
@@ -22,20 +24,28 @@ def get_issue(
     Returns:
         dict: Issue details information
     """
-    import os
-
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    headers = {"X-Redmine-API-Key": api_key}
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
     params = {}
     if include:
         params["include"] = include
-    url = f"{redmine_url.rstrip('/')}/issues/{issue_id}.json"
-    resp = requests.get(url, headers=headers, params=params)
-    resp.raise_for_status()
-    return resp.json()
+
+    try:
+        response = client.get(
+            endpoint=f"/issues/{issue_id}.json",
+            params=params,
+        )
+        return response.json()
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            return {"issue": None}
+        raise
 
 
-GetIssueTool = Tool.from_function(get_issue, name="get_issue", description="Get Redmine issue information")
+GetIssueTool = Tool.from_function(
+    get_issue,
+    name="get_issue",
+    description="Get Redmine issue information",
+)

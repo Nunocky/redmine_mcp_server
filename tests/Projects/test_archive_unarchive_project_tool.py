@@ -25,7 +25,11 @@ def test_create_archive_unarchive_delete_project_real_api():
 
     # Create project
     result_create = create_project(
-        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description="Project for automated testing"
+        name=name,
+        identifier=identifier,
+        redmine_url=redmine_url,
+        api_key=api_key,
+        description="Project for automated testing",
     )
     pprint.pprint(result_create)
     assert "id" in result_create
@@ -37,7 +41,11 @@ def test_create_archive_unarchive_delete_project_real_api():
     assert result_archive["status"] == "success"
 
     # Unarchive project
-    result_unarchive = unarchive_project(identifier, redmine_url=redmine_url, api_key=api_key)
+    result_unarchive = unarchive_project(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        project_id_or_identifier=identifier,
+    )
     pprint.pprint(result_unarchive)
     assert result_unarchive["status"] == "success"
 

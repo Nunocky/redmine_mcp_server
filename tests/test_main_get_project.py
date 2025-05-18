@@ -23,10 +23,12 @@ async def test_get_project():
     Note:
         Please set REDMINE_URL, REDMINE_ADMIN_API_KEY, and REDMINE_PROJECT_ID in .env.
     """
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
-    result = await get_project(project_id)
+    result = await get_project(redmine_url=redmine_url, api_key=api_key, project_id_or_identifier=project_id)
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "id" in result
@@ -46,10 +48,14 @@ async def test_get_project_with_include():
     Note:
         Please set REDMINE_URL, REDMINE_ADMIN_API_KEY, and REDMINE_PROJECT_ID in .env.
     """
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
-    result = await get_project(project_id, include="trackers,enabled_modules")
+    result = await get_project(
+        redmine_url=redmine_url, api_key=api_key, project_id_or_identifier=project_id, include="trackers,enabled_modules"
+    )
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "id" in result
