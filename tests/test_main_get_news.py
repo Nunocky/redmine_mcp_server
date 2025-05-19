@@ -40,6 +40,24 @@ def test_get_news():
     assert "offset" in result
 
 
+def test_get_news_invalid_project():
+    """存在しないプロジェクトID指定時のエラー系テスト（実API呼び出し）"""
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
+    # 存在しないプロジェクトIDを明示的に指定
+    invalid_project_id = "__not_exist_project__"
+    assert redmine_url, "REDMINE_URL is not set in .env"
+    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
+    with pytest.raises(ValueError):
+        get_news(
+            redmine_url=redmine_url,
+            api_key=api_key,
+            project_id=invalid_project_id,
+            limit=1,
+            offset=0,
+        )
+
+
 def test_get_news_project():
     """Test get_news for a specific project with real Redmine server.
 

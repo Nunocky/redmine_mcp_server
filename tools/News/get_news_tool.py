@@ -64,9 +64,9 @@ def get_news(
             data["limit"] = params.get("limit", 25)
         return data
     except Exception as e:
-        # Return an empty result for 404 errors
+        # Raise exception for 404 errors (project not found)
         if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
-            return {"news": [], "total_count": 0, "offset": 0, "limit": 0}
+            raise ValueError("指定された project_id は存在しません") from e
         raise
 
 
