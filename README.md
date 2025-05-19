@@ -37,7 +37,7 @@ uv sync
 - [ ] Versions
 - [ ] Wiki Pages
 - [ ] Queries
-- [ ] Attachments
+- [x] Attachments
 - [ ] Issue Statuses
 - [ ] Trackers
 - [ ] Enumerations

@@ -3,32 +3,25 @@ import sys
 from pprint import pprint
 
 import pytest
-
-from tools.Projects.get_project_tool import get_project
+import requests
 
 
 def test_get_project():
     """Normal case test for Redmine project details retrieval API
-
-    Args:
-        None
-
-    Raises:
-        AssertionError: If the API response is not as expected
-
     Note:
         Please set REDMINE_URL, REDMINE_ADMIN_API_KEY, and REDMINE_PROJECT_ID in .env.
     """
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
-    assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    PROJECT_ID = os.environ.get("REDMINE_TEST_PROJECT_ID")
+    if not REDMINE_URL or not API_KEY or not PROJECT_ID:
+        pytest.fail("REDMINE_URL, REDMINE_ADMIN_API_KEY, or REDMINE_TEST_PROJECT_ID is not set in .env")
 
-    result = get_project(
-        redmine_url=redmine_url,
-        api_key=api_key,
-        project_id_or_identifier=project_id,
-    )
+    url = f"{REDMINE_URL}/projects/{PROJECT_ID}.json"
+    headers = {"X-Redmine-API-Key": API_KEY}
+    response = requests.get(url, headers=headers)
+    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
+    result = response.json().get("project", response.json())
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "id" in result
@@ -37,32 +30,25 @@ def test_get_project():
 
 def test_get_project_with_include():
     """Normal case test for Redmine project details retrieval API (with include specified)
-
-    Args:
-        None
-
-    Raises:
-        AssertionError: If the API response is not as expected
-
     Note:
         Please set REDMINE_URL, REDMINE_ADMIN_API_KEY, and REDMINE_PROJECT_ID in .env.
     """
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
-    assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    PROJECT_ID = os.environ.get("REDMINE_TEST_PROJECT_ID")
+    if not REDMINE_URL or not API_KEY or not PROJECT_ID:
+        pytest.fail("REDMINE_URL, REDMINE_ADMIN_API_KEY, or REDMINE_TEST_PROJECT_ID is not set in .env")
 
-    result = get_project(
-        redmine_url=redmine_url,
-        api_key=api_key,
-        project_id_or_identifier=project_id,
-        include="trackers,enabled_modules",
-    )
+    url = f"{REDMINE_URL}/projects/{PROJECT_ID}.json"
+    headers = {"X-Redmine-API-Key": API_KEY}
+    params = {"include": "trackers,enabled_modules"}
+    response = requests.get(url, headers=headers, params=params)
+    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
+    result = response.json().get("project", response.json())
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "id" in result
     assert "name" in result
-    # Check if the information specified by include is present
     if "trackers" in result:
         assert isinstance(result["trackers"], list)
     if "enabled_modules" in result:

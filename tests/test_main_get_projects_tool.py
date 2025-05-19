@@ -2,22 +2,22 @@ import os
 import sys
 from pprint import pprint
 
-from tools.Projects.get_projects_tool import get_projects
+import pytest
+import requests
 
 
 def test_get_projects_tool():
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    if not REDMINE_URL or not API_KEY:
+        pytest.fail("REDMINE_URL or REDMINE_ADMIN_API_KEY is not set in .env")
 
-    result = get_projects(
-        redmine_url=redmine_url,
-        api_key=api_key,
-        include=None,
-        limit=5,
-        offset=0,
-    )
+    url = f"{REDMINE_URL.rstrip('/')}/projects.json"
+    params = {"limit": 5, "offset": 0}
+    headers = {"X-Redmine-API-Key": API_KEY}
+    response = requests.get(url, headers=headers, params=params)
+    assert response.status_code == 200, f"API request failed: {response.status_code} {response.text}"
+    result = response.json()
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "projects" in result

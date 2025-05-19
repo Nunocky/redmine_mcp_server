@@ -104,6 +104,17 @@ def create_issue(
         endpoint="/issues.json",
         json={"issue": issue_data},
     )
+    issue = response.json().get("issue")
+    # 添付ファイル情報を取得するため再取得
+    if issue and "id" in issue:
+        issue_id = issue["id"]
+        try:
+            detail_resp = client.get(f"/issues/{issue_id}.json", params={"include": "attachments"})
+            detail_json = detail_resp.json()
+            if "issue" in detail_json:
+                return detail_json
+        except Exception:
+            pass
     return response.json()
 
 
