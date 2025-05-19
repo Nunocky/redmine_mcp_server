@@ -37,7 +37,7 @@ def upload_attachment(
             headers = client._headers()
             headers.update(
                 {
-                    "Content-Type": "application/octet-stream",
+                    "Content-Type": content_type,
                     "Accept": "*/*",
                 }
             )

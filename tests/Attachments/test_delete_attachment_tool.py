@@ -39,7 +39,6 @@ def test_delete_attachment_success():
         redmine_url=redmine_url,
         api_key=api_key,
         file_path=file_path,
-        content_type="application/octet-stream",
     )
     print("upload_result:", upload_result)
     assert upload_result["success"] is True
