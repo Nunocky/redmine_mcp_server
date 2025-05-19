@@ -22,7 +22,7 @@ def test_get_attachment_success():
     redmine_url = get_env("REDMINE_URL")
     api_key = get_env("REDMINE_USER_API_KEY")
     # 添付ファイルIDは事前に存在するものを指定してください
-    attachment_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
+    attachment_id = get_env("REDMINE_TEST_ATTACHMENT_ID")
     result = get_attachment(
         redmine_url=redmine_url,
         api_key=api_key,
