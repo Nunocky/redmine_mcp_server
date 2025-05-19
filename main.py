@@ -42,10 +42,48 @@ mcp = FastMCP("Redmine MCP Server", "0.1.0")
 
 # こういう書き方のほうがいいかも
 # tools = [
+#     # ProjectMemberships
 #     GetMembershipsTool,
 #     CreateProjectMembershipTool,
+#     # News
 #     GetNewsTool,
-#     # ...他のTool...
+#     # Versions
+#     GetVersionTool,
+#     # WikiPages
+#     GetWikiPagesTool,
+#     # Issues
+#     GetIssueTool,
+#     GetIssuesTool,
+#     GetIssueRelationsTool,
+#     CreateIssueTool,
+#     UpdateIssueTool,  # △
+#     DeleteIssueTool,
+#     AddWatcherTool,
+#     RemoveWatcherTool,
+#     # Queries
+#     GetQueriesTool,
+#     # Projects
+#     GetProjectsTool,
+#     GetProjectTool,
+#     CreateProjectTool,
+#     UpdateProjectTool,
+#     DeleteProjectTool,
+#     ArchiveProjectTool,
+#     UnarchiveProjectTool,
+#     # TimeEntries
+#     GetTimeEntriesTool,
+#     CreateTimeEntryTool,
+#     # Attachments
+#     DeleteAttachmentTool,
+#     GetAttachmentTool,
+#     UpdateAttachmentTool,
+#     UploadAttachmentTool,
+#     # Users
+#     GetUsersTool,
+#     GetUserTool,
+#     CreateUserTool,
+#     UpdateUserTool,
+#     DeleteUserTool,
 # ]
 
 # for tool in tools:
@@ -72,10 +110,10 @@ mcp.add_tool(CreateIssueTool.fn)  # OK
 mcp.add_tool(UpdateIssueTool.fn)  # △
 mcp.add_tool(DeleteIssueTool.fn)  # OK
 mcp.add_tool(AddWatcherTool.fn)  # OK
-mcp.add_tool(RemoveWatcherTool.fn)
+mcp.add_tool(RemoveWatcherTool.fn)  # OK
 
-# Queries
-mcp.add_tool(GetQueriesTool.fn)
+# Queries (保存済み検索条件)
+mcp.add_tool(GetQueriesTool.fn)  # OK
 
 # Projects
 mcp.add_tool(GetProjectsTool.fn)  # OK
@@ -86,23 +124,25 @@ mcp.add_tool(DeleteProjectTool.fn)  # OK
 mcp.add_tool(ArchiveProjectTool.fn)  # OK
 mcp.add_tool(UnarchiveProjectTool.fn)  # OK
 
-# TimeEntries
-mcp.add_tool(GetTimeEntriesTool.fn)
-mcp.add_tool(CreateTimeEntryTool.fn)
+# TimeEntries (作業時間記録)
+mcp.add_tool(GetTimeEntriesTool.fn)  # OK
+mcp.add_tool(CreateTimeEntryTool.fn)  # OK
 
 # Attachments
-mcp.add_tool(DeleteAttachmentTool.fn)
-mcp.add_tool(GetAttachmentTool.fn)
-mcp.add_tool(UpdateAttachmentTool.fn)
-mcp.add_tool(UploadAttachmentTool.fn)
+mcp.add_tool(UploadAttachmentTool.fn)  # OK
+mcp.add_tool(DeleteAttachmentTool.fn)  # OK
+mcp.add_tool(GetAttachmentTool.fn)  # OK
+mcp.add_tool(UpdateAttachmentTool.fn)  # pass
 
 # Users
-mcp.add_tool(GetUsersTool.fn)
-mcp.add_tool(GetUserTool.fn)
-mcp.add_tool(CreateUserTool.fn)
-mcp.add_tool(UpdateUserTool.fn)
-mcp.add_tool(DeleteUserTool.fn)
+mcp.add_tool(GetUsersTool.fn)  # OK
+mcp.add_tool(GetUserTool.fn)  # OK
+mcp.add_tool(CreateUserTool.fn)  # OK
+mcp.add_tool(UpdateUserTool.fn)  # OK
+mcp.add_tool(DeleteUserTool.fn)  # OK
 
+# My Account
+mcp.add_tool(GetMyAccountTool.fn)
 
 if __name__ == "__main__":
     mcp.run()

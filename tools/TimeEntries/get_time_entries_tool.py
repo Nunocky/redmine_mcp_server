@@ -1,6 +1,8 @@
 """Tool class for retrieving Redmine TimeEntries list via REST API.
 
 This tool fetches a list of time entries from Redmine using the REST API.
+
+作業時間記録
 """
 
 from typing import Any, Dict, Optional

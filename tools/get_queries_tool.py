@@ -1,3 +1,8 @@
+"""
+Query Tool
+保存済み検索条件
+"""
+
 import os
 
 from fastmcp.tools.tool import Tool
@@ -23,8 +28,6 @@ def get_queries(
             "queries": data.get("queries", []),
         }
     except Exception as e:
-        import requests
-
         if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
             return {"queries": []}
         raise
