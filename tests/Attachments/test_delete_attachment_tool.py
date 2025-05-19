@@ -29,7 +29,7 @@ def create_temp_file(content: bytes = b"delete test file") -> str:
 
 
 def test_delete_attachment_success():
-    """添付ファイル削除APIの正常系テスト（事前にアップロード＆チケット登録）"""
+    """添付ファイル削除APIの正常系テスト（事前にアップロード & チケット登録）"""
     redmine_url = get_env("REDMINE_URL")
     api_key = get_env("REDMINE_ADMIN_API_KEY")
     project_id = get_env("REDMINE_TEST_PROJECT_ID")
@@ -39,7 +39,7 @@ def test_delete_attachment_success():
         redmine_url=redmine_url,
         api_key=api_key,
         file_path=file_path,
-        content_type="text/plain",
+        content_type="application/octet-stream",
     )
     print("upload_result:", upload_result)
     assert upload_result["success"] is True
@@ -49,7 +49,7 @@ def test_delete_attachment_success():
         {
             "token": token,
             "filename": os.path.basename(file_path),
-            "content_type": "text/plain",
+            "content_type": "application/octet-stream",
         }
     ]
     issue_result = create_issue(

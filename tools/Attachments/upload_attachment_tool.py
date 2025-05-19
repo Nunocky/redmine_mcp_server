@@ -34,10 +34,13 @@ def upload_attachment(
     endpoint = "/uploads.json"
     try:
         with open(file_path, "rb") as f:
-            headers = {
-                "Content-Type": content_type,
-                "Accept": "application/json",
-            }
+            headers = client._headers()
+            headers.update(
+                {
+                    "Content-Type": "application/octet-stream",
+                    "Accept": "*/*",
+                }
+            )
             resp = client._request(
                 method="POST",
                 endpoint=endpoint,
