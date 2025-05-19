@@ -40,6 +40,17 @@ from tools.Users.update_user_tool import UpdateUserTool
 
 mcp = FastMCP("Redmine MCP Server", "0.1.0")
 
+# こういう書き方のほうがいいかも
+# tools = [
+#     GetMembershipsTool,
+#     CreateProjectMembershipTool,
+#     GetNewsTool,
+#     # ...他のTool...
+# ]
+
+# for tool in tools:
+#     mcp.add_tool(tool.fn)
+
 # ProjectMemberships
 mcp.add_tool(GetMembershipsTool.fn)  # OK
 mcp.add_tool(CreateProjectMembershipTool.fn)  # △ get_rolesが必要と言われる
