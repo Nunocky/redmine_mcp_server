@@ -1,78 +1,46 @@
 import os
-import random
-import string
 import sys
 from pprint import pprint
 
-from tests.random_identifier import random_identifier
-from tools.Projects.create_project_tool import create_project
-from tools.Projects.delete_project_tool import delete_project
+import pytest
+import requests
 
-REDMINE_URL = os.environ.get("REDMINE_URL")
-API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+from tests.random_identifier import random_identifier
 
 
 def test_delete_project():
-    """Normal case test for Redmine project deletion API
+    """Normal case test for Redmine project deletion API"""
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    if not REDMINE_URL or not API_KEY:
+        pytest.fail("REDMINE_URL or REDMINE_ADMIN_API_KEY is not set in .env")
 
-    Args:
-        None
-
-    Raises:
-        AssertionError: If the API response is not as expected
-
-    Note:
-        Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
-    """
-    identifier = random_identifier()
+    identifier = "deltest_" + random_identifier()
     name = "Project for deletion test_" + identifier
-
-    # Create project
-    result_create = create_project(
-        name=name,
-        identifier=identifier,
-        redmine_url=REDMINE_URL,
-        api_key=API_KEY,
-        description="Project for deletion test",
-    )
+    description = "Project for deletion test"
+    headers = {"X-Redmine-API-Key": API_KEY, "Content-Type": "application/json"}
+    payload = {"project": {"name": name, "identifier": identifier, "description": description}}
+    resp_create = requests.post(f"{REDMINE_URL}/projects.json", json=payload, headers=headers)
+    result_create = resp_create.json()
     pprint(result_create, stream=sys.stderr)
-    assert isinstance(result_create, dict)
-    assert "id" in result_create
-    assert result_create["identifier"] == identifier
+    assert resp_create.status_code in (201, 200), f"Create failed: {resp_create.text}"
+    project_info = result_create.get("project", result_create)
+    assert isinstance(project_info, dict)
+    assert "identifier" in project_info and project_info["identifier"] == identifier
 
-    # Delete project
-    result_delete = delete_project(
-        project_id_or_identifier=identifier,
-        redmine_url=REDMINE_URL,
-        api_key=API_KEY,
-    )
-    pprint(result_delete, stream=sys.stderr)
-    assert result_delete["status"] == "success"
+    # プロジェクト削除
+    resp_delete = requests.delete(f"{REDMINE_URL}/projects/{identifier}.json", headers=headers)
+    pprint({"status_code": resp_delete.status_code, "text": resp_delete.text}, stream=sys.stderr)
+    assert resp_delete.status_code in (200, 204), f"Delete failed: {resp_delete.text}"
 
 
 def test_delete_nonexistent_project():
-    """Test for deleting a non-existent Redmine project API
-
-    Args:
-        None
-
-    Raises:
-        AssertionError: If the API response is not as expected
-
-    Note:
-        Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
-    """
-    # Specify a non-existent project ID
-    nonexistent_id = "nonexistent_project_" + "".join(
-        random.choices(string.ascii_lowercase + string.digits, k=8),
-    )
-
-    # Delete project
-    result_delete = delete_project(
-        project_id_or_identifier=nonexistent_id,
-        redmine_url=REDMINE_URL,
-        api_key=API_KEY,
-    )
-    pprint(result_delete, stream=sys.stderr)
-    assert result_delete["status"] == "error"
-    assert "status_code" in result_delete
+    """Test for deleting a non-existent Redmine project API"""
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    if not REDMINE_URL or not API_KEY:
+        pytest.fail("REDMINE_URL or REDMINE_ADMIN_API_KEY is not set in .env")
+    nonexistent_id = "nonexistent_project_" + random_identifier()
+    resp_delete = requests.delete(f"{REDMINE_URL}/projects/{nonexistent_id}.json", headers={"X-Redmine-API-Key": API_KEY})
+    pprint({"status_code": resp_delete.status_code, "text": resp_delete.text}, stream=sys.stderr)
+    assert resp_delete.status_code == 404

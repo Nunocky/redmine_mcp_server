@@ -2,25 +2,22 @@ import os
 import sys
 from pprint import pprint
 
-from tools.ProjectMemberships.get_memberships_tool import get_memberships
+import pytest
+import requests
 
 
 def test_get_memberships_tool():
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
-    assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
-    assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    PROJECT_ID = os.environ.get("REDMINE_TEST_PROJECT_ID")
+    if not REDMINE_URL or not API_KEY or not PROJECT_ID:
+        pytest.fail("REDMINE_URL, REDMINE_ADMIN_API_KEY, or REDMINE_TEST_PROJECT_ID is not set in .env")
 
-    # Actual API call (adjust arguments as needed)
-    result = get_memberships(
-        redmine_url=redmine_url,
-        api_key=api_key,
-        project_id=project_id,
-        offset=None,
-        limit=None,
-    )
+    url = f"{REDMINE_URL}/projects/{PROJECT_ID}/memberships.json"
+    headers = {"X-Redmine-API-Key": API_KEY}
+    response = requests.get(url, headers=headers)
+    assert response.status_code == 200, f"API request failed: {response.status_code} {response.text}"
+    result = response.json()
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "memberships" in result

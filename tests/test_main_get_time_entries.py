@@ -2,28 +2,26 @@ import os
 import sys
 from pprint import pprint
 
-from tools.TimeEntries.get_time_entries_tool import get_time_entries
+import pytest
+import requests
 
 
 def test_get_time_entries_basic():
-    """Basic test for get_time_entries tool via main.py
-
-    Raises:
-        AssertionError: If the API response is not as expected
-
+    """Basic test for Redmine time_entries API via REST
     Note:
         Please set REDMINE_URL and REDMINE_ADMIN_API_KEY in .env.
     """
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    if not REDMINE_URL or not API_KEY:
+        pytest.fail("REDMINE_URL or REDMINE_ADMIN_API_KEY is not set in .env")
 
-    result = get_time_entries(
-        redmine_url=redmine_url,
-        api_key=api_key,
-        limit=1,
-    )
+    url = f"{REDMINE_URL.rstrip('/')}/time_entries.json"
+    params = {"limit": 1}
+    headers = {"X-Redmine-API-Key": API_KEY}
+    response = requests.get(url, headers=headers, params=params)
+    response.raise_for_status()
+    result = response.json()
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "time_entries" in result

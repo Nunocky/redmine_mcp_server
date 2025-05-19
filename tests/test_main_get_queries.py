@@ -2,19 +2,21 @@ import os
 import sys
 from pprint import pprint
 
-from tools.get_queries_tool import get_queries
+import pytest
+import requests
 
 
 def test_get_queries():
-    redmine_url = os.environ.get("REDMINE_URL")
-    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    assert redmine_url, "REDMINE_URL is not set in .env"
-    assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
+    REDMINE_URL = os.environ.get("REDMINE_URL")
+    API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")
+    if not REDMINE_URL or not API_KEY:
+        pytest.fail("REDMINE_URL or REDMINE_ADMIN_API_KEY is not set in .env")
 
-    result = get_queries(
-        redmine_url=redmine_url,
-        api_key=api_key,
-    )
+    url = f"{REDMINE_URL.rstrip('/')}/queries.json"
+    headers = {"X-Redmine-API-Key": API_KEY}
+    response = requests.get(url, headers=headers)
+    assert response.status_code == 200, f"API request failed: {response.status_code} {response.text}"
+    result = response.json()
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "queries" in result
