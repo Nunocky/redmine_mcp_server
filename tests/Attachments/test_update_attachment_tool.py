@@ -28,14 +28,11 @@ def create_temp_file(content: bytes = b"update test file") -> str:
     return path
 
 
-import pytest
-
-
 @pytest.mark.skip(reason="PATCH API is not documented yet.")
 def test_update_attachment_success():
     """添付ファイル情報更新APIの正常系テスト（事前にアップロード＆チケット登録）"""
     redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_ADMIN_API_KEY")
+    api_key = get_env("REDMINE_USER_API_KEY")
     project_id = get_env("REDMINE_TEST_PROJECT_ID")
     # 一時ファイルを作成してアップロード
     file_path = create_temp_file()
@@ -97,7 +94,7 @@ def test_update_attachment_success():
 def test_update_attachment_not_found():
     """存在しない添付ファイルID指定時のエラー系テスト"""
     redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_ADMIN_API_KEY")
+    api_key = get_env("REDMINE_USER_API_KEY")
     update_fields = {"description": "should not update"}
     result = update_attachment(
         redmine_url=redmine_url,

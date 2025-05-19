@@ -75,10 +75,61 @@ def test_delete_attachment_success():
     os.remove(file_path)
 
 
+def test_delete_attachment_permission_denied():
+    """一般ユーザーは添付ファイルを削除できないことを確認
+
+    - 管理者権限で添付ファイル付きチケットを作成
+    - 添付ファイルIDを取得
+    - 一般ユーザーAPIキーで削除APIを実行し、権限エラーとなることを確認
+    """
+    redmine_url = get_env("REDMINE_URL")
+    admin_api_key = get_env("REDMINE_ADMIN_API_KEY")
+    user_api_key = get_env("REDMINE_USER_API_KEY")
+    project_id = get_env("REDMINE_TEST_PROJECT_ID")
+    # 一時ファイルを作成してアップロード
+    file_path = create_temp_file()
+    upload_result = upload_attachment(
+        redmine_url=redmine_url,
+        api_key=admin_api_key,
+        file_path=file_path,
+    )
+    assert upload_result["success"] is True
+    token = upload_result["token"]
+    uploads = [
+        {
+            "token": token,
+            "filename": os.path.basename(file_path),
+            "content_type": "application/octet-stream",
+        }
+    ]
+    issue_result = create_issue(
+        redmine_url=redmine_url,
+        api_key=admin_api_key,
+        project_id=project_id,
+        subject="permission denied test",
+        uploads=uploads,
+    )
+    attachments = issue_result.get("issue", {}).get("attachments", [])
+    assert attachments, "チケット作成時に添付ファイルが登録されていません"
+    attachment_id = attachments[0]["id"]
+    # 一般ユーザーで削除API実行
+    result = delete_attachment(
+        redmine_url=redmine_url,
+        api_key=user_api_key,
+        attachment_id=attachment_id,
+    )
+    print("permission_denied_result:", result)
+    assert result["success"] is False
+    # "status_code"が無い場合はerror文字列で判定
+    assert "403" in result.get("error", "")
+    # ファイル削除
+    os.remove(file_path)
+
+
 def test_delete_attachment_not_found():
     """存在しない添付ファイルID指定時のエラー系テスト"""
     redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_ADMIN_API_KEY")
+    api_key = get_env("REDMINE_USER_API_KEY")
     result = delete_attachment(
         redmine_url=redmine_url,
         api_key=api_key,

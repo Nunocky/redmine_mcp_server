@@ -20,7 +20,7 @@ def get_env(key: str) -> str:
 def test_get_attachment_success():
     """添付ファイル取得APIの正常系テスト"""
     redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_USER_API_KEY") or get_env("REDMINE_ADMIN_API_KEY")
+    api_key = get_env("REDMINE_USER_API_KEY")
     # 添付ファイルIDは事前に存在するものを指定してください
     attachment_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     result = get_attachment(
@@ -37,7 +37,7 @@ def test_get_attachment_success():
 def test_get_attachment_not_found():
     """存在しない添付ファイルID指定時のエラー系テスト"""
     redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_ADMIN_API_KEY")
+    api_key = get_env("REDMINE_USER_API_KEY")
     result = get_attachment(
         redmine_url=redmine_url,
         api_key=api_key,
