@@ -1,6 +1,15 @@
 """Redmine Project Deletion Tool
 
 Delete a project using RedmineAPIClient.
+Returns {"status": "success", "message": "..."} for 204 No Content,
+{"status": "error", "message": "..."} for 404 error,
+{"status": "error", "message": "..."} for other errors.
+
+Returns:
+    dict: {"status": "success", "message": "..."} if deleted (204), {"status": "error", "message": "..."} for errors
+
+Raises:
+    Exception: When API request fails (excluding 404 errors)
 """
 
 from typing import Any, Dict, Optional
@@ -12,28 +21,44 @@ from tools.redmine_api_client import RedmineAPIClient
 
 
 def delete_project(
-    project_id_or_identifier: str, redmine_url: Optional[str] = None, api_key: Optional[str] = None
+    project_id_or_identifier: str,
+    redmine_url: Optional[str] = None,
+    api_key: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Delete a Redmine project
 
     Args:
-        project_id_or_identifier (str): Project ID or identifier
-        redmine_url (str, optional): URL of the Redmine server
-        api_key (str, optional): Redmine API key
+        project_id_or_identifier: Project ID or identifier
+        redmine_url: URL of the Redmine server
+        api_key: Redmine API key
 
     Returns:
-        dict: Deletion result (status, message)
+        {"status": "success", "message": "..."} if deleted (204), {"status": "error", "message": "..."} for errors
+
+    Raises:
+        Exception: When API request fails (excluding 404 errors)
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     endpoint = f"/projects/{project_id_or_identifier}.json"
     try:
-        resp = client.delete(endpoint)
-        if resp.status_code == 200 or resp.status_code == 204:
+        response = client.delete(endpoint)
+        if response.status_code == 204:
             return {"status": "success", "message": "Project deleted"}
-        else:
-            return {"status": "error", "message": resp.text, "status_code": resp.status_code}
+        return {
+            "status": "error",
+            "message": response.text or f"Unexpected status code: {response.status_code}",
+            "status_code": response.status_code,
+        }
     except requests.exceptions.HTTPError as e:
-        return {"status": "error", "message": str(e), "status_code": e.response.status_code if hasattr(e, "response") else 500}
+        return {
+            "status": "error",
+            "message": str(e),
+            "status_code": getattr(e.response, "status_code", 500),
+        }
 
 
-DeleteProjectTool = Tool.from_function(delete_project, name="delete_project", description="Delete a Redmine project")
+DeleteProjectTool = Tool.from_function(
+    delete_project,
+    name="delete_project",
+    description="Delete a Redmine project",
+)

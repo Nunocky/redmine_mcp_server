@@ -2,14 +2,10 @@ import os
 import sys
 from pprint import pprint
 
-import pytest
-
-from tools.Users.get_users_tool import GetUsersTool
-from unwrap_text_content import unwrap_text_content
+from tools.Users.get_users_tool import get_users
 
 
-@pytest.mark.asyncio
-async def test_run_success():
+def test_run_success():
     """
     Access the actual Redmine server to retrieve the user list and verify basic items.
     """
@@ -21,9 +17,7 @@ async def test_run_success():
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Execute
-    tool = GetUsersTool
-    result = await tool.run({"limit": 5})
-    result = unwrap_text_content(result)
+    result = get_users(limit=5)
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -35,8 +29,7 @@ async def test_run_success():
     assert result["limit"] == 5
 
 
-@pytest.mark.asyncio
-async def test_run_with_status_filter():
+def test_run_with_status_filter():
     """
     Use the status filter to retrieve the user list and verify the results.
     """
@@ -48,9 +41,7 @@ async def test_run_with_status_filter():
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Execute (active users only)
-    tool = GetUsersTool
-    result = await tool.run({"status": 1, "limit": 5})
-    result = unwrap_text_content(result)
+    result = get_users(status=1, limit=5)
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -64,8 +55,7 @@ async def test_run_with_status_filter():
             assert user["status"] == 1
 
 
-@pytest.mark.asyncio
-async def test_run_with_name_filter():
+def test_run_with_name_filter():
     """
     Use the name filter to retrieve the user list and verify the results.
     """
@@ -80,9 +70,7 @@ async def test_run_with_name_filter():
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
     # Execute
-    tool = GetUsersTool
-    result = await tool.run({"name": test_name})
-    result = unwrap_text_content(result)
+    result = get_users(name=test_name)
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -107,8 +95,7 @@ async def test_run_with_name_filter():
     assert found, f"Search results do not include '{test_name}'"
 
 
-@pytest.mark.asyncio
-async def test_run_with_group_id_filter():
+def test_run_with_group_id_filter():
     """
     Use the group_id filter to retrieve the user list and verify the results.
     Note: This test will only succeed in an environment where groups exist.
@@ -124,8 +111,9 @@ async def test_run_with_group_id_filter():
     test_group_id = 3  # non member group ID
 
     # Execute
-    result = await GetUsersTool.run({"group_id": int(test_group_id)})
-    result = unwrap_text_content(result)
+    result = get_users(
+        group_id=int(test_group_id),
+    )
     pprint(result, stream=sys.stderr)
 
     # Verify
@@ -133,8 +121,7 @@ async def test_run_with_group_id_filter():
     assert isinstance(result["users"], list)
 
 
-@pytest.mark.asyncio
-async def test_run_with_pagination():
+def test_run_with_pagination():
     """
     Test pagination using limit and offset
     """
@@ -146,13 +133,17 @@ async def test_run_with_pagination():
     assert os.environ["REDMINE_URL"], "REDMINE_URL is not set in .env"
 
     # Get the first page (first 2 items)
-    result_page1 = await GetUsersTool.run({"limit": 2, "offset": 0})
-    result_page1 = unwrap_text_content(result_page1)
+    result_page1 = get_users(
+        limit=2,
+        offset=0,
+    )
     pprint(result_page1, stream=sys.stderr)
 
     # Get the second page (next 2 items)
-    result_page2 = await GetUsersTool.run({"limit": 2, "offset": 2})
-    result_page2 = unwrap_text_content(result_page2)
+    result_page2 = get_users(
+        limit=2,
+        offset=2,
+    )
     pprint(result_page2, stream=sys.stderr)
 
     # Verify
@@ -171,8 +162,7 @@ async def test_run_with_pagination():
             assert result_page1["users"][0]["id"] != result_page2["users"][0]["id"]
 
 
-@pytest.mark.asyncio
-async def test_run_with_combined_filters():
+def test_run_with_combined_filters():
     """
     Test combining multiple filters
     """
@@ -187,8 +177,11 @@ async def test_run_with_combined_filters():
     test_name = os.getenv("REDMINE_TEST_USER_NAME", "admin")
 
     # Execute (active users with a specific name)
-    result = await GetUsersTool.run({"status": 1, "name": test_name, "limit": 5})
-    result = unwrap_text_content(result)
+    result = get_users(
+        status=1,
+        name=test_name,
+        limit=5,
+    )
     pprint(result, stream=sys.stderr)
 
     # Verify

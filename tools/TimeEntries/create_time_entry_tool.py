@@ -1,5 +1,8 @@
-import requests
+from typing import Any, Dict, Optional
+
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def create_time_entry(
@@ -12,9 +15,9 @@ def create_time_entry(
     activity_id: int = None,
     comments: str = None,
     user_id: int = None,
-):
-    """Create a new time entry in Redmine."""
-    headers = {"X-Redmine-API-Key": api_key, "Content-Type": "application/json"}
+) -> Dict[str, Any]:
+    """Create a new time entry in Redmine using RedmineAPIClient."""
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     time_entry_data = {}
     if issue_id is not None:
         time_entry_data["issue_id"] = issue_id
@@ -31,14 +34,14 @@ def create_time_entry(
     if user_id is not None:
         time_entry_data["user_id"] = user_id
 
-    url = f"{redmine_url.rstrip('/')}/time_entries.json"
-    resp = requests.post(url, headers=headers, json={"time_entry": time_entry_data})
     try:
-        resp.raise_for_status()
-    except requests.HTTPError as e:
-        # Also return the response body
-        return {"error": str(e), "status_code": resp.status_code, "response": resp.text}
-    return {"time_entry": resp.json().get("time_entry", {})}
+        resp = client.post("/time_entries.json", json={"time_entry": time_entry_data})
+        return {"time_entry": resp.json().get("time_entry", {})}
+    except Exception as e:
+        # 失敗時はエラー内容・status_code・レスポンスボディを返す
+        status_code = getattr(e.response, "status_code", None) if hasattr(e, "response") else None
+        response_text = getattr(e.response, "text", str(e)) if hasattr(e, "response") else str(e)
+        return {"error": str(e), "status_code": status_code, "response": response_text}
 
 
 CreateTimeEntryTool = Tool.from_function(

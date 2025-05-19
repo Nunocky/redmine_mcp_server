@@ -1,7 +1,8 @@
 import os
 
-import requests
 from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_queries(
@@ -12,14 +13,21 @@ def get_queries(
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
         api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    headers = {"X-Redmine-API-Key": api_key}
-    url = f"{redmine_url.rstrip('/')}/queries.json"
-    resp = requests.get(url, headers=headers)
-    resp.raise_for_status()
-    data = resp.json()
-    return {
-        "queries": data.get("queries", []),
-    }
+    if not redmine_url or not api_key:
+        raise ValueError("redmine_url and api_key are required.")
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
+    try:
+        response = client.get(endpoint="/queries.json")
+        data = response.json()
+        return {
+            "queries": data.get("queries", []),
+        }
+    except Exception as e:
+        import requests
+
+        if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
+            return {"queries": []}
+        raise
 
 
 GetQueriesTool = Tool.from_function(

@@ -1,16 +1,24 @@
 """Redmine User List Retrieval Tool
 
 Retrieves a list of users using RedmineAPIClient.
+404エラー時は空dict、他エラーは例外送出。
+
+Returns:
+    dict: User list information or {} for 404
+
+Raises:
+    Exception: When API request fails (excluding 404 errors)
 """
 
 from typing import Any, Dict, Optional
 
+import requests
 from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
 
-async def get_users(
+def get_users(
     redmine_url: Optional[str] = None,
     api_key: Optional[str] = None,
     limit: Optional[int] = None,
@@ -22,20 +30,19 @@ async def get_users(
     """Retrieve a list of Redmine users.
 
     Args:
-        redmine_url (str, optional): Redmine server URL. If not specified, the REDMINE_URL environment variable is used.
-        api_key (str, optional): Redmine API key. If not specified, the REDMINE_ADMIN_API_KEY environment variable is used.
-        limit (int, optional): Number of records to retrieve.
-        offset (int, optional): Number of records to skip.
-        status (int, optional): User status (1: active, 2: registered, 3: locked).
-        name (str, optional): Filter by login, name, or email address.
-        group_id (int, optional): Filter users belonging to the specified group.
+        redmine_url: Redmine server URL.
+        api_key: Redmine API key.
+        limit: Number of records to retrieve.
+        offset: Number of records to skip.
+        status: User status (1: active, 2: registered, 3: locked).
+        name: Filter by login, name, or email address.
+        group_id: Filter users belonging to the specified group.
 
     Returns:
-        dict: User list information
-            - users (list): List of user information
-            - total_count (int): Total number of users
-            - limit (int): Number of records retrieved
-            - offset (int): Offset
+        User list information as dict, or {} for 404
+
+    Raises:
+        Exception: When API request fails (excluding 404 errors)
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}
@@ -49,15 +56,19 @@ async def get_users(
         params["name"] = name
     if group_id is not None:
         params["group_id"] = group_id
-    resp = client.get("/users.json", params=params)
-    resp.raise_for_status()
-    data = resp.json()
-    return {
-        "users": data.get("users", []),
-        "total_count": data.get("total_count", 0),
-        "limit": data.get("limit", limit if limit is not None else 25),
-        "offset": data.get("offset", offset if offset is not None else 0),
-    }
+    try:
+        resp = client.get("/users.json", params=params)
+        data = resp.json()
+        return {
+            "users": data.get("users", []),
+            "total_count": data.get("total_count", 0),
+            "limit": data.get("limit", limit if limit is not None else 25),
+            "offset": data.get("offset", offset if offset is not None else 0),
+        }
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 404:
+            return {}
+        raise
 
 
 GetUsersTool = Tool.from_function(

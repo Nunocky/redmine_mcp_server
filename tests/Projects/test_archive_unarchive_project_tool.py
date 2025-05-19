@@ -33,7 +33,11 @@ def test_create_archive_unarchive_delete_project_api():
     assert result_create["identifier"] == identifier
 
     # Archive project
-    result_archive = archive_project(identifier, redmine_url=redmine_url, api_key=api_key)
+    result_archive = archive_project(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        project_id_or_identifier=identifier,
+    )
     pprint.pprint(result_archive)
     assert result_archive["status"] == "success"
 

@@ -13,7 +13,13 @@ def test_get_memberships():
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
-    result = get_memberships(redmine_url=redmine_url, api_key=api_key, project_id=project_id)
+    result = get_memberships(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        project_id=project_id,
+        offset=None,
+        limit=None,
+    )
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)
     assert "memberships" in result

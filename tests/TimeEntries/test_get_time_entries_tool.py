@@ -2,7 +2,7 @@
 
 import os
 
-from tools.TimeEntries.get_time_entries_tool import GetTimeEntriesTool
+from tools.TimeEntries.get_time_entries_tool import get_time_entries
 
 
 def test_get_time_entries_success():
@@ -18,7 +18,12 @@ def test_get_time_entries_success():
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
     # 実際のAPIを呼び出す
-    result = GetTimeEntriesTool().run(redmine_url=redmine_url, api_key=api_key, limit=5, project_id=project_id)
+    result = get_time_entries(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        limit=5,
+        project_id=project_id,
+    )
 
     # レスポンスの検証
     assert "time_entries" in result
@@ -37,8 +42,12 @@ def test_get_time_entries_with_filters():
     assert redmine_url, "REDMINE_URL is not set in .env"
 
     # 実際のAPIを呼び出す（フィルター付き）
-    result = GetTimeEntriesTool().run(
-        redmine_url=redmine_url, api_key=api_key, limit=3, from_date="2025-01-01", to_date="2025-12-31"
+    result = get_time_entries(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        limit=3,
+        from_date="2025-01-01",
+        to_date="2025-12-31",
     )
 
     # レスポンスの検証

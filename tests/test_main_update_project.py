@@ -2,14 +2,13 @@ import os
 import sys
 from pprint import pprint
 
-import pytest
-
-from main import create_project, delete_project, update_project
 from tests.random_identifier import random_identifier
+from tools.Projects.create_project_tool import create_project
+from tools.Projects.delete_project_tool import delete_project
+from tools.Projects.update_project_tool import update_project
 
 
-@pytest.mark.asyncio
-async def test_create_update_delete_project():
+def test_create_update_delete_project():
     """Normal case test for Redmine project creation, update, and deletion APIs
 
     Args:
@@ -31,8 +30,12 @@ async def test_create_update_delete_project():
     description = "Project for automated testing"
 
     # Create project
-    result_create = await create_project(
-        name=name, identifier=identifier, redmine_url=redmine_url, api_key=api_key, description=description
+    result_create = create_project(
+        name=name,
+        identifier=identifier,
+        redmine_url=redmine_url,
+        api_key=api_key,
+        description=description,
     )
     pprint(result_create, stream=sys.stderr)
     assert isinstance(result_create, dict)
@@ -44,7 +47,7 @@ async def test_create_update_delete_project():
     # Update project
     new_name = name + "_Updated"
     new_description = "Updated description"
-    result_update = await update_project(
+    result_update = update_project(
         project_id_or_identifier=identifier,
         redmine_url=redmine_url,
         api_key=api_key,
@@ -61,6 +64,10 @@ async def test_create_update_delete_project():
             assert result_update["description"] == new_description
 
     # Delete project
-    result_delete = await delete_project(project_id_or_identifier=identifier, redmine_url=redmine_url, api_key=api_key)
+    result_delete = delete_project(
+        project_id_or_identifier=identifier,
+        redmine_url=redmine_url,
+        api_key=api_key,
+    )
     pprint(result_delete, stream=sys.stderr)
     assert result_delete["status"] == "success"

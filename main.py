@@ -21,16 +21,12 @@ from tools.Issues.update_issue_tool import UpdateIssueTool
 from tools.News.get_news_tool import GetNewsTool
 from tools.ProjectMemberships.create_membership_tool import CreateProjectMembershipTool
 from tools.ProjectMemberships.get_memberships_tool import GetMembershipsTool
-
-# TODO ArchiveToolを使うように修正する
-from tools.Projects.archive_project_tool import archive_project as archive_project_func
+from tools.Projects.archive_project_tool import ArchiveProjectTool
 from tools.Projects.create_project_tool import CreateProjectTool
 from tools.Projects.delete_project_tool import DeleteProjectTool
 from tools.Projects.get_project_tool import GetProjectTool
 from tools.Projects.get_projects_tool import GetProjectsTool
-
-# TODO UnarchiveToolを使うように修正する
-from tools.Projects.unarchive_project_tool import unarchive_project as unarchive_project_func
+from tools.Projects.unarchive_project_tool import UnarchiveProjectTool
 from tools.Projects.update_project_tool import UpdateProjectTool
 from tools.TimeEntries.create_time_entry_tool import CreateTimeEntryTool
 from tools.TimeEntries.get_time_entries_tool import GetTimeEntriesTool
@@ -49,16 +45,23 @@ async def get_memberships(
     redmine_url: str,
     api_key: str,
     project_id: str,
+    offset: int = None,
+    limit: int = None,
 ) -> dict:
     """Get a list of memberships for the specified project"""
-    result = await GetMembershipsTool.run(
-        {
-            "redmine_url": redmine_url,
-            "api_key": api_key,
-            "project_id": project_id,
-        }
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: GetMembershipsTool().run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "project_id": project_id,
+                "offset": offset,
+                "limit": limit,
+            }
+        ),
     )
-    return unwrap_text_content(result)
 
 
 @mcp.tool()
@@ -248,13 +251,17 @@ async def add_watcher(
     user_id: int,
 ) -> dict:
     """Add a watcher to a Redmine issue"""
-    return AddWatcherTool.run(
-        {
-            "redmine_url": redmine_url,
-            "api_key": api_key,
-            "issue_id": issue_id,
-            "user_id": user_id,
-        },
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: AddWatcherTool.run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "issue_id": issue_id,
+                "user_id": user_id,
+            },
+        ),
     )
 
 
@@ -266,11 +273,17 @@ async def remove_watcher(
     user_id: int,
 ) -> dict:
     """Remove a watcher from a Redmine issue"""
-    return await RemoveWatcherTool.run(
-        redmine_url,
-        api_key,
-        issue_id,
-        user_id,
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: RemoveWatcherTool.run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "issue_id": issue_id,
+                "user_id": user_id,
+            },
+        ),
     )
 
 
@@ -281,10 +294,16 @@ async def delete_issue(
     issue_id: int,
 ) -> dict:
     """Delete a Redmine issue"""
-    return await DeleteIssueTool.run(
-        redmine_url,
-        api_key,
-        issue_id,
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: DeleteIssueTool.run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "issue_id": issue_id,
+            },
+        ),
     )
 
 
@@ -297,14 +316,18 @@ async def get_issue_relations(
     offset: int = None,
 ) -> dict:
     """Get a list of Redmine issue relations"""
-    return await GetIssueRelationsTool.run(
-        {
-            "redmine_url": redmine_url,
-            "api_key": api_key,
-            "issue_id": issue_id,
-            "limit": limit,
-            "offset": offset,
-        }
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(
+        None,
+        lambda: GetIssueRelationsTool.run(
+            {
+                "redmine_url": redmine_url,
+                "api_key": api_key,
+                "issue_id": issue_id,
+                "limit": limit,
+                "offset": offset,
+            }
+        ),
     )
 
 
@@ -362,14 +385,12 @@ async def archive_project(
 ) -> dict:
     """Archive a Redmine project"""
 
-    loop = asyncio.get_event_loop()
-    result = await loop.run_in_executor(
-        None,
-        lambda: archive_project_func(
-            project_id_or_identifier=project_id_or_identifier,
-            redmine_url=redmine_url,
-            api_key=api_key,
-        ),
+    result = await ArchiveProjectTool.run(
+        {
+            "project_id_or_identifier": project_id_or_identifier,
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+        }
     )
     return unwrap_text_content(result)
 
@@ -440,15 +461,14 @@ async def unarchive_project(
 ) -> dict:
     """Unarchive a Redmine project"""
 
-    loop = asyncio.get_event_loop()
-    result = await loop.run_in_executor(
-        None,
-        lambda: unarchive_project_func(
-            redmine_url=redmine_url,
-            api_key=api_key,
-            project_id_or_identifier=project_id_or_identifier,
-        ),
+    result = await UnarchiveProjectTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "project_id_or_identifier": project_id_or_identifier,
+        }
     )
+
     return unwrap_text_content(result)
 
 
@@ -576,21 +596,20 @@ async def get_time_entries(
     to_date: str = None,
 ) -> dict:
     """Get a list of Redmine time entries"""
-    loop = asyncio.get_event_loop()
-    return await loop.run_in_executor(
-        None,
-        lambda: GetTimeEntriesTool().run(
-            redmine_url=redmine_url,
-            api_key=api_key,
-            offset=offset,
-            limit=limit,
-            user_id=user_id,
-            project_id=project_id,
-            spent_on=spent_on,
-            from_date=from_date,
-            to_date=to_date,
-        ),
+    result = await GetTimeEntriesTool.run(
+        {
+            "redmine_url": redmine_url,
+            "api_key": api_key,
+            "offset": offset,
+            "limit": limit,
+            "user_id": user_id,
+            "project_id": project_id,
+            "spent_on": spent_on,
+            "from_date": from_date,
+            "to_date": to_date,
+        }
     )
+    return unwrap_text_content(result)
 
 
 @mcp.tool()

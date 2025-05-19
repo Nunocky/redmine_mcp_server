@@ -2,13 +2,10 @@ import os
 import sys
 from pprint import pprint
 
-import pytest
-
-from main import get_memberships
+from tools.ProjectMemberships.get_memberships_tool import get_memberships
 
 
-@pytest.mark.asyncio
-async def test_get_memberships_tool():
+def test_get_memberships_tool():
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
     project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
@@ -17,10 +14,12 @@ async def test_get_memberships_tool():
     assert project_id, "REDMINE_TEST_PROJECT_ID is not set in .env"
 
     # Actual API call (adjust arguments as needed)
-    result = await get_memberships(
+    result = get_memberships(
         redmine_url=redmine_url,
         api_key=api_key,
         project_id=project_id,
+        offset=None,
+        limit=None,
     )
     pprint(result, stream=sys.stderr)
     assert isinstance(result, dict)

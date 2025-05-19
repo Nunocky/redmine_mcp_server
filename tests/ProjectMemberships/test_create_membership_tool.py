@@ -31,7 +31,13 @@ def cleanup_membership(redmine_url: str, api_key: str, project_id: str, user_id:
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     # First, get existing memberships to find the one to delete
     try:
-        current_memberships_response = get_memberships(redmine_url=redmine_url, api_key=api_key, project_id=project_id)
+        current_memberships_response = get_memberships(
+            redmine_url=redmine_url,
+            api_key=api_key,
+            project_id=project_id,
+            offset=None,
+            limit=None,
+        )
         if "memberships" in current_memberships_response:
             for membership in current_memberships_response["memberships"]:
                 if membership.get("user", {}).get("id") == user_id:
@@ -68,7 +74,13 @@ def test_create_membership_success(redmine_credentials):
     assert all(role["id"] in TEST_ROLE_IDS for role in created_membership["roles"])
 
     # Verify by getting memberships
-    verification_result = get_memberships(redmine_url=redmine_url, api_key=api_key, project_id=TEST_PROJECT_ID)
+    verification_result = get_memberships(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        project_id=TEST_PROJECT_ID,
+        offset=None,
+        limit=None,
+    )
     assert any(m["user"]["id"] == TEST_USER_ID for m in verification_result.get("memberships", [])), (
         "Membership not found after creation"
     )

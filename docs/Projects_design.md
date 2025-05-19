@@ -77,6 +77,16 @@
   curl -H "X-Redmine-API-Key: YOUR_API_KEY" -H "Content-Type: application/json" -X POST -d '{"project":{"name":"Example name","identifier":"example_name"}}' http://your-redmine-instance/projects.json
   ```
 
+#### 設計・実装方針（2025/5/18追記）
+
+- fastmcpのToolとして実装する
+- APIクライアントはRedmineAPIClientを利用する
+- パラメータはNoneを除外し、必要なもののみリクエストボディに含める
+- 404エラー時は空辞書を返す
+- その他のHTTPエラーは例外送出
+- レスポンスはAPIの返却内容をそのまま返す
+- PEP8・GoogleスタイルDocstring・英語コメントを徹底する
+
 ### PUT /projects/:id
 
 - **説明**: プロジェクトを更新します。
@@ -157,6 +167,20 @@ RedmineのProjects APIに対応したPythonクライアントツールをtools/�
   - APIリクエスト共通処理（認証、リクエスト送信、エラーハンドリング）
 - 各ツール（例: GetProjectsTool）
   - RedmineAPIClientを利用し、各APIエンドポイントに対応
+
+### UpdateProjectTool・update_projectエンドポイント設計・テスト仕様（2025/5/18追記）
+
+- UpdateProjectToolの戻り値はRedmine APIの仕様に従い、204 No Contentの場合は空dict `{}`、それ以外は `{"id": ..., ...}` のようなproject情報dictとする
+- main.pyのupdate_projectエンドポイントも同様に、空dictまたはproject情報dictを返す
+- unwrap_text_contentの副作用で戻り値が変化しないことを保証する（不要なら外す）
+- テスト（test_update_project_tool.py）は、updateの戻り値が空dictまたは `"id"` キーを含むdictであることを検証する
+
+#### 実行項目リスト
+
+- [ ] UpdateProjectToolの戻り値仕様の明確化
+- [ ] main.py update_projectの戻り値仕様の明確化
+- [ ] unwrap_text_contentの影響調査・修正
+- [ ] テストが期待する戻り値仕様の明記
 
 ### ディレクトリ構成（予定）
 

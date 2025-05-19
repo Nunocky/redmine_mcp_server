@@ -2,13 +2,10 @@ import os
 import sys
 from pprint import pprint
 
-import pytest
-
-from main import get_time_entries
+from tools.TimeEntries.get_time_entries_tool import get_time_entries
 
 
-@pytest.mark.asyncio
-async def test_get_time_entries_basic():
+def test_get_time_entries_basic():
     """Basic test for get_time_entries tool via main.py
 
     Raises:
@@ -22,7 +19,7 @@ async def test_get_time_entries_basic():
     assert redmine_url, "REDMINE_URL is not set in .env"
     assert api_key, "REDMINE_ADMIN_API_KEY is not set in .env"
 
-    result = await get_time_entries(
+    result = get_time_entries(
         redmine_url=redmine_url,
         api_key=api_key,
         limit=1,
