@@ -47,5 +47,5 @@ def test_get_news_invalid_project():
     """存在しないプロジェクトID指定時のエラー系テスト"""
     redmine_url = get_env("REDMINE_URL")
     api_key = get_env("REDMINE_USER_API_KEY") or get_env("REDMINE_ADMIN_API_KEY")
-    with pytest.raises(Exception):
+    with pytest.raises(ValueError):
         get_news(redmine_url=redmine_url, api_key=api_key, project_id="__not_exist_project__")
