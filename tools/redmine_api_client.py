@@ -129,3 +129,18 @@ class RedmineAPIClient:
             requests.Response: Response
         """
         return self._request("DELETE", endpoint)
+
+    def patch(
+        self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
+    ) -> requests.Response:
+        """PATCH request
+
+        Args:
+            endpoint (str): Endpoint path
+            data (dict, optional): Form data
+            json (dict, optional): JSON data
+
+        Returns:
+            requests.Response: Response
+        """
+        return self._request("PATCH", endpoint, data=data, json=json)
