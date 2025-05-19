@@ -65,8 +65,8 @@ RedmineのREST APIを利用してニュース情報を取得する。
   </news>
   ...
 </news>
-```
 - **エラー例**:
+    - 不正なproject_id: `ValueError` が発生し、メッセージ「Invalid project_id」が返される
     - 不正なパラメータ: 400 Bad Request
     - Redmine API接続失敗: 502 Bad Gateway
 
