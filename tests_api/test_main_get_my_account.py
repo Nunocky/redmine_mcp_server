@@ -58,7 +58,7 @@ def test_get_my_account():
 def test_get_my_account_invalid_key():
     """Test /my/account endpoint with invalid API key returns 401."""
     base_url, _ = _get_base_url_and_api_key()
-    url = f"{base_url}/my/account"
+    url = f"{base_url}/my/account.json"
     headers = {"X-Redmine-API-Key": "invalid_key"}
     response = requests.get(url, headers=headers)
     if "text/html" in response.headers.get("Content-Type", ""):
