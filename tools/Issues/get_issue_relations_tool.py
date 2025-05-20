@@ -1,5 +1,3 @@
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -46,8 +44,3 @@ def get_issue_relations(
             "offset": offset if offset is not None else 0,
             "error": str(e),
         }
-
-
-GetIssueRelationsTool = Tool.from_function(
-    get_issue_relations, name="get_issue_relations", description="Get a list of Redmine issue relations"
-)

@@ -1,7 +1,6 @@
 """Redmine Issue Details Retrieval Tool"""
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -42,10 +41,3 @@ def get_issue(
         if e.response.status_code == 404:
             return {"issue": None}
         raise
-
-
-GetIssueTool = Tool.from_function(
-    get_issue,
-    name="get_issue",
-    description="Get Redmine issue information",
-)

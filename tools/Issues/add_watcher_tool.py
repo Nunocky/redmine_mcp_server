@@ -1,7 +1,5 @@
 """Tool to add a watcher to a Redmine issue"""
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -41,10 +39,3 @@ def add_watcher(
             "success": False,
             "error": str(e),
         }
-
-
-AddWatcherTool = Tool.from_function(
-    add_watcher,
-    name="add_watcher",
-    description="Add a watcher to a Redmine issue",
-)

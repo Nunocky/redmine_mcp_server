@@ -1,7 +1,5 @@
 """Tool to remove a watcher from a Redmine issue"""
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -40,10 +38,3 @@ def remove_watcher(
             "success": False,
             "error": str(e),
         }
-
-
-RemoveWatcherTool = Tool.from_function(
-    remove_watcher,
-    name="remove_watcher",
-    description="Remove a watcher from a Redmine issue",
-)

@@ -12,9 +12,6 @@ Raises:
 
 from typing import Any, Dict, Optional
 
-import requests
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -119,10 +116,3 @@ def update_issue(
         if e.response.status_code == 404:
             return {}
         raise
-
-
-UpdateIssueTool = Tool.from_function(
-    update_issue,
-    name="update_issue",
-    description="Update an existing issue in Redmine.",
-)

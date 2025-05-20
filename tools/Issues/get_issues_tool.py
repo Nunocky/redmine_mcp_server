@@ -13,7 +13,6 @@ Raises:
 from typing import Any, Dict, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -80,10 +79,3 @@ def get_issues(
             return {"issues": [], "total_count": 0, "offset": 0, "limit": 0}
         # Re-raise other errors
         raise
-
-
-GetIssuesTool = Tool.from_function(
-    get_issues,
-    name="get_issues",
-    description="Get a list of Redmine issues",
-)

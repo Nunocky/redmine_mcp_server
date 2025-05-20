@@ -6,8 +6,6 @@ This tool creates a new Redmine issue.
 import os
 from typing import Any, Dict, Optional
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -116,10 +114,3 @@ def create_issue(
         except Exception:
             pass
     return response.json()
-
-
-CreateIssueTool = Tool.from_function(
-    create_issue,
-    name="create_issue",
-    description="Create a new issue in Redmine.",
-)

@@ -1,5 +1,3 @@
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -25,6 +23,3 @@ def delete_issue(redmine_url: str, api_key: str, issue_id: int):
         return {"success": resp.status_code in (200, 204), "status_code": resp.status_code, "response_text": resp.text}
     except Exception as e:
         return {"success": False, "error": str(e)}
-
-
-DeleteIssueTool = Tool.from_function(delete_issue, name="delete_issue", description="Delete an issue from Redmine.")
