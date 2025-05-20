@@ -7,16 +7,9 @@ import pytest
 from tools.MyAccount.get_my_account_tool import get_my_account
 
 
-def get_env(key: str) -> str:
-    value = os.environ.get(key)
-    if not value:
-        pytest.fail(f"環境変数 {key} が未設定のため終了")
-    return value
-
-
 def test_get_my_account_json():
-    base_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_USER_API_KEY")
+    base_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_USER_API_KEY")
 
     user = get_my_account(
         base_url=base_url,
@@ -36,7 +29,7 @@ def test_get_my_account_json():
 
 def test_get_my_account_invalid_key():
     """Test get_my_account raises Exception with invalid API key."""
-    base_url = get_env("REDMINE_URL")
+    base_url = os.environ.get("REDMINE_URL")
     with pytest.raises(Exception):
         get_my_account(
             base_url=base_url,

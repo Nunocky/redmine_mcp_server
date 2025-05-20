@@ -11,18 +11,11 @@ import pytest
 from tools.Attachments.upload_attachment_tool import upload_attachment
 
 
-def get_env(key: str) -> str:
-    value = os.environ.get(key)
-    if not value:
-        pytest.fail(f"環境変数 {key} が未設定のため失敗")
-    return value
-
-
 def test_upload_attachment_success():
     """添付ファイルアップロードAPIの正常系テスト"""
 
-    redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_USER_API_KEY")
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_USER_API_KEY")
 
     # 一時ファイル作成
     with tempfile.NamedTemporaryFile("w+", delete=False, suffix=".txt") as tmp:
@@ -47,8 +40,8 @@ def test_upload_attachment_success():
 
 def test_upload_attachment_file_not_found():
     """存在しないファイルパス指定時のエラー系テスト"""
-    redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_USER_API_KEY")
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_USER_API_KEY")
     file_path = "/tmp/not_exist_file_123456789.txt"
     result = upload_attachment(
         redmine_url=redmine_url,

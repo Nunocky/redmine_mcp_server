@@ -6,18 +6,9 @@ pytest -s tests/Attachments/test_delete_attachment_tool.py
 import os
 import tempfile
 
-import pytest
-
 from tools.Attachments.delete_attachment_tool import delete_attachment
 from tools.Attachments.upload_attachment_tool import upload_attachment
 from tools.Issues.create_issue_tool import create_issue
-
-
-def get_env(key: str) -> str:
-    value = os.environ.get(key)
-    if not value:
-        pytest.fail(f"環境変数 {key} が未設定のため終了")
-    return value
 
 
 def create_temp_file(content: bytes = b"delete test file") -> str:
@@ -30,9 +21,9 @@ def create_temp_file(content: bytes = b"delete test file") -> str:
 
 def test_delete_attachment_success():
     """添付ファイル削除APIの正常系テスト（事前にアップロード & チケット登録）"""
-    redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_ADMIN_API_KEY")
-    project_id = get_env("REDMINE_TEST_PROJECT_ID")
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
+    project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     # 一時ファイルを作成してアップロード
     file_path = create_temp_file()
     upload_result = upload_attachment(
@@ -82,10 +73,10 @@ def test_delete_attachment_permission_denied():
     - 添付ファイルIDを取得
     - 一般ユーザーAPIキーで削除APIを実行し、権限エラーとなることを確認
     """
-    redmine_url = get_env("REDMINE_URL")
-    admin_api_key = get_env("REDMINE_ADMIN_API_KEY")
-    user_api_key = get_env("REDMINE_USER_API_KEY")
-    project_id = get_env("REDMINE_TEST_PROJECT_ID")
+    redmine_url = os.environ.get("REDMINE_URL")
+    admin_api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
+    user_api_key = os.environ.get("REDMINE_USER_API_KEY")
+    project_id = os.environ.get("REDMINE_TEST_PROJECT_ID")
     # 一時ファイルを作成してアップロード
     file_path = create_temp_file()
     upload_result = upload_attachment(
@@ -128,8 +119,8 @@ def test_delete_attachment_permission_denied():
 
 def test_delete_attachment_not_found():
     """存在しない添付ファイルID指定時のエラー系テスト"""
-    redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_USER_API_KEY")
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_USER_API_KEY")
     result = delete_attachment(
         redmine_url=redmine_url,
         api_key=api_key,
