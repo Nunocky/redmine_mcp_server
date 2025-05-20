@@ -31,6 +31,8 @@ from tools.Projects.get_project_tool import GetProjectTool
 from tools.Projects.get_projects_tool import GetProjectsTool
 from tools.Projects.unarchive_project_tool import UnarchiveProjectTool
 from tools.Projects.update_project_tool import UpdateProjectTool
+from tools.Roles.get_role_tool import GetRoleTool
+from tools.Roles.get_roles_tool import GetRolesTool
 from tools.TimeEntries.create_time_entry_tool import CreateTimeEntryTool
 from tools.TimeEntries.get_time_entries_tool import GetTimeEntriesTool
 from tools.Users.create_user_tool import CreateUserTool
@@ -141,6 +143,10 @@ mcp.add_tool(GetUserTool.fn)  # OK
 mcp.add_tool(CreateUserTool.fn)  # OK
 mcp.add_tool(UpdateUserTool.fn)  # OK
 mcp.add_tool(DeleteUserTool.fn)  # OK
+
+# Roles
+mcp.add_tool(GetRolesTool.fn)  # OK
+mcp.add_tool(GetRoleTool.fn)  # OK
 
 # My Account
 mcp.add_tool(GetMyAccountTool.fn)  # OK
