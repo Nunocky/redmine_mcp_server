@@ -20,6 +20,7 @@ from tools.Issues.get_issue_tool import GetIssueTool
 from tools.Issues.get_issues_tool import GetIssuesTool
 from tools.Issues.remove_watcher_tool import RemoveWatcherTool
 from tools.Issues.update_issue_tool import UpdateIssueTool
+from tools.MyAccount.GetMyAccountTool import GetMyAccountTool
 from tools.News.get_news_tool import GetNewsTool
 from tools.ProjectMemberships.create_membership_tool import CreateProjectMembershipTool
 from tools.ProjectMemberships.get_memberships_tool import GetMembershipsTool
