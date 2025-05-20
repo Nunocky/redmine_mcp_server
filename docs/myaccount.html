@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Rest MyAccount - Redmine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Redmine" />
+<meta name="keywords" content="issue,bug,tracker" />
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="3RBzjfIEGH/fk8KCPRYFCSDv4yfooeQJR48vD9m1jbyLQ/04Abyf+IgSkoYyK+zySGPORPxeY+QART5gDAsPeA==" />
+<link rel='shortcut icon' href='/favicon.ico?1679302129' />
+<link rel="stylesheet" media="all" href="/stylesheets/jquery/jquery-ui-1.13.2.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/tribute-5.1.3.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/application.css?1679302129" />
+<link rel="stylesheet" media="all" href="/stylesheets/responsive.css?1679302129" />
+
+<script src="/javascripts/jquery-3.6.1-ui-1.13.2-ujs-5.2.8.1.js?1679302129"></script>
+<script src="/javascripts/jquery-migrate-3.3.2.min.js?1679302129"></script>
+<script src="/javascripts/tribute-5.1.3.min.js?1679302129"></script>
+<script src="/javascripts/tablesort-5.2.1.min.js?1679302129"></script>
+<script src="/javascripts/tablesort-5.2.1.number.min.js?1679302129"></script>
+<script src="/javascripts/application.js?1679302129"></script>
+<script src="/javascripts/responsive.js?1679302129"></script>
+<script>
+//<![CDATA[
+$(window).on('load', function(){ warnLeavingUnsaved('このページから移動すると、保存されていないデータが失われます。'); });
+//]]>
+</script>
+
+<script>
+//<![CDATA[
+rm = window.rm || {};rm.AutoComplete = rm.AutoComplete || {};rm.AutoComplete.dataSources = '{"issues":"/issues/auto_complete?project_id=redmine\u0026q=","wiki_pages":"/wiki_pages/auto_complete?project_id=redmine\u0026q="}';
+//]]>
+</script>
+
+<!-- page specific tags -->
+
+</head>
+<body class="project-redmine has-main-menu controller-wiki action-show avatars-on">
+
+<div id="wrapper">
+
+<div class="flyout-menu js-flyout-menu">
+
+        <div class="flyout-menu__search">
+            <form action="/projects/redmine/search" accept-charset="UTF-8" name="form-265c4378" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+            <input type="hidden" name="wiki_pages" value="1" />
+            <label class="search-magnifier search-magnifier--flyout" for="flyout-search">&#9906;</label>
+            <input type="text" name="q" id="flyout-search" class="small js-search-input" placeholder="検索" />
+</form>        </div>
+
+
+        <h3>プロジェクト</h3>
+        <span class="js-project-menu"></span>
+
+    <h3>全般</h3>
+    <span class="js-general-menu"></span>
+
+    <span class="js-sidebar flyout-menu__sidebar"></span>
+
+    <h3>プロフィール</h3>
+    <span class="js-profile-menu"></span>
+
+</div>
+
+<div id="wrapper2">
+<div id="wrapper3">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a class="login" href="/login">ログイン</a></li><li><a class="register" href="/account/register">登録する</a></li></ul>    </div>
+    
+    <ul><li><a class="home" href="/">ホーム</a></li><li><a class="projects" href="/projects">プロジェクト</a></li><li><a class="help" href="https://www.redmine.org/guide">ヘルプ</a></li></ul></div>
+
+<div id="header">
+
+    <a href="#" class="mobile-toggle-button js-flyout-menu-toggle-button"></a>
+
+    <div id="quick-search">
+        <form action="/projects/redmine/search" accept-charset="UTF-8" name="form-0cac11ef" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+        <input type="hidden" name="scope" value="subprojects" />
+        <input type="hidden" name="wiki_pages" value="1" />
+        <label for='q'>
+          <a accesskey="4" href="/projects/redmine/search?scope=subprojects">検索</a>:
+        </label>
+        <input type="text" name="q" id="q" size="20" class="small" accesskey="f" data-auto-complete="true" />
+</form>        <div id="project-jump" class="drdn"><span class="drdn-trigger">Redmine</span><div class="drdn-content"><div class="quick-search"><input type="text" name="q" id="projects-quick-search" value="" class="autocomplete" data-automcomplete-url="/projects/autocomplete.js?jump=wiki" autocomplete="off" /></div><div class="drdn-items projects selection"></div><div class="drdn-items all-projects selection"><a href="/projects?jump=wiki">全プロジェクト</a></div></div></div>
+    </div>
+
+    <h1><span class="current-project">Redmine</span></h1>
+
+    <div id="main-menu" class="tabs">
+        <ul><li><a class="overview" href="/projects/redmine">概要</a></li><li><a class="download" href="/projects/redmine/wiki/Download">Download</a></li><li><a class="activity" href="/projects/redmine/activity">活動</a></li><li><a class="roadmap" href="/projects/redmine/roadmap">ロードマップ</a></li><li><a class="issues" href="/projects/redmine/issues">チケット</a></li><li><a class="news" href="/projects/redmine/news">ニュース</a></li><li><a class="wiki selected" href="/projects/redmine/wiki">Wiki</a></li><li><a class="boards" href="/projects/redmine/boards">フォーラム</a></li><li><a class="repository" href="/projects/redmine/repository">リポジトリ</a></li></ul>
+        <div class="tabs-buttons" style="display:none;">
+            <button class="tab-left" onclick="moveTabLeft(this); return false;"></button>
+            <button class="tab-right" onclick="moveTabRight(this); return false;"></button>
+        </div>
+    </div>
+</div>
+
+<div id="main" class="">
+    <div id="sidebar">
+          
+  <div class="wiki">
+    <a name="Latest-releases"></a>
+<h3 >Latest releases<a href="#Latest-releases" class="wiki-anchor">&para;</a></h3>
+
+
+	<p><a class="wiki-page" href="/projects/redmine/wiki/Download">5.0.12 (2025-03-10)</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Download">5.1.8 (2025-04-20)</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Download">6.0.5 (2025-04-20)</a></p>
+
+
+	<a name="Resources"></a>
+<h3 >Resources<a href="#Resources" class="wiki-anchor">&para;</a></h3>
+
+
+	<p><a class="wiki-page" href="/projects/redmine/wiki/Guide">User's Guide</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Developer_Guide">Developer's Guide</a><br /><a class="wiki-page" href="/projects/redmine/wiki/Changelog">Changelog</a>, <a class="wiki-page" href="/projects/redmine/wiki/Security_Advisories">Security</a><br /><a class="wiki-page" href="/projects/redmine/wiki/FAQ">FAQ</a>, <a class="wiki-page" href="/projects/redmine/wiki/HowTos">HowTo's</a><br /><a href="/plugins">Plugins</a>, <a class="wiki-page" href="/projects/redmine/wiki/Theme_List">Themes</a><br /><a class="wiki-page" href="/projects/redmine/wiki/PrivacyPolicy">Privacy Policy</a></p>
+  </div>
+
+<h3>Wiki</h3>
+<ul>
+  <li><a href="/">メインページ</a></li>
+  <li><a href="/projects/redmine/wiki/index">索引(名前順)</a></li>
+  <li><a href="/projects/redmine/wiki/date_index">索引(日付順)</a></li>
+</ul>
+
+
+
+		<br />
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-0447284344517370";
+		google_alternate_color = "FFFFFF";
+		google_ad_width = 160;
+		google_ad_height = 600;
+		google_ad_format = "160x600_as";
+		google_ad_type = "text_image";
+		google_ad_channel = "";
+		google_color_border = "EEEEEE";
+		google_color_bg = "FFFFFF";
+		google_color_link = "484848";
+		google_color_text = "484848";
+		google_color_url = "2A5685";
+		//-->
+		</script>
+		<script type="text/javascript"
+		  src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+                <br />
+
+        
+    </div>
+
+    <div id="content">
+        
+        <div class="contextual">
+
+  
+  
+
+  <span class="drdn"><span class="drdn-trigger"><span class="icon-only icon-actions" title="操作">操作</span></span><div class="drdn-content"><div class="drdn-items">
+    <a class="icon icon-history" href="/projects/redmine/wiki/Rest_MyAccount/history">履歴</a>
+
+      
+      
+      
+      
+
+</div></div></span></div>
+
+<p class="breadcrumb"><a href="/projects/redmine/wiki/Guide">Guide</a> » <a href="/projects/redmine/wiki/Developer_Guide">Developer Guide</a> » <a href="/projects/redmine/wiki/Rest_api">Rest api</a> » </p>
+
+
+<div class="wiki wiki-page">
+  <a name="MyAccount"></a>
+<h1 >MyAccount<a href="#MyAccount" class="wiki-anchor">&para;</a></h1>
+
+
+	<a name="myaccountformat"></a>
+<h2 >/my/account.:format<a href="#myaccountformat" class="wiki-anchor">&para;</a></h2>
+
+
+	<a name="GET"></a>
+<h3 >GET<a href="#GET" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>Returns the details of your account.</p>
+
+
+	<p><ins>Examples</ins>:</p>
+
+
+<pre>
+GET /my/account.xml
+GET /my/account.json
+</pre>
+
+	<p><ins>Response</ins>:</p>
+
+
+<pre><code class="xml syntaxhl"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;user&gt;</span>
+  <span class="nt">&lt;id&gt;</span>3<span class="nt">&lt;/id&gt;</span>
+  <span class="nt">&lt;login&gt;</span>dlopper<span class="nt">&lt;/login&gt;</span>
+  <span class="nt">&lt;admin&gt;</span>false<span class="nt">&lt;/admin&gt;</span>
+  <span class="nt">&lt;firstname&gt;</span>Dave<span class="nt">&lt;/firstname&gt;</span>
+  <span class="nt">&lt;lastname&gt;</span>Lopper<span class="nt">&lt;/lastname&gt;</span>
+  <span class="nt">&lt;mail&gt;</span>dlopper@somenet.foo<span class="nt">&lt;/mail&gt;</span>
+  <span class="nt">&lt;created_on&gt;</span>2006-07-19T17:33:19Z<span class="nt">&lt;/created_on&gt;</span>
+  <span class="nt">&lt;last_login_on&gt;</span>2020-06-14T13:03:34Z<span class="nt">&lt;/last_login_on&gt;</span>
+  <span class="nt">&lt;api_key&gt;</span>c308a59c9dea95920b13522fb3e0fb7fae4f292d<span class="nt">&lt;/api_key&gt;</span>
+  <span class="nt">&lt;custom_fields</span> <span class="na">type=</span><span class="s">"array"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;custom_field</span> <span class="na">id=</span><span class="s">"4"</span> <span class="na">name=</span><span class="s">"Phone number"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value/&gt;</span>
+    <span class="nt">&lt;/custom_field&gt;</span>
+    <span class="nt">&lt;custom_field</span> <span class="na">id=</span><span class="s">"5"</span> <span class="na">name=</span><span class="s">"Money"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;value/&gt;</span>
+    <span class="nt">&lt;/custom_field&gt;</span>
+  <span class="nt">&lt;/custom_fields&gt;</span>
+<span class="nt">&lt;/user&gt;</span>
+</code></pre>
+
+	<a name="PUT"></a>
+<h3 >PUT<a href="#PUT" class="wiki-anchor">&para;</a></h3>
+
+
+	<p>Updates your account.</p>
+
+
+	<p>TODO</p>
+</div>
+
+
+<fieldset class="collapsible collapsed hide-when-print">
+  <legend onclick="toggleFieldset(this);" class="icon icon-collapsed">ファイル (1)</legend>
+  <div style="display: none;">
+
+  <div class="attachments">
+<div class="contextual">
+  
+  
+</div>
+<table>
+<tr>
+  <td>
+    <a class="icon icon-attachment" href="/attachments/28231">image Test.png</a>    <span class="size">(40.5 KB)</span>
+    <a class="icon-only icon-download" title="ダウンロード" href="/attachments/download/28231/image%20Test.png">image Test.png</a>  </td>
+  <td></td>
+  <td>
+      <span class="author">Israel Luque , 2021-10-30 15:10</span>
+  </td>
+  <td>
+  </td>
+</tr>
+</table>
+</div>
+
+
+</div>
+</fieldset>
+
+<p class="wiki-update-info">
+    <a class="user active" href="/users/332">Go MAEDA</a> さんが<a title="2020-06-14 15:08" href="/projects/redmine/activity?from=2020-06-14">ほぼ5年</a>前に更新
+    · <a href="/projects/redmine/wiki/Rest_MyAccount/history">2件の履歴</a>
+</p>
+
+
+
+
+
+        
+        <div style="clear:both;"></div>
+    </div>
+</div>
+<div id="footer">
+    Powered by <a href="https://www.redmine.org/">Redmine</a> &copy; 2006-2023 Jean-Philippe Lang
+</div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>ロード中...</span></div>
+<div id="ajax-modal" style="display:none;"></div>
+
+</div>
+</div>
+
+</body>
+</html>

@@ -30,6 +30,8 @@ from tools.Projects.get_project_tool import GetProjectTool
 from tools.Projects.get_projects_tool import GetProjectsTool
 from tools.Projects.unarchive_project_tool import UnarchiveProjectTool
 from tools.Projects.update_project_tool import UpdateProjectTool
+from tools.Roles.get_role_tool import GetRoleTool
+from tools.Roles.get_roles_tool import GetRolesTool
 from tools.TimeEntries.create_time_entry_tool import CreateTimeEntryTool
 from tools.TimeEntries.get_time_entries_tool import GetTimeEntriesTool
 from tools.Users.create_user_tool import CreateUserTool
@@ -72,10 +74,10 @@ mcp.add_tool(CreateIssueTool.fn)  # OK
 mcp.add_tool(UpdateIssueTool.fn)  # △
 mcp.add_tool(DeleteIssueTool.fn)  # OK
 mcp.add_tool(AddWatcherTool.fn)  # OK
-mcp.add_tool(RemoveWatcherTool.fn)
+mcp.add_tool(RemoveWatcherTool.fn)  # OK
 
 # Queries
-mcp.add_tool(GetQueriesTool.fn)
+mcp.add_tool(GetQueriesTool.fn)  # OK
 
 # Projects
 mcp.add_tool(GetProjectsTool.fn)  # OK
@@ -102,6 +104,10 @@ mcp.add_tool(GetUserTool.fn)
 mcp.add_tool(CreateUserTool.fn)
 mcp.add_tool(UpdateUserTool.fn)
 mcp.add_tool(DeleteUserTool.fn)
+
+# Roles
+mcp.add_tool(GetRolesTool.fn)  # OK
+mcp.add_tool(GetRoleTool.fn)  # OK
 
 
 if __name__ == "__main__":
