@@ -133,7 +133,7 @@ mcp.add_tool(CreateTimeEntryTool.fn)  # OK
 mcp.add_tool(UploadAttachmentTool.fn)  # OK
 mcp.add_tool(DeleteAttachmentTool.fn)  # OK
 mcp.add_tool(GetAttachmentTool.fn)  # OK
-mcp.add_tool(UpdateAttachmentTool.fn)  # pass
+mcp.add_tool(UpdateAttachmentTool.fn)  # skip
 
 # Users
 mcp.add_tool(GetUsersTool.fn)  # OK
@@ -143,7 +143,7 @@ mcp.add_tool(UpdateUserTool.fn)  # OK
 mcp.add_tool(DeleteUserTool.fn)  # OK
 
 # My Account
-mcp.add_tool(GetMyAccountTool.fn)
+mcp.add_tool(GetMyAccountTool.fn)  # OK
 
 if __name__ == "__main__":
     mcp.run()
