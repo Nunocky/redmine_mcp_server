@@ -5,24 +5,15 @@ pytest -s tests/Attachments/test_get_attachment_tool.py
 
 import os
 
-import pytest
-
 from tools.Attachments.get_attachment_tool import get_attachment
-
-
-def get_env(key: str) -> str:
-    value = os.environ.get(key)
-    if not value:
-        pytest.fail(f"環境変数 {key} が未設定のため終了")
-    return value
 
 
 def test_get_attachment_success():
     """添付ファイル取得APIの正常系テスト"""
-    redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_USER_API_KEY")
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_USER_API_KEY")
     # 添付ファイルIDは事前に存在するものを指定してください
-    attachment_id = get_env("REDMINE_TEST_ATTACHMENT_ID")
+    attachment_id = os.environ.get("REDMINE_TEST_ATTACHMENT_ID")
     result = get_attachment(
         redmine_url=redmine_url,
         api_key=api_key,
@@ -36,8 +27,8 @@ def test_get_attachment_success():
 
 def test_get_attachment_not_found():
     """存在しない添付ファイルID指定時のエラー系テスト"""
-    redmine_url = get_env("REDMINE_URL")
-    api_key = get_env("REDMINE_USER_API_KEY")
+    redmine_url = os.environ.get("REDMINE_URL")
+    api_key = os.environ.get("REDMINE_USER_API_KEY")
     result = get_attachment(
         redmine_url=redmine_url,
         api_key=api_key,
