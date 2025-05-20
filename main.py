@@ -21,7 +21,7 @@ from tools.Issues.GetIssueTool import GetIssueTool
 from tools.Issues.RemoveWatcherTool import RemoveWatcherTool
 from tools.Issues.UpdateIssueTool import UpdateIssueTool
 from tools.MyAccount.GetMyAccountTool import GetMyAccountTool
-from tools.News.get_news_tool import GetNewsTool
+from tools.News.GetNewsTool import GetNewsTool
 from tools.ProjectMemberships.create_membership_tool import CreateProjectMembershipTool
 from tools.ProjectMemberships.get_memberships_tool import GetMembershipsTool
 from tools.Projects.archive_project_tool import ArchiveProjectTool

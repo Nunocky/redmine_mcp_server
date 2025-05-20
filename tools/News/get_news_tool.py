@@ -1,8 +1,6 @@
 import os
 from typing import Any, Dict, Optional
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -68,10 +66,3 @@ def get_news(
         if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
             raise ValueError("指定された project_id は存在しません") from e
         raise
-
-
-GetNewsTool = Tool.from_function(
-    get_news,
-    name="get_news",
-    description="Get a list of news from Redmine.",
-)
