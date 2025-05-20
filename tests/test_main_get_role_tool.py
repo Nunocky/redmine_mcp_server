@@ -6,6 +6,7 @@ import pytest
 import requests
 from pprint import pprint
 
+
 def test_main_get_role_api():
     """Basic test for Redmine role detail API via REST
     Note:

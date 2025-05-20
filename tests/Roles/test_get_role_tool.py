@@ -5,11 +5,13 @@ import pytest
 from tools.Roles.get_roles_tool import get_roles
 from tools.Roles.get_role_tool import get_role
 
+
 def get_env(key: str) -> str:
     value = os.environ.get(key)
     if not value:
         pytest.fail(f"環境変数 {key} が未設定")
     return value
+
 
 def test_get_role():
     """Redmineロール詳細取得APIの正常系テスト"""

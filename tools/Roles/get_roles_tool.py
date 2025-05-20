@@ -7,6 +7,7 @@ from fastmcp.tools.tool import Tool
 from tools.redmine_api_client import RedmineAPIClient
 from typing import Any, Dict, List, Optional
 
+
 def get_roles(
     redmine_url: Optional[str] = None,
     api_key: Optional[str] = None,
@@ -29,6 +30,7 @@ def get_roles(
         raise Exception(f"Failed to fetch roles: {response.status_code} {response.text}")
     data = response.json()
     return {"roles": data.get("roles", [])}
+
 
 GetRolesTool = Tool.from_function(
     get_roles,
