@@ -3,9 +3,11 @@
 This module provides a function and a Tool object to retrieve all roles from the Redmine REST API.
 """
 
-from fastmcp.tools.tool import Tool
-from tools.redmine_api_client import RedmineAPIClient
 from typing import Any, Dict, List, Optional
+
+from fastmcp.tools.tool import Tool
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_roles(

@@ -1,9 +1,11 @@
 """Test for get_role (Redmine Roles API)."""
 
 import os
+
 import pytest
-from tools.Roles.get_roles_tool import get_roles
+
 from tools.Roles.get_role_tool import get_role
+from tools.Roles.get_roles_tool import get_roles
 
 
 def get_env(key: str) -> str:
@@ -24,7 +26,12 @@ def test_get_role():
     roles = roles_result["roles"]
     assert len(roles) > 0
     role_id = roles[0]["id"]
-    result = get_role(role_id)
+
+    result = get_role(
+        redmine_url=redmine_url,
+        api_key=api_key,
+        role_id=role_id,
+    )
     print("result:", result)
     assert "role" in result
     role = result["role"]

@@ -1,7 +1,9 @@
 """Test for get_roles (Redmine Roles API)."""
 
 import os
+
 import pytest
+
 from tools.Roles.get_roles_tool import get_roles
 
 
