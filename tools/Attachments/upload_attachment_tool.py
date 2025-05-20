@@ -4,8 +4,6 @@ Redmine REST API: POST /uploads.json
 Content-Type: application/octet-stream
 """
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -58,10 +56,3 @@ def upload_attachment(
             "success": False,
             "error": str(e),
         }
-
-
-UploadAttachmentTool = Tool.from_function(
-    upload_attachment,
-    name="upload_attachment",
-    description="Redmineにファイルをアップロードし添付ファイルトークンを取得します",
-)

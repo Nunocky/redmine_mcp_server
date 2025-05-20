@@ -1,7 +1,5 @@
 """Tool to update a Redmine attachment's meta information (PATCH)"""
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -46,10 +44,3 @@ def update_attachment(
             "success": False,
             "error": str(e),
         }
-
-
-UpdateAttachmentTool = Tool.from_function(
-    update_attachment,
-    name="update_attachment",
-    description="Updates Redmine attachment information (PATCH).",
-)

@@ -1,7 +1,5 @@
 """Tool to get a Redmine attachment's meta information"""
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -47,10 +45,3 @@ def get_attachment(
             "success": False,
             "error": str(e),
         }
-
-
-GetAttachmentTool = Tool.from_function(
-    get_attachment,
-    name="get_attachment",
-    description="Retrieves Redmine attachment information.",
-)

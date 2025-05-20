@@ -1,7 +1,5 @@
 """Tool to delete a Redmine attachment"""
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -40,10 +38,3 @@ def delete_attachment(
             "success": False,
             "error": str(e),
         }
-
-
-DeleteAttachmentTool = Tool.from_function(
-    delete_attachment,
-    name="delete_attachment",
-    description="Deletes an attachment from Redmine.",
-)

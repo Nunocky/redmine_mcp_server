@@ -5,10 +5,10 @@ Registers all API tools under tools as Redmine MCP server using @mcp.tool() and 
 
 from fastmcp.server import FastMCP
 
-from tools.Attachments.delete_attachment_tool import DeleteAttachmentTool
-from tools.Attachments.get_attachment_tool import GetAttachmentTool
-from tools.Attachments.update_attachment_tool import UpdateAttachmentTool
-from tools.Attachments.upload_attachment_tool import UploadAttachmentTool
+from tools.Attachments.DeleteAttachmentTool import DeleteAttachmentTool
+from tools.Attachments.GetAttachmentTool import GetAttachmentTool
+from tools.Attachments.UpdateAttachmentTool import UpdateAttachmentTool
+from tools.Attachments.UploadAttachmentTool import UploadAttachmentTool
 from tools.get_queries_tool import GetQueriesTool
 from tools.get_versions_tool import GetVersionTool
 from tools.get_wiki_pages_tool import GetWikiPagesTool
