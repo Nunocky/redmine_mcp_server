@@ -34,18 +34,18 @@ uv sync
 - [x] Time Entries
 - [x] News
 - [ ] Issue Relations
-- [ ] Versions
-- [ ] Wiki Pages
-- [ ] Queries
+- [x] Versions
+- [x] Wiki Pages
+- [x] Queries
 - [x] Attachments
 - [ ] Issue Statuses
 - [ ] Trackers
 - [ ] Enumerations
 - [ ] Issue Categories
-- [ ] Roles
+- [x] Roles
 - [ ] Groups
 - [ ] Custom Fields
 - [ ] Search
 - [ ] Files
-- [ ] My account
+- [x] My account
 - [ ] Journals
