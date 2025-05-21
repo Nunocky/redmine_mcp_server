@@ -1,6 +1,6 @@
 import os
 
-from fastmcp.tools.tool import Tool
+import requests
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -38,15 +38,6 @@ def get_versions(
             "offset": data.get("offset", offset if offset is not None else 0),
         }
     except Exception as e:
-        import requests
-
         if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
             return {"versions": [], "total_count": 0, "limit": 0, "offset": 0}
         raise
-
-
-GetVersionTool = Tool.from_function(
-    get_versions,
-    name="get_versions",
-    description="Get versions from Redmine",
-)

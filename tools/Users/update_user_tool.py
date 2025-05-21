@@ -12,9 +12,6 @@ Raises:
 
 from typing import Any, Dict, List, Optional
 
-import requests
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -93,10 +90,3 @@ def update_user(
         return get_resp.json().get("user", {})
     resp.raise_for_status()
     return resp.json().get("user", {})
-
-
-UpdateUserTool = Tool.from_function(
-    update_user,
-    name="update_user",
-    description="Update a user in Redmine by user_id.",
-)

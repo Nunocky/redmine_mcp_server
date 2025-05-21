@@ -13,7 +13,6 @@ Raises:
 from typing import Any, Dict, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -69,10 +68,3 @@ def get_memberships(
             return {"memberships": [], "total_count": 0, "offset": 0, "limit": 0}
         # Re-raise other errors
         raise
-
-
-GetMembershipsTool = Tool.from_function(
-    get_memberships,
-    name="get_memberships",
-    description="Get a list of Redmine project memberships",
-)

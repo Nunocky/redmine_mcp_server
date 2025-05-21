@@ -13,7 +13,6 @@ Raises:
 from typing import Any, Dict
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -57,10 +56,3 @@ def unarchive_project(
         if e.response.status_code == 404:
             return {"status": "not_found", "message": "Project not found"}
         raise
-
-
-UnarchiveProjectTool = Tool.from_function(
-    unarchive_project,
-    name="unarchive_project",
-    description="Unarchive a Redmine project",
-)

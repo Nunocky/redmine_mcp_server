@@ -1,11 +1,17 @@
-import os
+"""
+Query Tool
+保存済み検索条件
+"""
 
-from fastmcp.tools.tool import Tool
+import os
 
 from tools.redmine_api_client import RedmineAPIClient
 
 
-def get_wiki_pages(redmine_url: str, api_key: str, project_id: str):
+def get_queries(
+    redmine_url: str,
+    api_key: str,
+):
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:
@@ -13,23 +19,13 @@ def get_wiki_pages(redmine_url: str, api_key: str, project_id: str):
     if not redmine_url or not api_key:
         raise ValueError("redmine_url and api_key are required.")
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
-    endpoint = f"/projects/{project_id}/wiki/index.json"
     try:
-        response = client.get(endpoint=endpoint)
+        response = client.get(endpoint="/queries.json")
         data = response.json()
         return {
-            "wiki_pages": data.get("wiki_pages", []),
+            "queries": data.get("queries", []),
         }
     except Exception as e:
-        import requests
-
         if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
-            return {"wiki_pages": []}
+            return {"queries": []}
         raise
-
-
-GetWikiPagesTool = Tool.from_function(
-    get_wiki_pages,
-    name="get_wiki_pages",
-    description="Get wiki pages from Redmine",
-)

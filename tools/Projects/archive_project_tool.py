@@ -6,7 +6,6 @@ Archive a project using RedmineAPIClient.
 from typing import Any, Dict, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -45,10 +44,3 @@ def archive_project(
             "message": str(e),
             "status_code": getattr(e.response, "status_code", None),
         }
-
-
-ArchiveProjectTool = Tool.from_function(
-    archive_project,
-    name="archive_project",
-    description="Archive a Redmine project",
-)

@@ -7,8 +7,6 @@ This tool fetches a list of time entries from Redmine using the REST API.
 
 from typing import Any, Dict, Optional
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -48,10 +46,3 @@ def get_time_entries(
         status_code = getattr(e.response, "status_code", None) if hasattr(e, "response") else None
         response_text = getattr(e.response, "text", str(e)) if hasattr(e, "response") else str(e)
         return {"error": str(e), "status_code": status_code, "response": response_text}
-
-
-GetTimeEntriesTool = Tool.from_function(
-    get_time_entries,
-    name="get_time_entries",
-    description="Retrieve a list of time entries from Redmine.",
-)

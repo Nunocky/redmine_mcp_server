@@ -13,7 +13,6 @@ Raises:
 from typing import Any, Dict, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -50,10 +49,3 @@ def get_project(
         if e.response.status_code == 404:
             return {}
         raise
-
-
-GetProjectTool = Tool.from_function(
-    get_project,
-    name="get_project",
-    description="Get Redmine project information",
-)

@@ -3,9 +3,9 @@
 This module provides a function and a Tool object to retrieve a specific role's detail from the Redmine REST API.
 """
 
-from fastmcp.tools.tool import Tool
-from tools.redmine_api_client import RedmineAPIClient
 from typing import Any, Dict, Optional
+
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_role(
@@ -32,10 +32,3 @@ def get_role(
         raise Exception(f"Failed to fetch role: {response.status_code} {response.text}")
     data = response.json()
     return {"role": data.get("role", {})}
-
-
-GetRoleTool = Tool.from_function(
-    get_role,
-    name="get_role",
-    description="Get the detail of a specific role from Redmine.",
-)

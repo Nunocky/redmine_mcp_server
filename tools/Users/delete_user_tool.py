@@ -12,9 +12,6 @@ Raises:
 
 from typing import Any, Dict
 
-import requests
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -43,10 +40,3 @@ def delete_user(
         return {"success": True}
     # 204以外はraise_for_statusで例外送出（404含む）
     resp.raise_for_status()
-
-
-DeleteUserTool = Tool.from_function(
-    delete_user,
-    name="delete_user",
-    description="Delete a user in Redmine by user_id.",
-)

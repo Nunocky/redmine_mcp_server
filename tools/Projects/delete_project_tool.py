@@ -15,7 +15,6 @@ Raises:
 from typing import Any, Dict, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -55,10 +54,3 @@ def delete_project(
             "message": str(e),
             "status_code": getattr(e.response, "status_code", 500),
         }
-
-
-DeleteProjectTool = Tool.from_function(
-    delete_project,
-    name="delete_project",
-    description="Delete a Redmine project",
-)

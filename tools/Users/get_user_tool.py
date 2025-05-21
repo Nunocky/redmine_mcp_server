@@ -13,9 +13,6 @@ Raises:
 
 from typing import Any, Dict, Optional, Union
 
-import requests
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -47,10 +44,3 @@ def get_user(
     resp = client.get(endpoint, params=params)
     resp.raise_for_status()
     return resp.json()
-
-
-GetUserTool = Tool.from_function(
-    get_user,
-    name="get_user",
-    description="Get Redmine user details",
-)

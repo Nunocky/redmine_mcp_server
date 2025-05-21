@@ -1,6 +1,4 @@
-from typing import Any, Dict, Optional
-
-from fastmcp.tools.tool import Tool
+from typing import Any, Dict
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -42,10 +40,3 @@ def create_time_entry(
         status_code = getattr(e.response, "status_code", None) if hasattr(e, "response") else None
         response_text = getattr(e.response, "text", str(e)) if hasattr(e, "response") else str(e)
         return {"error": str(e), "status_code": status_code, "response": response_text}
-
-
-CreateTimeEntryTool = Tool.from_function(
-    create_time_entry,
-    name="create_time_entry",
-    description="Create a new time entry in Redmine.",
-)

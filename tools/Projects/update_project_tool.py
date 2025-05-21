@@ -14,7 +14,6 @@ Raises:
 from typing import Any, Dict, List, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -108,10 +107,3 @@ def update_project(
             "message": str(e),
             "status_code": getattr(e.response, "status_code", 500),
         }
-
-
-UpdateProjectTool = Tool.from_function(
-    update_project,
-    name="update_project",
-    description="Update Redmine project information",
-)

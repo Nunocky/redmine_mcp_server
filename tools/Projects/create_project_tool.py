@@ -13,7 +13,6 @@ Raises:
 from typing import Any, Dict, List, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -100,10 +99,3 @@ def create_project(
         if e.response.status_code == 404:
             return {}
         raise
-
-
-CreateProjectTool = Tool.from_function(
-    create_project,
-    name="create_project",
-    description="Create a Redmine project",
-)

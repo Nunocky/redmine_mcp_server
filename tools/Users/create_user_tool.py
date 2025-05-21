@@ -13,7 +13,6 @@ Raises:
 from typing import Any, Dict, List, Optional
 
 import requests
-from fastmcp.tools.tool import Tool
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -87,10 +86,3 @@ def create_user(
         if e.response.status_code == 404:
             return {}
         raise
-
-
-CreateUserTool = Tool.from_function(
-    create_user,
-    name="create_user",
-    description="Create a new user in Redmine.",
-)
