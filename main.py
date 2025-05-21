@@ -94,63 +94,63 @@ mcp = FastMCP("Redmine MCP Server", "0.1.0")
 #     mcp.add_tool(tool.fn)
 
 # ProjectMemberships
-mcp.add_tool(GetMembershipsTool.fn)  # OK
-mcp.add_tool(CreateProjectMembershipTool.fn)  # △ get_rolesが必要と言われる
+mcp.add_tool(GetMembershipsTool.fn)
+mcp.add_tool(CreateProjectMembershipTool.fn)
 
 # News
-mcp.add_tool(GetNewsTool.fn)  # OK
+mcp.add_tool(GetNewsTool.fn)
 
 # Versions
-mcp.add_tool(GetVersionTool.fn)  # 多分OK
+mcp.add_tool(GetVersionTool.fn)
 
 # WikiPages
-mcp.add_tool(GetWikiPagesTool.fn)  # OK
+mcp.add_tool(GetWikiPagesTool.fn)
 
 # Issues
-mcp.add_tool(GetIssueTool.fn)  # OK
-mcp.add_tool(GetIssuesTool.fn)  # OK
-mcp.add_tool(GetIssueRelationsTool.fn)  # OK
-mcp.add_tool(CreateIssueTool.fn)  # OK
+mcp.add_tool(GetIssueTool.fn)
+mcp.add_tool(GetIssuesTool.fn)
+mcp.add_tool(GetIssueRelationsTool.fn)
+mcp.add_tool(CreateIssueTool.fn)
 mcp.add_tool(UpdateIssueTool.fn)  # △
-mcp.add_tool(DeleteIssueTool.fn)  # OK
-mcp.add_tool(AddWatcherTool.fn)  # OK
-mcp.add_tool(RemoveWatcherTool.fn)  # OK
+mcp.add_tool(DeleteIssueTool.fn)
+mcp.add_tool(AddWatcherTool.fn)
+mcp.add_tool(RemoveWatcherTool.fn)
 
 # Queries (保存済み検索条件)
-mcp.add_tool(GetQueriesTool.fn)  # OK
+mcp.add_tool(GetQueriesTool.fn)
 
 # Projects
-mcp.add_tool(GetProjectsTool.fn)  # OK
-mcp.add_tool(GetProjectTool.fn)  # OK
-mcp.add_tool(CreateProjectTool.fn)  # OK
-mcp.add_tool(UpdateProjectTool.fn)  # OK
-mcp.add_tool(DeleteProjectTool.fn)  # OK
-mcp.add_tool(ArchiveProjectTool.fn)  # OK
-mcp.add_tool(UnarchiveProjectTool.fn)  # OK
+mcp.add_tool(GetProjectsTool.fn)
+mcp.add_tool(GetProjectTool.fn)
+mcp.add_tool(CreateProjectTool.fn)
+mcp.add_tool(UpdateProjectTool.fn)
+mcp.add_tool(DeleteProjectTool.fn)
+mcp.add_tool(ArchiveProjectTool.fn)
+mcp.add_tool(UnarchiveProjectTool.fn)
 
 # TimeEntries (作業時間記録)
-mcp.add_tool(GetTimeEntriesTool.fn)  # OK
-mcp.add_tool(CreateTimeEntryTool.fn)  # OK
+mcp.add_tool(GetTimeEntriesTool.fn)
+mcp.add_tool(CreateTimeEntryTool.fn)
 
 # Attachments
-mcp.add_tool(UploadAttachmentTool.fn)  # OK
-mcp.add_tool(DeleteAttachmentTool.fn)  # OK
-mcp.add_tool(GetAttachmentTool.fn)  # OK
+mcp.add_tool(UploadAttachmentTool.fn)
+mcp.add_tool(DeleteAttachmentTool.fn)
+mcp.add_tool(GetAttachmentTool.fn)
 mcp.add_tool(UpdateAttachmentTool.fn)  # skip
 
 # Users
-mcp.add_tool(GetUsersTool.fn)  # OK
-mcp.add_tool(GetUserTool.fn)  # OK
-mcp.add_tool(CreateUserTool.fn)  # OK
-mcp.add_tool(UpdateUserTool.fn)  # OK
-mcp.add_tool(DeleteUserTool.fn)  # OK
+mcp.add_tool(GetUsersTool.fn)
+mcp.add_tool(GetUserTool.fn)
+mcp.add_tool(CreateUserTool.fn)
+mcp.add_tool(UpdateUserTool.fn)
+mcp.add_tool(DeleteUserTool.fn)
 
 # Roles
-mcp.add_tool(GetRolesTool.fn)  # OK
-mcp.add_tool(GetRoleTool.fn)  # OK
+mcp.add_tool(GetRolesTool.fn)
+mcp.add_tool(GetRoleTool.fn)
 
 # My Account
-mcp.add_tool(GetMyAccountTool.fn)  # OK
+mcp.add_tool(GetMyAccountTool.fn)
 
 if __name__ == "__main__":
     mcp.run()
