@@ -3,13 +3,14 @@
 ## PR作成時
 
 - PRを要望されたら、gitコマンドで差分を確認したうえで、`gh pr` コマンドを使ってPRを作成してください
-- PRのdescriptionは .github/pull_request_template.md を読み取ってフォーマットを合わせてください
+- PRの descriptionは [[.github/pull_request_template.md]] を読み取ってフォーマットを合わせてください。**これは絶対です**
+
 
 ## PRレビュー時
 
 以下の手順でファイルごとにコメントを付けてください：
 
-1. チェックする観点は .github/pull_request_template.md を参照してください
+1. チェックする観点は .github/pull_request_template.md を参照してください。
 2. PRの差分を確認:
 
 ```bash
