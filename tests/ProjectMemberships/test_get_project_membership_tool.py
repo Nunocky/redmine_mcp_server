@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from tools.ProjectMemberships.get_project_membership_tool import GetProjectMembershipTool
+from tools.ProjectMemberships.get_project_membership import GetProjectMembershipTool
 from tools.redmine_api_client import RedmineAPIClient
 
 

@@ -55,7 +55,7 @@ class UpdateProjectMembershipTool:
             # According to Redmine API, 204 No Content means update succeeded.
             if resp.status_code == 204:
                 # Retrieve latest membership info after update.
-                from tools.ProjectMemberships.get_project_membership_tool import GetProjectMembershipTool
+                from tools.ProjectMemberships.get_project_membership import GetProjectMembershipTool
 
                 get_tool = GetProjectMembershipTool(client=self.client)
                 return get_tool.execute(membership_id)

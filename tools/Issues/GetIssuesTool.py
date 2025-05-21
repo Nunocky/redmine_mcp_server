@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Issues.get_issues_tool import get_issues
+from tools.Issues.get_issues import get_issues
 
 GetIssuesTool = Tool.from_function(
     get_issues,

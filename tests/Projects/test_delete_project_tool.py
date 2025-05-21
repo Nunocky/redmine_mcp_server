@@ -6,8 +6,8 @@ import string
 import pytest
 
 from tests.random_identifier import random_identifier
-from tools.Projects.create_project_tool import create_project
-from tools.Projects.delete_project_tool import delete_project
+from tools.Projects.create_project import create_project
+from tools.Projects.delete_project import delete_project
 
 
 def test_delete_project_api():

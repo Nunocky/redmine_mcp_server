@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from tools.ProjectMemberships.delete_project_membership_tool import delete_project_membership
+from tools.ProjectMemberships.delete_project_membership import delete_project_membership
 from tools.ProjectMemberships.DeleteProjectMembershipTool import DeleteProjectMembershipTool
 
 
@@ -13,7 +13,7 @@ def test_execute_success():
 
     This test creates a membership, then deletes it using the Tool class.
     """
-    from tools.ProjectMemberships.create_membership_tool import create_membership
+    from tools.ProjectMemberships.create_membership import create_membership
 
     redmine_url = os.getenv("REDMINE_URL")
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
@@ -50,7 +50,7 @@ def test_execute_not_found():
 
 def test_delete_project_membership_function_success():
     """Test successful deletion using the delete_project_membership function."""
-    from tools.ProjectMemberships.create_membership_tool import create_membership
+    from tools.ProjectMemberships.create_membership import create_membership
 
     redmine_url = os.getenv("REDMINE_URL")
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")

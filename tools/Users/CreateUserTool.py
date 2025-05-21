@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Users.create_user_tool import create_user
+from tools.Users.create_user import create_user
 
 CreateUserTool = Tool.from_function(
     create_user,

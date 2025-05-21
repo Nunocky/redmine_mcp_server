@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Attachments.get_attachment_tool import get_attachment
+from tools.Attachments.get_attachment import get_attachment
 
 GetAttachmentTool = Tool.from_function(
     get_attachment,

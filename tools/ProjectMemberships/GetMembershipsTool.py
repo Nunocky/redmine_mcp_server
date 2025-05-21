@@ -1,8 +1,8 @@
 """Redmineのプロジェクトメンバーシップ一覧取得ツールクラス"""
 
-from mcp import Tool
+from fastmcp.tools.tool import Tool
 
-from tools.ProjectMemberships.get_memberships_tool import get_memberships
+from tools.ProjectMemberships.get_memberships import get_memberships
 
 GetMembershipsTool = Tool.from_function(
     get_memberships,

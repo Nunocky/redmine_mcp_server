@@ -1,6 +1,6 @@
 import os
 
-from tools.Issues.create_issue_tool import create_issue
+from tools.Issues.create_issue import create_issue
 
 REDMINE_URL = os.environ.get("REDMINE_URL")
 API_KEY = os.environ.get("REDMINE_ADMIN_API_KEY")

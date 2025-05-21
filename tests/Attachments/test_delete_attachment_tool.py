@@ -6,9 +6,9 @@ pytest -s tests/Attachments/test_delete_attachment_tool.py
 import os
 import tempfile
 
-from tools.Attachments.delete_attachment_tool import delete_attachment
-from tools.Attachments.upload_attachment_tool import upload_attachment
-from tools.Issues.create_issue_tool import create_issue
+from tools.Attachments.delete_attachment import delete_attachment
+from tools.Attachments.upload_attachment import upload_attachment
+from tools.Issues.create_issue import create_issue
 
 
 def create_temp_file(content: bytes = b"delete test file") -> str:

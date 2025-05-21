@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.News.get_news_tool import get_news
+from tools.News.get_news import get_news
 
 GetNewsTool = Tool.from_function(
     get_news,

@@ -1,7 +1,7 @@
 import requests
 from fastmcp.tools.tool import Tool
 
-from tools.Issues.update_issue_tool import update_issue
+from tools.Issues.update_issue import update_issue
 
 UpdateIssueTool = Tool.from_function(
     update_issue,

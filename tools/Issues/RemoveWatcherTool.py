@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Issues.remove_watcher_tool import remove_watcher
+from tools.Issues.remove_watcher import remove_watcher
 
 RemoveWatcherTool = Tool.from_function(
     remove_watcher,

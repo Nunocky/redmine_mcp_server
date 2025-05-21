@@ -4,10 +4,10 @@ import pprint
 import pytest
 
 from tests.random_identifier import random_identifier
-from tools.Projects.archive_project_tool import archive_project
-from tools.Projects.create_project_tool import create_project
-from tools.Projects.delete_project_tool import delete_project
-from tools.Projects.unarchive_project_tool import unarchive_project
+from tools.Projects.archive_project import archive_project
+from tools.Projects.create_project import create_project
+from tools.Projects.delete_project import delete_project
+from tools.Projects.unarchive_project import unarchive_project
 
 
 def test_create_archive_unarchive_delete_project_api():

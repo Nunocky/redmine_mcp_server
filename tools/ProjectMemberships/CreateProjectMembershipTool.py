@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.ProjectMemberships.create_membership_tool import create_membership
+from tools.ProjectMemberships.create_membership import create_membership
 
 CreateProjectMembershipTool = Tool.from_function(
     create_membership,

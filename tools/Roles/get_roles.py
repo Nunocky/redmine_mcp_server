@@ -5,8 +5,6 @@ This module provides a function and a Tool object to retrieve all roles from the
 
 from typing import Any, Dict, List, Optional
 
-from fastmcp.tools.tool import Tool
-
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -32,10 +30,3 @@ def get_roles(
         raise Exception(f"Failed to fetch roles: {response.status_code} {response.text}")
     data = response.json()
     return {"roles": data.get("roles", [])}
-
-
-GetRolesTool = Tool.from_function(
-    get_roles,
-    name="get_roles",
-    description="Get the list of roles from Redmine.",
-)

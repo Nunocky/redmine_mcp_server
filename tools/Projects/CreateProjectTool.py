@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Projects.create_project_tool import create_project
+from tools.Projects.create_project import create_project
 
 CreateProjectTool = Tool.from_function(
     create_project,

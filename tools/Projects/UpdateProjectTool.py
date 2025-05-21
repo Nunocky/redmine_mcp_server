@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Projects.update_project_tool import update_project
+from tools.Projects.update_project import update_project
 
 UpdateProjectTool = Tool.from_function(
     update_project,

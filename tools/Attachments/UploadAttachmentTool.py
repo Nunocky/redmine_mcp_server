@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Attachments.upload_attachment_tool import upload_attachment
+from tools.Attachments.upload_attachment import upload_attachment
 
 UploadAttachmentTool = Tool.from_function(
     upload_attachment,

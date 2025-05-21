@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Roles.get_role_tool import get_role
+from tools.Roles.get_role import get_role
 
 GetRoleTool = Tool.from_function(
     get_role,

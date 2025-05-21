@@ -3,7 +3,7 @@ import pprint
 
 import pytest
 
-from tools.Projects.get_project_tool import get_project
+from tools.Projects.get_project import get_project
 
 
 def test_get_project_by_id_api():

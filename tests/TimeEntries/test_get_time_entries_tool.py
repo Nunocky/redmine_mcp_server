@@ -2,7 +2,7 @@
 
 import os
 
-from tools.TimeEntries.get_time_entries_tool import get_time_entries
+from tools.TimeEntries.get_time_entries import get_time_entries
 
 
 def test_get_time_entries_success():

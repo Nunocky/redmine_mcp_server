@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Attachments.delete_attachment_tool import delete_attachment
+from tools.Attachments.delete_attachment import delete_attachment
 
 DeleteAttachmentTool = Tool.from_function(
     delete_attachment,

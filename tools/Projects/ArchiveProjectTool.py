@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Projects.archive_project_tool import archive_project
+from tools.Projects.archive_project import archive_project
 
 ArchiveProjectTool = Tool.from_function(
     archive_project,

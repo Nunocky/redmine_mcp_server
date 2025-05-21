@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.WikiPages.get_wiki_pages_tool import get_wiki_pages
+from tools.WikiPages.get_wiki_pages import get_wiki_pages
 
 GetWikiPagesTool = Tool.from_function(
     get_wiki_pages,

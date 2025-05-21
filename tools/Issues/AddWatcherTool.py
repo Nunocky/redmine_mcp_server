@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Issues.add_watcher_tool import add_watcher
+from tools.Issues.add_watcher import add_watcher
 
 AddWatcherTool = Tool.from_function(
     add_watcher,

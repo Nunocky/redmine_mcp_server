@@ -5,7 +5,7 @@ pytest -s tests/Attachments/test_get_attachment_tool.py
 
 import os
 
-from tools.Attachments.get_attachment_tool import get_attachment
+from tools.Attachments.get_attachment import get_attachment
 
 
 def test_get_attachment_success():

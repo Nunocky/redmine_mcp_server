@@ -7,7 +7,7 @@ import os
 
 import pytest
 
-from tools.News.get_news_tool import get_news
+from tools.News.get_news import get_news
 
 
 def test_get_news_all_projects():
