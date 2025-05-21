@@ -35,6 +35,7 @@ from tools.Roles.GetRolesTool import GetRolesTool
 from tools.Roles.GetRoleTool import GetRoleTool
 from tools.TimeEntries.CreateTimeEntryTool import CreateTimeEntryTool
 from tools.TimeEntries.GetTimeEntriesTool import GetTimeEntriesTool
+from tools.Trackers.GetTrackersTool import GetTrackersTool
 from tools.Users.CreateUserTool import CreateUserTool
 from tools.Users.DeleteUserTool import DeleteUserTool
 from tools.Users.get_users import GetUsersTool
@@ -103,6 +104,9 @@ mcp.add_tool(GetNewsTool.fn)
 
 # IssueStatuses
 mcp.add_tool(GetIssueStatusesTool.fn)
+
+# Trackers
+mcp.add_tool(GetTrackersTool.fn)
 
 # Versions
 mcp.add_tool(GetVersionTool.fn)

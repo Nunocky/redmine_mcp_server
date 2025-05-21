@@ -40,7 +40,7 @@ uv sync
 - [x] Queries
 - [x] Attachments
 - [x] Issue Statuses
-- [ ] Trackers
+- [x] Trackers
 - [ ] Enumerations
 - [ ] Issue Categories
 - [x] Roles
