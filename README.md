@@ -39,7 +39,7 @@ uv sync
 - [x] Wiki Pages
 - [x] Queries
 - [x] Attachments
-- [ ] Issue Statuses
+- [x] Issue Statuses
 - [ ] Trackers
 - [ ] Enumerations
 - [ ] Issue Categories
