@@ -1,7 +1,6 @@
-"""Project Membership List Retrieval Tool
+"""Redmineのプロジェクトメンバーシップ一覧取得API呼び出し関数
 
-This tool retrieves a list of project memberships from Redmine.
-Returns an empty result for non-existent resources (404 error).
+存在しないリソース（404エラー）は空リストを返す。
 
 Returns:
     dict: Membership list and page information
@@ -24,23 +23,22 @@ def get_memberships(
     offset: Optional[int] = None,
     limit: Optional[int] = None,
 ) -> Dict[str, Any]:
-    """Get a list of Redmine project memberships
+    """Redmineのプロジェクトメンバーシップ一覧を取得
 
     Args:
-        redmine_url: URL of the Redmine server
-        api_key: Redmine API key
-        project_id: Project ID or identifier
-        offset: Number of items to skip
-        limit: Number of items to retrieve
+        redmine_url: RedmineサーバのURL
+        api_key: Redmine APIキー
+        project_id: プロジェクトIDまたは識別子
+        offset: スキップする件数
+        limit: 取得件数
 
     Returns:
-        dict: Membership list and page information
-        Returns an empty result for non-existent resources (404 error)
+        dict: メンバーシップ一覧とページ情報
+        存在しないリソース（404エラー）は空リストを返す
 
     Raises:
-        Exception: When API request fails (excluding 404 errors)
+        Exception: APIリクエスト失敗時（404以外）
     """
-    # Create Redmine API client
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params: Dict[str, Any] = {}
     if limit is not None:
@@ -55,16 +53,12 @@ def get_memberships(
             params=params,
         )
         data = response.json()
-        # Ensure offset/limit are present in the result
         if "offset" not in data:
             data["offset"] = params.get("offset", 0)
         if "limit" not in data:
             data["limit"] = params.get("limit", 25)
-        # Return the API response as is, ensuring offset/limit are present
         return data
     except requests.exceptions.HTTPError as e:
-        # Return an empty result for 404 errors
         if e.response.status_code == 404:
             return {"memberships": [], "total_count": 0, "offset": 0, "limit": 0}
-        # Re-raise other errors
         raise
