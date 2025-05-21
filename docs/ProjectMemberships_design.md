@@ -80,47 +80,33 @@ Redmine APIの `/projects/:project_id/memberships` および `/memberships/:id` 
     1. Redmine APIクライアントを利用して、指定されたIDのメンバーシップを削除する。
     2. 削除結果（成功時はステータスコード、失敗時はエラー情報）を返す。
 
-### 2.3. クラス構成
+### 2.3. クラス構成（2025/05/21修正版）
 
-各機能は、個別のツールとして実装する。
-共通のRedmine APIアクセス処理は `RedmineAPIClient` クラス（既存または新規作成）に集約する。
+- 各ツールはクラスベースから「関数＋Tool.from_function」パターンへ統一。
+- 各API操作は `tools/ProjectMemberships/xxx.py` に関数として実装し、それを `Tool.from_function` でラップしたツール定義ファイル（`GetProjectMembershipTool.py` など）を用意。
+- APIクライアント呼び出しは News系と同様、`redmine_url`・`api_key` を引数または環境変数から取得する関数型実装とする。
 
-```mermaid
-classDiagram
-    class RedmineAPIClient {
-        - redmine_url: string
-        - api_key: string
-        + get(path: string, params: dict)
-        + post(path: string, data: dict)
-        + put(path: string, data: dict)
-        + delete(path: string)
-    }
+#### 実装例
 
-    class GetProjectMembershipsTool {
-        + execute(project_id: string, limit: int, offset: int)
-    }
-    GetProjectMembershipsTool --|> RedmineApiClient
+```python
+# tools/ProjectMemberships/get_project_membership.py
+def get_project_membership(membership_id: int, redmine_url: Optional[str] = None, api_key: Optional[str] = None) -> dict:
+    # ...（RedmineAPIClientでAPI呼び出し）
+    return membership_info
 
-    class CreateProjectMembershipTool {
-        + execute(project_id: string, user_id: int, role_ids: list)
-    }
-    CreateProjectMembershipTool --|> RedmineApiClient
-
-    class GetProjectMembershipTool {
-        + execute(membership_id: int)
-    }
-    GetProjectMembershipTool --|> RedmineApiClient
-
-    class UpdateProjectMembershipTool {
-        + execute(membership_id: int, role_ids: list)
-    }
-    UpdateProjectMembershipTool --|> RedmineApiClient
-
-    class DeleteProjectMembershipTool {
-        + execute(membership_id: int)
-    }
-    DeleteProjectMembershipTool --|> RedmineApiClient
+# tools/ProjectMemberships/GetProjectMembershipTool.py
+GetProjectMembershipTool = Tool.from_function(
+    get_project_membership,
+    name="get_project_membership",
+    description="Get the details of a project membership from Redmine.",
+)
 ```
+
+#### 変更理由
+
+- News系ツールと実装スタイルを統一し、保守性・テスト容易性を向上。
+- クラスベースの execute() ではなく、関数型＋Tool.from_function でツール定義を一元化。
+
 
 ## 3. 注意事項
 

@@ -1,56 +1,9 @@
-"""Tool class for deleting a project membership in Redmine.
+from fastmcp.tools.tool import Tool
 
-This class uses the RedmineAPIClient to delete a specific membership.
-"""
+from tools.ProjectMemberships.delete_project_membership import delete_project_membership
 
-import os
-
-from tools.redmine_api_client import RedmineAPIClient
-
-
-class DeleteProjectMembershipTool:
-    """Tool to delete a project membership in Redmine.
-
-    Attributes:
-        client (RedmineAPIClient): The API client for Redmine.
-    """
-
-    def __init__(self, client=None):
-        """Initialize the tool with Redmine API client.
-
-        Args:
-            client (RedmineAPIClient, optional): Injected API client for testing.
-        """
-        if client is not None:
-            self.client = client
-        else:
-            redmine_url = os.getenv("REDMINE_URL")
-            api_key = os.getenv("REDMINE_ADMIN_API_KEY")
-            if not redmine_url or not api_key:
-                raise ValueError("REDMINE_URL and REDMINE_ADMIN_API_KEY must be set in environment variables.")
-            self.client = RedmineAPIClient(redmine_url, api_key)
-
-    def execute(self, membership_id: int) -> dict:
-        """Delete a project membership.
-
-        Args:
-            membership_id (int): The ID of the membership to delete.
-
-        Returns:
-            dict: Result with status code or error message.
-
-        Raises:
-            Exception: If the API call fails or returns an error.
-        """
-        path = f"/memberships/{membership_id}.json"
-        try:
-            resp = self.client.delete(path)
-            # Redmine returns 204 No Content on success
-            if resp.status_code == 204:
-                return {"status": "success", "status_code": 204}
-            return {"status": "failed", "status_code": resp.status_code, "message": resp.text}
-        except Exception as e:
-            # Return status: failed for errors like 404
-            if hasattr(e, "response") and hasattr(e.response, "status_code"):
-                return {"status": "failed", "status_code": e.response.status_code, "message": str(e)}
-            return {"status": "failed", "status_code": None, "message": str(e)}
+DeleteProjectMembershipTool = Tool.from_function(
+    delete_project_membership,
+    name="delete_project_membership",
+    description="Delete a project membership by ID in Redmine.",
+)
