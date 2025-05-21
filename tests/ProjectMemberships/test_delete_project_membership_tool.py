@@ -11,7 +11,7 @@ from tools.ProjectMemberships.DeleteProjectMembershipTool import DeleteProjectMe
 def test_execute_success():
     """Test successful deletion of membership from real Redmine server.
 
-    This test creates a membership, then deletes it using the Tool class.
+    This test creates a membership, then deletes it using the delete_project_membership function.
     """
     from tools.ProjectMemberships.create_membership import create_membership
 
@@ -33,17 +33,15 @@ def test_execute_success():
     assert "membership" in create_result, f"Failed to create membership: {create_result}"
     membership_id = create_result["membership"]["id"]
 
-    tool = DeleteProjectMembershipTool()
-    result = tool.execute(membership_id)
+    result = delete_project_membership(membership_id)
     assert result["status"] == "success"
     assert result["status_code"] == 204
 
 
 def test_execute_not_found():
-    """Test deletion with non-existent membership_id using the Tool class."""
-    tool = DeleteProjectMembershipTool()
+    """Test deletion with non-existent membership_id using the delete_project_membership function."""
     # 9999999 is assumed to not exist
-    result = tool.execute(9999999)
+    result = delete_project_membership(9999999)
     assert result["status"] == "failed"
     assert result["status_code"] != 204
 
