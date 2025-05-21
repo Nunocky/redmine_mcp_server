@@ -18,6 +18,7 @@ from tools.Issues.GetIssuesTool import GetIssuesTool
 from tools.Issues.GetIssueTool import GetIssueTool
 from tools.Issues.RemoveWatcherTool import RemoveWatcherTool
 from tools.Issues.UpdateIssueTool import UpdateIssueTool
+from tools.IssueStatuses.GetIssueStatusesTool import GetIssueStatusesTool
 from tools.MyAccount.GetMyAccountTool import GetMyAccountTool
 from tools.News.GetNewsTool import GetNewsTool
 from tools.ProjectMemberships.CreateProjectMembershipTool import CreateProjectMembershipTool
@@ -99,6 +100,9 @@ mcp.add_tool(CreateProjectMembershipTool.fn)
 
 # News
 mcp.add_tool(GetNewsTool.fn)
+
+# IssueStatuses
+mcp.add_tool(GetIssueStatusesTool.fn)
 
 # Versions
 mcp.add_tool(GetVersionTool.fn)
