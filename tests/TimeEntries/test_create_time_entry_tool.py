@@ -1,6 +1,6 @@
 import os
 
-from tools.TimeEntries.create_time_entry_tool import create_time_entry
+from tools.TimeEntries.create_time_entry import create_time_entry
 
 
 def test_create_time_entry_redmine():

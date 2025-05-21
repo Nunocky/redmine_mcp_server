@@ -5,7 +5,7 @@ A Tool definition for getting the current user's account information from Redmin
 
 from fastmcp.tools.tool import Tool
 
-from tools.MyAccount.get_my_account_tool import get_my_account
+from tools.MyAccount.get_my_account import get_my_account
 
 GetMyAccountTool = Tool.from_function(
     get_my_account,

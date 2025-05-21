@@ -1,9 +1,9 @@
 import os
 
-from tools.Issues.add_watcher_tool import add_watcher
-from tools.Issues.create_issue_tool import create_issue
-from tools.Issues.delete_issue_tool import delete_issue
-from tools.Issues.remove_watcher_tool import remove_watcher
+from tools.Issues.add_watcher import add_watcher
+from tools.Issues.create_issue import create_issue
+from tools.Issues.delete_issue import delete_issue
+from tools.Issues.remove_watcher import remove_watcher
 
 
 def test_add_remove_watcher_redmine():

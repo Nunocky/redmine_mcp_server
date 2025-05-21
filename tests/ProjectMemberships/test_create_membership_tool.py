@@ -4,8 +4,8 @@ from pprint import pprint
 
 import pytest
 
-from tools.ProjectMemberships.create_membership_tool import create_membership
-from tools.ProjectMemberships.get_memberships_tool import get_memberships  # For verification
+from tools.ProjectMemberships.create_membership import create_membership
+from tools.ProjectMemberships.get_memberships import get_memberships  # For verification
 from tools.redmine_api_client import RedmineAPIClient  # For cleanup
 
 # Constants for testing - will be loaded from environment variables

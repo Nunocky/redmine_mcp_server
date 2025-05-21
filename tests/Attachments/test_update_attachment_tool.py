@@ -8,9 +8,9 @@ import tempfile
 
 import pytest
 
-from tools.Attachments.update_attachment_tool import update_attachment
-from tools.Attachments.upload_attachment_tool import upload_attachment
-from tools.Issues.create_issue_tool import create_issue
+from tools.Attachments.update_attachment import update_attachment
+from tools.Attachments.upload_attachment import upload_attachment
+from tools.Issues.create_issue import create_issue
 
 
 def create_temp_file(content: bytes = b"update test file") -> str:
@@ -53,7 +53,7 @@ def test_update_attachment_success():
     )
     print("issue_result:", issue_result)
     issue_id = issue_result.get("issue", {}).get("id")
-    from tools.Issues.get_issue_tool import get_issue
+    from tools.Issues.get_issue import get_issue
 
     get_issue_result = get_issue(
         issue_id=issue_id,

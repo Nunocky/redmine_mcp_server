@@ -2,7 +2,7 @@ import os
 import sys
 from pprint import pprint
 
-from tools.ProjectMemberships.get_memberships_tool import get_memberships
+from tools.ProjectMemberships.get_memberships import get_memberships
 
 
 def test_get_memberships():

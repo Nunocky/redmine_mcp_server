@@ -8,7 +8,7 @@ import tempfile
 
 import pytest
 
-from tools.Attachments.upload_attachment_tool import upload_attachment
+from tools.Attachments.upload_attachment import upload_attachment
 
 
 def test_upload_attachment_success():

@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from tools.Roles.get_roles_tool import get_roles
+from tools.Roles.get_roles import get_roles
 
 
 def get_env(key: str) -> str:

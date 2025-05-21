@@ -4,7 +4,7 @@ from pprint import pprint
 
 import pytest
 
-from tools.Users.delete_user_tool import delete_user
+from tools.Users.delete_user import delete_user
 
 
 @pytest.fixture

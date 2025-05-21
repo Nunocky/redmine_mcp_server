@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from tools.MyAccount.get_my_account_tool import get_my_account
+from tools.MyAccount.get_my_account import get_my_account
 
 
 def test_get_my_account_json():

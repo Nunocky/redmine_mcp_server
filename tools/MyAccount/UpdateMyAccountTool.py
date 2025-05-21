@@ -5,7 +5,7 @@ A Tool definition for updating the current user's account information in Redmine
 
 from mcp import Tool
 
-from tools.MyAccount.update_my_account_tool import update_my_account
+from tools.MyAccount.update_my_account import update_my_account
 
 UpdateMyAccountTool = Tool.from_function(
     update_my_account,

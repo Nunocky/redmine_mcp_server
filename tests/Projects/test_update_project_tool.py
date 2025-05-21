@@ -4,9 +4,9 @@ import pprint
 import pytest
 
 from tests.random_identifier import random_identifier
-from tools.Projects.create_project_tool import create_project
-from tools.Projects.delete_project_tool import delete_project
-from tools.Projects.update_project_tool import update_project
+from tools.Projects.create_project import create_project
+from tools.Projects.delete_project import delete_project
+from tools.Projects.update_project import update_project
 
 
 def test_create_update_delete_project_api():

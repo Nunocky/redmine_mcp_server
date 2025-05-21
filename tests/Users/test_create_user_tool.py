@@ -6,7 +6,7 @@ from pprint import pprint
 
 import pytest
 
-from tools.Users.create_user_tool import create_user
+from tools.Users.create_user import create_user
 
 
 @pytest.fixture

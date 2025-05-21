@@ -2,7 +2,7 @@ import os
 import sys
 from pprint import pprint
 
-from tools.Users.get_users_tool import get_users
+from tools.Users.get_users import get_users
 
 
 def test_run_success():
