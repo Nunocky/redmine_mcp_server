@@ -29,6 +29,11 @@ def test_execute_success():
     # Update membership roles
     result = update_project_membership(membership_id, [role_id], redmine_url=redmine_url, api_key=api_key)
 
+    # resultの内容を確認
+    assert result["id"] == membership_id
+    assert "roles" in result
+    assert any(role["id"] == role_id for role in result["roles"])
+
     # Get membership detail and assert
     membership_detail = get_project_membership(membership_id, redmine_url=redmine_url, api_key=api_key)
     assert membership_detail["id"] == membership_id
