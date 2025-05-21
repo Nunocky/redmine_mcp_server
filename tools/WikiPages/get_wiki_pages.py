@@ -19,8 +19,6 @@ def get_wiki_pages(redmine_url: str, api_key: str, project_id: str):
             "wiki_pages": data.get("wiki_pages", []),
         }
     except Exception as e:
-        import requests
-
         if hasattr(e, "response") and e.response is not None and getattr(e.response, "status_code", None) == 404:
             return {"wiki_pages": []}
         raise

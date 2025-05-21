@@ -1,6 +1,7 @@
 # Redmine MCP Server
 
-## API Refecence
+## API Reference
+
 - [Redmine API](https://www.redmine.org/projects/redmine/wiki/Rest_api)
 - [MCP Specification](https://modelcontextprotocol.io/specification/2025-03-26)
 
@@ -13,7 +14,7 @@ uv sync
 ### Cline
 
 ```json
-    "Local Redmine": {
+    "Redmine": {
       "disabled": false,
       "command": "uv",
       "args": [
@@ -34,18 +35,18 @@ uv sync
 - [x] Time Entries
 - [x] News
 - [ ] Issue Relations
-- [ ] Versions
-- [ ] Wiki Pages
-- [ ] Queries
+- [x] Versions
+- [x] Wiki Pages
+- [x] Queries
 - [x] Attachments
 - [ ] Issue Statuses
 - [ ] Trackers
 - [ ] Enumerations
 - [ ] Issue Categories
-- [ ] Roles
+- [x] Roles
 - [ ] Groups
 - [ ] Custom Fields
 - [ ] Search
 - [ ] Files
-- [ ] My account
+- [x] My account
 - [ ] Journals
