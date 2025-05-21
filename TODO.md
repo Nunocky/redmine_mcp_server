@@ -1,5 +1,8 @@
-## 13. Project Memberships API
-- [ ] プロジェクトメンバーの追加 (`POST /projects/:project_id/memberships.:format`)
-- [ ] 特定のメンバーシップの取得 (`GET /memberships/:id.:format`)
-- [ ] メンバーシップの更新 (`PUT /memberships/:id.:format`)
-- [ ] メンバーシップの削除 (`DELETE /memberships/:id.:format`)
+# 要修正
+
+tools/ProjectMemberships/DeleteProjectMembershipTool.py
+tools/ProjectMemberships/get_project_membership.py
+tools/ProjectMemberships/update_project_membership.py
+
+
+
