@@ -3,9 +3,9 @@
 import os
 
 import pytest
+import requests
 
-from tools.ProjectMemberships.get_project_membership import GetProjectMembershipTool
-from tools.redmine_api_client import RedmineAPIClient
+from tools.ProjectMemberships.get_project_membership import get_project_membership
 
 
 def test_execute_success():
@@ -15,20 +15,18 @@ def test_execute_success():
     """
     redmine_url = os.getenv("REDMINE_URL")
     api_key = os.getenv("REDMINE_ADMIN_API_KEY")
-    tool = GetProjectMembershipTool(
-        client=RedmineAPIClient(redmine_url, api_key),
-    )
 
     # get membership id from projects/{project_id}/memberships.json
     project_id = int(os.getenv("REDMINE_TEST_PROJECT_ID"))
-    path = f"/projects/{project_id}/memberships.json"
-    resp = tool.client.get(path)
+    url = f"{redmine_url}/projects/{project_id}/memberships.json"
+    headers = {"X-Redmine-API-Key": api_key}
+    resp = requests.get(url, headers=headers)
     data = resp.json()
     membership_id = data["memberships"][0]["id"]
     if not membership_id:
         raise ValueError("No membership ID found in the response.")
 
-    result = tool.execute(membership_id)
+    result = get_project_membership(membership_id, redmine_url=redmine_url, api_key=api_key)
     assert result["id"] == membership_id
     assert "project" in result
     assert "user" in result or "group" in result
@@ -37,8 +35,7 @@ def test_execute_success():
 
 def test_execute_not_found():
     """Test retrieval with non-existent membership_id from real Redmine server."""
-    tool = GetProjectMembershipTool()
     # 9999999 is assumed to not exist
     with pytest.raises(Exception) as excinfo:
-        tool.execute(9999999)
+        get_project_membership(9999999)
     assert "Failed to get project membership detail" in str(excinfo.value)
