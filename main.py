@@ -10,6 +10,9 @@ from tools.Attachments.DeleteAttachmentTool import DeleteAttachmentTool
 from tools.Attachments.GetAttachmentTool import GetAttachmentTool
 from tools.Attachments.UpdateAttachmentTool import UpdateAttachmentTool
 from tools.Attachments.UploadAttachmentTool import UploadAttachmentTool
+from tools.Enumerations.GetDocumentCategoriesTool import GetDocumentCategoriesTool
+from tools.Enumerations.GetIssuePrioritiesTool import GetIssuePrioritiesTool
+from tools.Enumerations.GetTimeEntryActivitiesTool import GetTimeEntryActivitiesTool
 from tools.Issues.AddWatcherTool import AddWatcherTool
 from tools.Issues.CreateIssueTool import CreateIssueTool
 from tools.Issues.DeleteIssueTool import DeleteIssueTool
@@ -159,6 +162,11 @@ mcp.add_tool(GetRoleTool.fn)
 
 # My Account
 mcp.add_tool(GetMyAccountTool.fn)
+
+# Enumerations
+mcp.add_tool(GetIssuePrioritiesTool.fn)
+mcp.add_tool(GetTimeEntryActivitiesTool.fn)
+mcp.add_tool(GetDocumentCategoriesTool.fn)
 
 if __name__ == "__main__":
     mcp.run()
