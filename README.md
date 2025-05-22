@@ -41,7 +41,7 @@ uv sync
 - [x] Attachments
 - [x] Issue Statuses
 - [x] Trackers
-- [ ] Enumerations
+- [x] Enumerations
 - [ ] Issue Categories
 - [x] Roles
 - [ ] Groups
@@ -49,4 +49,4 @@ uv sync
 - [ ] Search
 - [ ] Files
 - [x] My account
-- [ ] Journals
+~~- [ ] Journals~~
