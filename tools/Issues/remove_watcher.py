@@ -1,5 +1,7 @@
 """Tool to remove a watcher from a Redmine issue"""
 
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -8,7 +10,7 @@ def remove_watcher(
     api_key: str,
     issue_id: int,
     user_id: int,
-):
+) -> Dict[str, Any]:
     """
     Remove a watcher (user_id) from the specified issue (issue_id)
 

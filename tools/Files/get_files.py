@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import requests
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -7,7 +9,7 @@ def get_files(
     redmine_url: str,
     api_key: str,
     project_id: str,
-):
+) -> Dict[str, Any]:
     """Get files for a Redmine project.
 
     Args:

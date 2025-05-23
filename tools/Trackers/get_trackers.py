@@ -3,10 +3,15 @@
 Returns a list of tracker dicts.
 """
 
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
-def get_trackers(redmine_url: str, api_key: str):
+def get_trackers(
+    redmine_url: str,
+    api_key: str,
+) -> Dict[str, Any]:
     """Get all trackers from Redmine.
 
     Args:
@@ -23,7 +28,10 @@ def get_trackers(redmine_url: str, api_key: str):
     Raises:
         Exception: If the API request fails or response is invalid
     """
-    client = RedmineAPIClient(redmine_url, api_key)
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
     response = client.get("/trackers.json").json()
     if "trackers" not in response:
         raise Exception("Invalid response: 'trackers' key not found")

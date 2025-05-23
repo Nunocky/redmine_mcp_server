@@ -1,5 +1,7 @@
 """Tool to update a Redmine attachment's meta information (PATCH)"""
 
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -9,7 +11,7 @@ def update_attachment(
     attachment_id: int,
     update_fields: dict,
     response_format: str = "json",
-):
+) -> Dict[str, Any]:
     """
     Update attachment meta information on Redmine.
 

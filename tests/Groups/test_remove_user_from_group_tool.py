@@ -1,7 +1,8 @@
 import os
+
+from tools.Groups.add_user_to_group import add_user_to_group
 from tools.Groups.create_group import create_group
 from tools.Groups.delete_group import delete_group
-from tools.Groups.add_user_to_group import add_user_to_group
 from tools.Groups.remove_user_from_group import remove_user_from_group
 
 
@@ -32,4 +33,8 @@ def test_remove_user_from_group_404():
     if not redmine_url or not api_key or not user_id:
         raise RuntimeError("REDMINE_URL, REDMINE_ADMIN_API_KEY, REDMINE_USER_ID が .env で定義されている必要があります。")
     result = remove_user_from_group(redmine_url, api_key, 99999999, int(user_id))
-    assert result == {"success": False, "error": "Not found"}
+    assert isinstance(result, dict)
+    assert "success" in result
+    assert result["success"] is False
+    assert "error" in result
+    assert result["error"] == "Not found"

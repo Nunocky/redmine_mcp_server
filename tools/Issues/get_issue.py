@@ -1,5 +1,7 @@
 """Redmine Issue Details Retrieval Tool"""
 
+from typing import Any, Dict
+
 import requests
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -10,7 +12,7 @@ def get_issue(
     api_key: str,
     issue_id: int,
     include: str = None,
-):
+) -> Dict[str, Any]:
     """
     Get detailed information for the specified issue (issue_id)
 

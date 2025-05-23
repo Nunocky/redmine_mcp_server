@@ -1,5 +1,7 @@
 """Tool to add a watcher to a Redmine issue"""
 
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -8,7 +10,7 @@ def add_watcher(
     api_key: str,
     issue_id: int,
     user_id: int,
-):
+) -> Dict[str, Any]:
     """
     Add a watcher (user_id) to the specified issue (issue_id)
 

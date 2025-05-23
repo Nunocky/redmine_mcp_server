@@ -3,12 +3,15 @@
 This module provides a function to retrieve all issue statuses from Redmine.
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import requests
 
 
-def get_issue_statuses(redmine_url: str, api_key: str) -> List[Dict[str, Any]]:
+def get_issue_statuses(
+    redmine_url: str,
+    api_key: str,
+) -> Dict[str, Any]:
     """Retrieve all issue statuses from Redmine.
 
     Args:
@@ -16,7 +19,7 @@ def get_issue_statuses(redmine_url: str, api_key: str) -> List[Dict[str, Any]]:
         api_key (str): Redmine API key.
 
     Returns:
-        List[Dict[str, Any]]: List of issue status dicts with keys 'id', 'name', 'is_closed'.
+        Dict[str, Any]: API response containing the list of issue statuses.
 
     Raises:
         requests.HTTPError: If the API request fails.
@@ -26,4 +29,4 @@ def get_issue_statuses(redmine_url: str, api_key: str) -> List[Dict[str, Any]]:
     response = requests.get(url, headers=headers, timeout=10)
     response.raise_for_status()
     data = response.json()
-    return data.get("issue_statuses", [])
+    return data["issue_statuses"]

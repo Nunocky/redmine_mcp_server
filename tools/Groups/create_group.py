@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import requests
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -9,7 +11,7 @@ def create_group(
     name: str,
     users: list = None,
     custom_fields: list = None,
-):
+) -> Dict[str, Any]:
     """Create a Redmine group.
 
     Args:

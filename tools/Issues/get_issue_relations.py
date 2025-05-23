@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -7,7 +9,7 @@ def get_issue_relations(
     issue_id: int = None,
     limit: int = None,
     offset: int = None,
-):
+) -> Dict[str, Any]:
     """
     Get a list of Redmine issue relations
     """

@@ -4,6 +4,7 @@ Query Tool
 """
 
 import os
+from typing import Any, Dict
 
 from tools.redmine_api_client import RedmineAPIClient
 
@@ -11,7 +12,7 @@ from tools.redmine_api_client import RedmineAPIClient
 def get_queries(
     redmine_url: str,
     api_key: str,
-):
+) -> Dict[str, Any]:
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:

@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import requests
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -10,7 +12,7 @@ def update_group(
     name: str = None,
     users: list = None,
     custom_fields: list = None,
-):
+) -> Dict[str, Any]:
     """Update a Redmine group.
 
     Args:
