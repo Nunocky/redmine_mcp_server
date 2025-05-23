@@ -4,8 +4,8 @@
 
 - [x] グループ一覧取得（GET /groups.json）
 - [x] グループ作成（POST /groups.json）
-- [ ] グループ詳細取得（GET /groups/{id}.json）
-- [ ] グループ更新（PUT /groups/{id}.json）
+- [x] グループ詳細取得（GET /groups/{id}.json）
+- [x] グループ更新（PUT /groups/{id}.json）
 - [ ] グループ削除（DELETE /groups/{id}.json）
 - [ ] グループにユーザー追加（POST /groups/{id}/users.json）
 - [ ] グループからユーザー削除（DELETE /groups/{id}/users/{user_id}.json）
