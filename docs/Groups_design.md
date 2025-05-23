@@ -1,8 +1,8 @@
-# Groups一覧取得・作成・詳細取得・更新・削除ツール設計書
+# Groups一覧取得・作成・詳細取得・更新・削除・ユーザー追加ツール設計書
 
 ## 要件定義
 
-- Redmineのグループ一覧取得API（GET /groups.json）、グループ作成API（POST /groups.json）、グループ詳細取得API（GET /groups/{id}.json）、グループ更新API（PUT /groups/{id}.json）、グループ削除API（DELETE /groups/{id}.json）をPythonツールとして実装する
+- Redmineのグループ一覧取得API（GET /groups.json）、グループ作成API（POST /groups.json）、グループ詳細取得API（GET /groups/{id}.json）、グループ更新API（PUT /groups/{id}.json）、グループ削除API（DELETE /groups/{id}.json）、グループにユーザー追加API（POST /groups/{id}/users.json）をPythonツールとして実装する
 - 認証情報（redmine_url, api_key）は必須
 - レスポンスはJSON形式
 - 例外処理、GoogleスタイルDocstring、PEP8、英語コメントを徹底
@@ -38,6 +38,11 @@
 - 必須引数: redmine_url, api_key, group_id
 - レスポンス: 削除成功時 {"success": True}、404時 {"success": False, "error": "Not found"}
 
+### グループにユーザー追加
+- APIエンドポイント: POST /groups/{id}/users.json
+- 必須引数: redmine_url, api_key, group_id, user_ids（リスト）
+- レスポンス: 追加成功時 {"success": True}、404時 {"success": False, "error": "Not found"}
+
 ## クラス構成
 
 - tools/Groups/get_groups.py: グループ一覧取得APIクライアント関数
@@ -50,3 +55,5 @@
 - tools/Groups/UpdateGroupTool.py: グループ更新Toolクラス
 - tools/Groups/delete_group.py: グループ削除APIクライアント関数
 - tools/Groups/DeleteGroupTool.py: グループ削除Toolクラス
+- tools/Groups/add_user_to_group.py: グループにユーザー追加APIクライアント関数
+- tools/Groups/AddUserToGroupTool.py: グループにユーザー追加Toolクラス
