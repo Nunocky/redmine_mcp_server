@@ -1,7 +1,13 @@
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
-def delete_issue(redmine_url: str, api_key: str, issue_id: int):
+def delete_issue(
+    redmine_url: str,
+    api_key: str,
+    issue_id: int,
+) -> Dict[str, Any]:
     """
     Delete an issue from Redmine.
 

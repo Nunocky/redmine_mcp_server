@@ -4,6 +4,8 @@ Redmine REST API: POST /uploads.json
 Content-Type: application/octet-stream
 """
 
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -12,7 +14,7 @@ def upload_attachment(
     api_key: str,
     file_path: str,
     content_type: str = "application/octet-stream",
-):
+) -> Dict[str, Any]:
     """
     Upload a file to Redmine as an attachment.
 

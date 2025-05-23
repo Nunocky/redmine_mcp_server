@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import requests
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -7,7 +9,7 @@ def get_group(
     redmine_url: str,
     api_key: str,
     group_id: int,
-):
+) -> Dict[str, Any]:
     """Get Redmine group detail.
 
     Args:

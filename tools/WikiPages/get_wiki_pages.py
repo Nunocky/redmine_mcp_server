@@ -1,9 +1,14 @@
 import os
+from typing import Any, Dict
 
 from tools.redmine_api_client import RedmineAPIClient
 
 
-def get_wiki_pages(redmine_url: str, api_key: str, project_id: str):
+def get_wiki_pages(
+    redmine_url: str,
+    api_key: str,
+    project_id: str,
+) -> Dict[str, Any]:
     if redmine_url is None:
         redmine_url = os.environ.get("REDMINE_URL")
     if api_key is None:

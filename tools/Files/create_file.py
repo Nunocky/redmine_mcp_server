@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import requests
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -8,7 +10,7 @@ def create_file(
     api_key: str,
     project_id: str,
     file: dict,
-):
+) -> Dict[str, Any]:
     """Create a new file for a Redmine project.
 
     Args:

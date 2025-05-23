@@ -1,5 +1,7 @@
 """Tool to get a Redmine attachment's meta information"""
 
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -8,7 +10,7 @@ def get_attachment(
     api_key: str,
     attachment_id: int,
     response_format: str = "json",
-):
+) -> Dict[str, Any]:
     """
     Get attachment meta information from Redmine.
 

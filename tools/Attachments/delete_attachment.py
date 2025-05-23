@@ -1,5 +1,7 @@
 """Tool to delete a Redmine attachment"""
 
+from typing import Any, Dict
+
 from tools.redmine_api_client import RedmineAPIClient
 
 
@@ -8,7 +10,7 @@ def delete_attachment(
     api_key: str,
     attachment_id: int,
     response_format: str = "json",
-):
+) -> Dict[str, Any]:
     """
     Delete an attachment from Redmine.
 
