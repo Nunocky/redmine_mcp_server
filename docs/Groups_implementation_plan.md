@@ -8,7 +8,7 @@
 - [x] グループ更新（PUT /groups/{id}.json）
 - [x] グループ削除（DELETE /groups/{id}.json）
 - [x] グループにユーザー追加（POST /groups/{id}/users.json）
-- [ ] グループからユーザー削除（DELETE /groups/{id}/users/{user_id}.json）
+- [x] グループからユーザー削除（DELETE /groups/{id}/users/{user_id}.json）
 
 ## 目的
 
