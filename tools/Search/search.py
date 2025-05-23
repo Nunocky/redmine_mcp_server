@@ -97,6 +97,7 @@ def search(
                 continue
             raise
 
+        resource_matches = 0  # 追加: 各リソースごとのマッチ数
         for item in items:
             # 検索対象フィールドを決定
             search_fields = fields if fields else meta["fields"]
@@ -117,7 +118,8 @@ def search(
                     ),
                 }
                 results.append(result)
-        total_count += len(results)
+                resource_matches += 1  # 追加: マッチ数カウント
+        total_count += resource_matches  # 修正: 新規マッチ数のみ加算
 
     return {
         "results": results[offset : offset + limit],
