@@ -47,56 +47,15 @@ from tools.Users.UpdateUserTool import UpdateUserTool
 from tools.Versions.GetVersionTool import GetVersionTool
 from tools.WikiPages.GetWikiPagesTool import GetWikiPagesTool
 
+from tools.Groups.GetGroupsTool import GetGroupsTool
+from tools.Groups.CreateGroupTool import CreateGroupTool
+from tools.Groups.GetGroupTool import GetGroupTool
+from tools.Groups.UpdateGroupTool import UpdateGroupTool
+from tools.Groups.DeleteGroupTool import DeleteGroupTool
+from tools.Groups.AddUserToGroupTool import AddUserToGroupTool
+from tools.Groups.RemoveUserFromGroupTool import RemoveUserFromGroupTool
+
 mcp = FastMCP("Redmine MCP Server", "0.1.0")
-
-# こういう書き方のほうがいいかも
-# tools = [
-#     # ProjectMemberships
-#     GetMembershipsTool,
-#     CreateProjectMembershipTool,
-#     # News
-#     GetNewsTool,
-#     # Versions
-#     GetVersionTool,
-#     # WikiPages
-#     GetWikiPagesTool,
-#     # Issues
-#     GetIssueTool,
-#     GetIssuesTool,
-#     GetIssueRelationsTool,
-#     CreateIssueTool,
-#     UpdateIssueTool,  # △
-#     DeleteIssueTool,
-#     AddWatcherTool,
-#     RemoveWatcherTool,
-#     # Queries
-#     GetQueriesTool,
-#     # Projects
-#     GetProjectsTool,
-#     GetProjectTool,
-#     CreateProjectTool,
-#     UpdateProjectTool,
-#     DeleteProjectTool,
-#     ArchiveProjectTool,
-#     UnarchiveProjectTool,
-#     # TimeEntries
-#     GetTimeEntriesTool,
-#     CreateTimeEntryTool,
-#     # Attachments
-#     DeleteAttachmentTool,
-#     GetAttachmentTool,
-#     UpdateAttachmentTool,
-#     UploadAttachmentTool,
-#     # Users
-#     GetUsersTool,
-#     GetUserTool,
-#     CreateUserTool,
-#     UpdateUserTool,
-#     DeleteUserTool,
-# ]
-
-# for tool in tools:
-#     mcp.add_tool(tool.fn)
 
 # ProjectMemberships
 mcp.add_tool(GetMembershipsTool.fn)
@@ -167,6 +126,15 @@ mcp.add_tool(GetMyAccountTool.fn)
 mcp.add_tool(GetIssuePrioritiesTool.fn)
 mcp.add_tool(GetTimeEntryActivitiesTool.fn)
 mcp.add_tool(GetDocumentCategoriesTool.fn)
+
+# Groups
+mcp.add_tool(GetGroupsTool.fn)
+mcp.add_tool(CreateGroupTool.fn)
+mcp.add_tool(GetGroupTool.fn)
+mcp.add_tool(UpdateGroupTool.fn)
+mcp.add_tool(DeleteGroupTool.fn)
+mcp.add_tool(AddUserToGroupTool.fn)
+mcp.add_tool(RemoveUserFromGroupTool.fn)
 
 if __name__ == "__main__":
     mcp.run()

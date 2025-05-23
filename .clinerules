@@ -4,12 +4,71 @@
 
 あなたは熟練のPythonプログラマとしてコードを書いてください。
 
-
 ## 期待する回答
 
 - 実装コードは省略せず、完全な形で提供
 - 日本語での詳細な説明
 
+
+
+# コーディングプラクティス
+
+## 原則
+
+コーディングは以下の手順に従って行います。
+1. 仕様書の作成 ... ユーザーの指示に従いAPI仕様、機能仕様書を作ります。
+2. 実装手順書の作成 ... 上記の仕様書に基づき実装手順書を作ります。
+3. 実装 ... 実装手順書に従い、実装を行います。 実装は関数やクラスなどを一つずつ作成します。一つ作成するたびにユーザーに確認を行います。
+4. テスト ... 実装した関数やクラスをテストします。テストは自動で行います。その際に必要な環境変数などは、ユーザーに求めます。
+5. ドキュメント作成 ... 実装したコードに対して、仕様書や設計書を修正します。
+
+### Redmineのツール
+
+Redmineのツールを開発する際の原則を以下に記します
+
+- ツールは toolsディレクトリの下に作られます。
+- ツールはカテゴリで分かれており、 Issues, Projectsなどのサブディレクトリが作られます。
+- APIひとつにつき、その APIを処理する関数、およびその関数を使用するツールをペアで作成します。
+- APIの関数は以下のように RedmineAPIClient を使用した関数です。 redmine_url, api_keyは必須の引数です。
+   ```python
+      import requests
+      from tools.redmine_api_client import RedmineAPIClient
+
+      def get_issue(
+          redmine_url: str,
+          api_key: str,
+          issue_id: int,
+          include: str = None,
+      ):
+          client = RedmineAPIClient(
+              base_url=redmine_url,
+              api_key=api_key,
+          )
+          params = {}
+          if include:
+              params["include"] = include
+
+          try:
+              response = client.get(
+                  endpoint=f"/issues/{issue_id}.json",
+                  params=params,
+              )
+              return response.json()
+          except requests.exceptions.HTTPError as e:
+              if e.response.status_code == 404:
+                  return {"issue": None}
+              raise
+   ```
+  - この関数を使用するツールを以下のように定義します。
+    ```python
+      from fastmcp.tools.tool import Tool
+      from tools.Issues.get_issue import get_issue
+      GetIssueTool = Tool.from_function(
+          get_issue,
+          name="get_issue",
+          description="Get Redmine issue information",
+      )
+    ```
 
 ## 注意事項
 
@@ -22,6 +81,7 @@
   - 既存の設計書を参照してソフトウェアを開発してください
   - 修正内容に応じて設計書も更新してください
 - 設計書を作成したら、コードを作成する前にユーザーに設計書のチェックを依頼してください
+- APIのテスト関数ではモックを使わないこと。
 
 ### コーディング規約
 
