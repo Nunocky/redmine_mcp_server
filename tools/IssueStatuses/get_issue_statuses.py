@@ -3,7 +3,7 @@
 This module provides a function to retrieve all issue statuses from Redmine.
 """
 
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import requests
 
