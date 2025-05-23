@@ -2,8 +2,8 @@
 
 ## 実装API一覧（進捗管理用チェックリスト）
 
-- [ ] グループ一覧取得（GET /groups.json）
-- [ ] グループ作成（POST /groups.json）
+- [x] グループ一覧取得（GET /groups.json）
+- [x] グループ作成（POST /groups.json）
 - [ ] グループ詳細取得（GET /groups/{id}.json）
 - [ ] グループ更新（PUT /groups/{id}.json）
 - [ ] グループ削除（DELETE /groups/{id}.json）
