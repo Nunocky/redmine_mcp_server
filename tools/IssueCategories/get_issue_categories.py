@@ -16,7 +16,8 @@ def get_issue_categories(
         project_id (str): Project ID or identifier.
 
     Returns:
-        dict: Issue categories list (API response as is). If not found, returns empty list.
+        dict: A dictionary containing the issue categories list under the key "issue_categories".
+              If the project is not found (404), returns {"issue_categories": []}.
 
     Raises:
         Exception: If API request fails (except 404).
