@@ -13,6 +13,7 @@ from tools.Attachments.UploadAttachmentTool import UploadAttachmentTool
 from tools.Enumerations.GetDocumentCategoriesTool import GetDocumentCategoriesTool
 from tools.Enumerations.GetIssuePrioritiesTool import GetIssuePrioritiesTool
 from tools.Enumerations.GetTimeEntryActivitiesTool import GetTimeEntryActivitiesTool
+from tools.CustomFields.GetCustomFieldsTool import GetCustomFieldsTool
 from tools.Issues.AddWatcherTool import AddWatcherTool
 from tools.Issues.CreateIssueTool import CreateIssueTool
 from tools.Issues.DeleteIssueTool import DeleteIssueTool
@@ -126,6 +127,9 @@ mcp.add_tool(GetMyAccountTool.fn)
 mcp.add_tool(GetIssuePrioritiesTool.fn)
 mcp.add_tool(GetTimeEntryActivitiesTool.fn)
 mcp.add_tool(GetDocumentCategoriesTool.fn)
+
+# CustomFields
+mcp.add_tool(GetCustomFieldsTool.fn)
 
 # Groups
 mcp.add_tool(GetGroupsTool.fn)
