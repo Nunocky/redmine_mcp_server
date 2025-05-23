@@ -42,7 +42,7 @@ uv sync
 - [x] Issue Statuses
 - [x] Trackers
 - [x] Enumerations
-- [ ] Issue Categories
+- [x] Issue Categories
 - [x] Roles
 - [x] Groups
 - [x] Custom Fields
