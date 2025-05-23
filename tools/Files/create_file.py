@@ -41,6 +41,9 @@ def create_file(
             endpoint=f"/projects/{project_id}/files.json",
             json=payload,
         )
+        if response.status_code == 204:
+            # No Content: 登録成功だがレスポンスボディなし
+            return {}
         return response.json()
     except requests.exceptions.HTTPError as e:
         raise
