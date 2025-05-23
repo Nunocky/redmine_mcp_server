@@ -1,4 +1,5 @@
 from fastmcp.tools.tool import Tool
+
 from tools.Groups.remove_user_from_group import remove_user_from_group
 
 RemoveUserFromGroupTool = Tool.from_function(

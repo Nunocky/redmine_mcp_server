@@ -1,4 +1,5 @@
 from fastmcp.tools.tool import Tool
+
 from tools.Groups.update_group import update_group
 
 UpdateGroupTool = Tool.from_function(

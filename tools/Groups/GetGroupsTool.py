@@ -1,4 +1,5 @@
 from fastmcp.tools.tool import Tool
+
 from tools.Groups.get_groups import get_groups
 
 GetGroupsTool = Tool.from_function(

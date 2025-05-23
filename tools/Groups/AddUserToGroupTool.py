@@ -1,4 +1,5 @@
 from fastmcp.tools.tool import Tool
+
 from tools.Groups.add_user_to_group import add_user_to_group
 
 AddUserToGroupTool = Tool.from_function(
