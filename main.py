@@ -14,6 +14,8 @@ from tools.CustomFields.GetCustomFieldsTool import GetCustomFieldsTool
 from tools.Enumerations.GetDocumentCategoriesTool import GetDocumentCategoriesTool
 from tools.Enumerations.GetIssuePrioritiesTool import GetIssuePrioritiesTool
 from tools.Enumerations.GetTimeEntryActivitiesTool import GetTimeEntryActivitiesTool
+from tools.Files.CreateFileTool import CreateFileTool
+from tools.Files.GetFilesTool import GetFilesTool
 from tools.Groups.AddUserToGroupTool import AddUserToGroupTool
 from tools.Groups.CreateGroupTool import CreateGroupTool
 from tools.Groups.DeleteGroupTool import DeleteGroupTool
@@ -142,6 +144,10 @@ mcp.add_tool(UpdateGroupTool.fn)
 mcp.add_tool(DeleteGroupTool.fn)
 mcp.add_tool(AddUserToGroupTool.fn)
 mcp.add_tool(RemoveUserFromGroupTool.fn)
+
+# Files
+mcp.add_tool(GetFilesTool.fn)
+mcp.add_tool(CreateFileTool.fn)
 
 if __name__ == "__main__":
     mcp.run()
