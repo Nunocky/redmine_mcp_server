@@ -64,13 +64,10 @@ def test_create_file_missing_token():
         "filename": "apitest.txt",
         "description": "APIテスト用ファイル",
     }
-    try:
+    with pytest.raises(ValueError):
         create_file(
             redmine_url=redmine_url,
             api_key=api_key,
             project_id=project_id,
             file=file,
         )
-        assert False, "ValueErrorが発生すべき"
-    except ValueError:
-        pass
