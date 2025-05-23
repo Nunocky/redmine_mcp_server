@@ -1,3 +1,5 @@
+from typing import Any
+
 import requests
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -6,7 +8,7 @@ from tools.redmine_api_client import RedmineAPIClient
 def get_custom_fields(
     redmine_url: str,
     api_key: str,
-):
+) -> dict[str, Any]:
     """Get all custom fields definitions from Redmine.
 
     Args:
