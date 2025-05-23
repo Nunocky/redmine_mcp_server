@@ -23,7 +23,7 @@ def create_file(
         }
 
     Returns:
-        dict: 登録したファイル情報
+        dict: Information about the registered file.
 
     Raises:
         Exception: If API request fails.
