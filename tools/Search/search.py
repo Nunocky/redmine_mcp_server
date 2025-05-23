@@ -101,10 +101,11 @@ def search(
         for item in items:
             # 検索対象フィールドを決定
             search_fields = fields if fields else meta["fields"]
-            text = ""
+            text_parts = []
             for f in search_fields:
                 if f in item and item[f]:
-                    text += str(item[f]) + " "
+                    text_parts.append(str(item[f]))
+            text = " ".join(text_parts)
             if query.lower() in text.lower():
                 result = {
                     "resource_type": resource,
