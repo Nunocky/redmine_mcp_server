@@ -26,7 +26,7 @@ uv sync
     }
 ```
 
-## APIs
+## supported APIs
 
 - [x] Issues
 - [x] Projects
@@ -44,9 +44,9 @@ uv sync
 - [x] Enumerations
 - [ ] Issue Categories
 - [x] Roles
-- [ ] Groups
-- [ ] Custom Fields
-- [ ] Search
-- [ ] Files
+- [x] Groups
+- [x] Custom Fields
+- [x] Search
+- [x] Files
 - [x] My account
 ~~- [ ] Journals~~
