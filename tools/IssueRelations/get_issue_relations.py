@@ -6,7 +6,7 @@ This module provides a function to retrieve issue relations from Redmine via its
 
 from typing import Any, Dict, Optional
 
-from tools.redmine_api_client import RedmineApiClient
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def get_issue_relations(redmine_url: str, api_key: str, issue_id: int, format: Optional[str] = "json") -> Dict[str, Any]:
@@ -29,9 +29,9 @@ def get_issue_relations(redmine_url: str, api_key: str, issue_id: int, format: O
     if format not in ("json", "xml"):
         raise ValueError("format must be 'json' or 'xml'")
 
-    endpoint = f"{redmine_url}/issues/{issue_id}/relations.{format}"
+    endpoint = f"/issues/{issue_id}/relations.{format}"
     headers = {"X-Redmine-API-Key": api_key, "Content-Type": f"application/{format}"}
 
-    client = RedmineApiClient()
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     response = client.get(endpoint, headers=headers)
     return response

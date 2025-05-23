@@ -1,6 +1,6 @@
 from fastmcp.tools.tool import Tool
 
-from tools.Issues.create_issue_relation import create_issue_relation
+from tools.IssueRelations.create_issue_relation import create_issue_relation
 
 CreateIssueRelationTool = Tool.from_function(
     create_issue_relation,

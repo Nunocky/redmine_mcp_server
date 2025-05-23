@@ -13,10 +13,10 @@ from tools.Attachments.UploadAttachmentTool import UploadAttachmentTool
 from tools.Enumerations.GetDocumentCategoriesTool import GetDocumentCategoriesTool
 from tools.Enumerations.GetIssuePrioritiesTool import GetIssuePrioritiesTool
 from tools.Enumerations.GetTimeEntryActivitiesTool import GetTimeEntryActivitiesTool
+from tools.IssueRelations.GetIssueRelationsTool import GetIssueRelationsTool
 from tools.Issues.AddWatcherTool import AddWatcherTool
 from tools.Issues.CreateIssueTool import CreateIssueTool
 from tools.Issues.DeleteIssueTool import DeleteIssueTool
-from tools.Issues.GetIssueRelationsTool import GetIssueRelationsTool
 from tools.Issues.GetIssuesTool import GetIssuesTool
 from tools.Issues.GetIssueTool import GetIssueTool
 from tools.Issues.RemoveWatcherTool import RemoveWatcherTool

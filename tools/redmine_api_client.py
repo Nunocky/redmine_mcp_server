@@ -77,20 +77,27 @@ class RedmineAPIClient:
         resp.raise_for_status()
         return resp
 
-    def get(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> requests.Response:
+    def get(
+        self, endpoint: str, params: Optional[Dict[str, Any]] = None, headers: Optional[Dict[str, str]] = None
+    ) -> requests.Response:
         """GET request
 
         Args:
             endpoint (str): Endpoint path
             params (dict, optional): Query parameters
+            headers (dict, optional): Additional headers
 
         Returns:
             requests.Response: Response
         """
-        return self._request("GET", endpoint, params=params)
+        return self._request("GET", endpoint, params=params, headers=headers)
 
     def post(
-        self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
+        self,
+        endpoint: str,
+        data: Optional[Dict[str, Any]] = None,
+        json: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, str]] = None,
     ) -> requests.Response:
         """POST request
 
@@ -98,14 +105,19 @@ class RedmineAPIClient:
             endpoint (str): Endpoint path
             data (dict, optional): Form data
             json (dict, optional): JSON data
+            headers (dict, optional): Additional headers
 
         Returns:
             requests.Response: Response
         """
-        return self._request("POST", endpoint, data=data, json=json)
+        return self._request("POST", endpoint, data=data, json=json, headers=headers)
 
     def put(
-        self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
+        self,
+        endpoint: str,
+        data: Optional[Dict[str, Any]] = None,
+        json: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, str]] = None,
     ) -> requests.Response:
         """PUT request
 
@@ -113,25 +125,31 @@ class RedmineAPIClient:
             endpoint (str): Endpoint path
             data (dict, optional): Form data
             json (dict, optional): JSON data
+            headers (dict, optional): Additional headers
 
         Returns:
             requests.Response: Response
         """
-        return self._request("PUT", endpoint, data=data, json=json)
+        return self._request("PUT", endpoint, data=data, json=json, headers=headers)
 
-    def delete(self, endpoint: str) -> requests.Response:
+    def delete(self, endpoint: str, headers: Optional[Dict[str, str]] = None) -> requests.Response:
         """DELETE request
 
         Args:
             endpoint (str): Endpoint path
+            headers (dict, optional): Additional headers
 
         Returns:
             requests.Response: Response
         """
-        return self._request("DELETE", endpoint)
+        return self._request("DELETE", endpoint, headers=headers)
 
     def patch(
-        self, endpoint: str, data: Optional[Dict[str, Any]] = None, json: Optional[Dict[str, Any]] = None
+        self,
+        endpoint: str,
+        data: Optional[Dict[str, Any]] = None,
+        json: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, str]] = None,
     ) -> requests.Response:
         """PATCH request
 
@@ -139,8 +157,9 @@ class RedmineAPIClient:
             endpoint (str): Endpoint path
             data (dict, optional): Form data
             json (dict, optional): JSON data
+            headers (dict, optional): Additional headers
 
         Returns:
             requests.Response: Response
         """
-        return self._request("PATCH", endpoint, data=data, json=json)
+        return self._request("PATCH", endpoint, data=data, json=json, headers=headers)

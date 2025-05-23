@@ -6,7 +6,7 @@ This module provides a function to create an issue relation in Redmine via its R
 
 from typing import Any, Dict, Optional
 
-from tools.redmine_api_client import RedmineApiClient
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def create_issue_relation(
@@ -40,7 +40,7 @@ def create_issue_relation(
     if format not in ("json", "xml"):
         raise ValueError("format must be 'json' or 'xml'")
 
-    endpoint = f"{redmine_url}/issues/{issue_id}/relations.{format}"
+    endpoint = f"/issues/{issue_id}/relations.{format}"
     headers = {"X-Redmine-API-Key": api_key, "Content-Type": f"application/{format}"}
 
     relation_data = {"issue_to_id": issue_to_id, "relation_type": relation_type}
@@ -49,6 +49,6 @@ def create_issue_relation(
 
     body = {"relation": relation_data}
 
-    client = RedmineApiClient()
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     response = client.post(endpoint, json=body, headers=headers)
     return response

@@ -6,7 +6,7 @@ This module provides a function to delete an issue relation in Redmine via its R
 
 from typing import Any, Dict, Optional
 
-from tools.redmine_api_client import RedmineApiClient
+from tools.redmine_api_client import RedmineAPIClient
 
 
 def delete_issue_relation(
@@ -34,10 +34,10 @@ def delete_issue_relation(
     if format not in ("json", "xml"):
         raise ValueError("format must be 'json' or 'xml'")
 
-    endpoint = f"{redmine_url}/relations/{id}.{format}"
+    endpoint = f"/relations/{id}.{format}"
     headers = {"X-Redmine-API-Key": api_key, "Content-Type": f"application/{format}"}
 
-    client = RedmineApiClient()
+    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     response = client.delete(endpoint, headers=headers)
     # If deletion is successful, Redmine returns 204 No Content
     if hasattr(response, "status_code") and response.status_code == 204:
