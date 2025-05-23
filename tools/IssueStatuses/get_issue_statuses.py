@@ -11,7 +11,7 @@ import requests
 def get_issue_statuses(
     redmine_url: str,
     api_key: str,
-) -> Dict[str, Any]:
+) -> List[Dict[str, Any]]:
     """Retrieve all issue statuses from Redmine.
 
     Args:
