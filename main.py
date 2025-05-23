@@ -10,10 +10,17 @@ from tools.Attachments.DeleteAttachmentTool import DeleteAttachmentTool
 from tools.Attachments.GetAttachmentTool import GetAttachmentTool
 from tools.Attachments.UpdateAttachmentTool import UpdateAttachmentTool
 from tools.Attachments.UploadAttachmentTool import UploadAttachmentTool
+from tools.CustomFields.GetCustomFieldsTool import GetCustomFieldsTool
 from tools.Enumerations.GetDocumentCategoriesTool import GetDocumentCategoriesTool
 from tools.Enumerations.GetIssuePrioritiesTool import GetIssuePrioritiesTool
 from tools.Enumerations.GetTimeEntryActivitiesTool import GetTimeEntryActivitiesTool
-from tools.CustomFields.GetCustomFieldsTool import GetCustomFieldsTool
+from tools.Groups.AddUserToGroupTool import AddUserToGroupTool
+from tools.Groups.CreateGroupTool import CreateGroupTool
+from tools.Groups.DeleteGroupTool import DeleteGroupTool
+from tools.Groups.GetGroupsTool import GetGroupsTool
+from tools.Groups.GetGroupTool import GetGroupTool
+from tools.Groups.RemoveUserFromGroupTool import RemoveUserFromGroupTool
+from tools.Groups.UpdateGroupTool import UpdateGroupTool
 from tools.Issues.AddWatcherTool import AddWatcherTool
 from tools.Issues.CreateIssueTool import CreateIssueTool
 from tools.Issues.DeleteIssueTool import DeleteIssueTool
@@ -37,6 +44,7 @@ from tools.Projects.UpdateProjectTool import UpdateProjectTool
 from tools.Queries.GetQueriesTool import GetQueriesTool
 from tools.Roles.GetRolesTool import GetRolesTool
 from tools.Roles.GetRoleTool import GetRoleTool
+from tools.Search.SearchTool import SearchTool
 from tools.TimeEntries.CreateTimeEntryTool import CreateTimeEntryTool
 from tools.TimeEntries.GetTimeEntriesTool import GetTimeEntriesTool
 from tools.Trackers.GetTrackersTool import GetTrackersTool
@@ -47,14 +55,6 @@ from tools.Users.GetUserTool import GetUserTool
 from tools.Users.UpdateUserTool import UpdateUserTool
 from tools.Versions.GetVersionTool import GetVersionTool
 from tools.WikiPages.GetWikiPagesTool import GetWikiPagesTool
-
-from tools.Groups.GetGroupsTool import GetGroupsTool
-from tools.Groups.CreateGroupTool import CreateGroupTool
-from tools.Groups.GetGroupTool import GetGroupTool
-from tools.Groups.UpdateGroupTool import UpdateGroupTool
-from tools.Groups.DeleteGroupTool import DeleteGroupTool
-from tools.Groups.AddUserToGroupTool import AddUserToGroupTool
-from tools.Groups.RemoveUserFromGroupTool import RemoveUserFromGroupTool
 
 mcp = FastMCP("Redmine MCP Server", "0.1.0")
 
@@ -89,6 +89,9 @@ mcp.add_tool(RemoveWatcherTool.fn)
 
 # Queries (保存済み検索条件)
 mcp.add_tool(GetQueriesTool.fn)
+
+# Search
+mcp.add_tool(SearchTool.fn)
 
 # Projects
 mcp.add_tool(GetProjectsTool.fn)
