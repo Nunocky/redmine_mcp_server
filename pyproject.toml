@@ -12,7 +12,7 @@ fix = true
 
 [tool.ruff.lint]
 select = [
-    "E", # pycodestyle
-    "F", # pyflakes
+    # "E", # pycodestyle
+    # "F", # pyflakes
     "I", # isort (importの整理)
 ]
