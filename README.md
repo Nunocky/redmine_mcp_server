@@ -11,7 +11,7 @@
 uv sync
 ```
 
-### Cline
+### using with Cline
 
 ```json
     "Redmine": {
@@ -50,3 +50,7 @@ uv sync
 - [x] Files
 - [x] My account
 ~~- [ ] Journals~~
+
+## License
+
+This source code is licensed under the Apache License, Version 2.0. See LICENSE for details.
