@@ -4,12 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = [
-    "fastmcp>=2.3.3",
-    "pytest>=8.3.5",
-    "pytest-asyncio>=0.26.0",
-    "requests>=2.0.0",
-]
+dependencies = ["fastmcp>=2.4.0", "pytest>=8.3.5", "requests>=2.0.0"]
 
 [tool.ruff]
 line-length = 128
@@ -17,7 +12,7 @@ fix = true
 
 [tool.ruff.lint]
 select = [
-    # "E", # pycodestyle
-    # "F", # pyflakes
+    "E", # pycodestyle
+    "F", # pyflakes
     "I", # isort (importの整理)
 ]
