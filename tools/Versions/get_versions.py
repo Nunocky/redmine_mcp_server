@@ -1,6 +1,7 @@
 """
 Get the list of Redmine project versions.
 """
+
 from typing import Any, Dict
 
 from tools.redmine_api_client import RedmineAPIClient
