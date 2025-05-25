@@ -1,11 +1,11 @@
 """Redmine Project Update Tool
 
 Update project information using RedmineAPIClient.
-204 No Content時はAPIでproject情報が返らないため、GETで最新情報を取得して返す。
-404や他エラー時は{"status": "error", "message": "..."}で返却。
+When 204 No Content is returned, the API does not return project information, so the latest information is retrieved with GET and returned.
+In case of 404 or other errors, returns {"status": "error", "message": "..."}.
 
 Returns:
-    dict: 更新後のproject情報（"id"キー含む）または{"status": "error", ...}
+    dict: Updated project information (including the "id" key) or {"status": "error", ...}
 
 Raises:
     Exception: When API request fails (excluding 404 errors)
@@ -42,11 +42,11 @@ def update_project(
         redmine_url: URL of the Redmine server
         api_key: Redmine API key
         name: Project name
-        description: Description
+        description: Project description
         homepage: Homepage URL
         is_public: Public flag
         parent_id: Parent project ID
-        inherit_members: Inherit members
+        inherit_members: Inherit members flag
         default_assigned_to_id: Default assignee ID
         default_version_id: Default version ID
         tracker_ids: List of tracker IDs
@@ -55,7 +55,7 @@ def update_project(
         custom_field_values: Custom field values
 
     Returns:
-        更新後のproject情報（"id"キー含む）または{"status": "error", ...}
+        dict: Updated project information (including the "id" key) or {"status": "error", ...}
 
     Raises:
         Exception: When API request fails (excluding 404 errors)

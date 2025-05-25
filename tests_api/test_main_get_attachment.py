@@ -26,15 +26,14 @@ def test_get_attachment_success():
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_USER_API_KEY")
     attachment_id = os.environ.get("REDMINE_TEST_ATTACHMENT_ID")
-    if not redmine_url or not api_key or not attachment_id:
-        pytest.fail("REDMINE_URL, REDMINE_USER_API_KEY, REDMINE_TEST_ATTACHMENT_ID のいずれかが未設定です")
 
     url = f"{redmine_url}/attachments/{attachment_id}.json"
     headers = {"X-Redmine-API-Key": api_key}
     response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        pytest.fail(f"API request failed: status={response.status_code}, body={response.text}")
     result = response.json()
     pprint(result, stream=sys.stderr)
-    assert response.status_code == 200
     assert isinstance(result, dict)
     assert "attachment" in result
     attachment = result["attachment"]

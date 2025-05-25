@@ -13,11 +13,14 @@ def test_get_attachment_success():
     redmine_url = os.environ.get("REDMINE_URL")
     api_key = os.environ.get("REDMINE_USER_API_KEY")
     # 添付ファイルIDは事前に存在するものを指定してください
-    attachment_id = os.environ.get("REDMINE_TEST_ATTACHMENT_ID")
+    attachment_id_str = os.environ.get("REDMINE_TEST_ATTACHMENT_ID")
+    if attachment_id_str is None:
+        raise ValueError("Environment variable 'REDMINE_TEST_ATTACHMENT_ID' is not set.")
+    attachment_id = int(attachment_id_str)
     result = get_attachment(
         redmine_url=redmine_url,
         api_key=api_key,
-        attachment_id=int(attachment_id),
+        attachment_id=attachment_id,
     )
     print("result:", result)
     assert result["success"] is True

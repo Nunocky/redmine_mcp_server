@@ -1,10 +1,10 @@
 """Redmine User Update Tool
 
 Update user information using RedmineAPIClient.
-204 No Content時はGETで最新情報を返却、404や他エラー時はException送出。
+If 204 No Content is returned, fetch and return the latest information with GET. Raise Exception for 404 or other errors.
 
 Returns:
-    dict: 更新後のuser情報
+    dict: Updated user information
 
 Raises:
     Exception: When API request fails (including 404 errors)
@@ -50,7 +50,7 @@ def update_user(
         admin: Admin flag
 
     Returns:
-        更新後のuser情報
+        dict: Updated user information
 
     Raises:
         Exception: When API request fails (including 404 errors)

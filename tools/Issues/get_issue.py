@@ -13,8 +13,7 @@ def get_issue(
     issue_id: int,
     include: str = None,
 ) -> Dict[str, Any]:
-    """
-    Get detailed information for the specified issue (issue_id)
+    """Get detailed information for the specified issue (issue_id)
 
     Args:
         redmine_url (str): Base URL of Redmine

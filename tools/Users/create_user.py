@@ -1,10 +1,10 @@
 """Redmine User Creation Tool
 
 Create a new user using RedmineAPIClient.
-404エラー時は空dict、他エラーは例外送出。
+Returns an empty dict on 404 error, raises exception on other errors.
 
 Returns:
-    dict: APIレスポンスそのまま（userキー含む場合も含まない場合も）
+    dict: Raw API response (may or may not include the 'user' key)
 
 Raises:
     Exception: When API request fails (excluding 404 errors)
@@ -50,7 +50,7 @@ def create_user(
         send_information: Send information flag
 
     Returns:
-        APIレスポンスそのまま（userキー含む場合も含まない場合も）
+        Raw API response (may or may not include the 'user' key)
 
     Raises:
         Exception: When API request fails (excluding 404 errors)

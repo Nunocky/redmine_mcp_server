@@ -20,24 +20,24 @@ def search(
     offset: int = 0,
     limit: int = 20,
 ) -> Dict[str, Any]:
-    """Redmineリソース横断検索API
+    """Cross-resource Redmine search API
 
     Args:
         redmine_url (str): Redmine base URL
         api_key (str): Redmine API key
-        query (str): 検索キーワード
-        resource_types (List[str], optional): 検索対象リソース種別（例: ["issues", "projects"]）
-        fields (List[str], optional): 検索対象フィールド（例: ["subject", "description"]）
-        offset (int, optional): ページネーション開始位置
-        limit (int, optional): 取得件数
+        query (str): Search keyword
+        resource_types (List[str], optional): Target resource types to search (e.g., ["issues", "projects"])
+        fields (List[str], optional): Fields to search (e.g., ["subject", "description"])
+        offset (int, optional): Pagination start position
+        limit (int, optional): Number of items to retrieve
 
     Returns:
-        Dict[str, Any]: 検索結果・ヒット件数・ページ情報
+        Dict[str, Any]: Search results, hit count, and pagination info
     """
-    if not redmine_url or not api_key or not query:
-        raise ValueError("redmine_url, api_key, queryは必須です")
-
-    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
     results = []
     total_count = 0
 

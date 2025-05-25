@@ -15,8 +15,7 @@ def upload_attachment(
     file_path: str,
     content_type: str = "application/octet-stream",
 ) -> Dict[str, Any]:
-    """
-    Upload a file to Redmine as an attachment.
+    """Upload a file to Redmine as an attachment.
 
     Args:
         redmine_url (str): Base URL of Redmine
