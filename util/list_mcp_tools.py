@@ -49,19 +49,11 @@ def main():
         "params": {
             "protocolVersion": "2024-11-05",
             "capabilities": {},
-            "clientInfo": {"name": "list_mcp_tools", "version": "1.0"}
-        }
+            "clientInfo": {"name": "list_mcp_tools", "version": "1.0"},
+        },
     }
-    notifications_initialized = {
-        "jsonrpc": "2.0",
-        "method": "notifications/initialized"
-    }
-    tools_list_req = {
-        "jsonrpc": "2.0",
-        "id": 2,
-        "method": "tools/list",
-        "params": {}
-    }
+    notifications_initialized = {"jsonrpc": "2.0", "method": "notifications/initialized"}
+    tools_list_req = {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}
     main_py_path = os.path.join(os.path.dirname(__file__), "..", "main.py")
     main_py_path = os.path.abspath(main_py_path)
 
@@ -73,7 +65,7 @@ def main():
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
-            bufsize=0
+            bufsize=0,
         )
 
         # stderrを別スレッドで読み続ける
@@ -146,6 +138,7 @@ def main():
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
