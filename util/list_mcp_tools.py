@@ -19,6 +19,11 @@ Usage:
 # [info] [Demo] Message from client: {"method":"tools/list","params":{},"jsonrpc":"2.0","id":1}
 # [info] [Demo] Message from server: {"jsonrpc":"2.0","id":1,"result":{"tools":[{"name":"add","description":"Add two numbers","inputSchema":{"properties":{"a":{"title":"A","type":"integer"},"b":{"title":"B","type":"integer"}},"required":["a","b"],"title":"addArguments","type":"object"}}]}}
 
+# main.pyにパイプでAPIを渡してツール一覧を取得するには以下のようにする。
+# "notifications/initialized"に idが付いていないのは、これが正しいみたい
+ (echo '{"jsonrpc":"2.0", "id":0, "method":"initialize"' ; \
+  echo '{"jsonrpc":"2.0",         "method":"notifications/initialized"}' ; \
+  echo '{"jsonrpc":"2.0", "id":2, "method":"tools/list"}') | python main.py
 """
 
 import json
