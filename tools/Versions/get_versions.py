@@ -10,8 +10,8 @@ def get_versions(
     redmine_url: str,
     api_key: str,
     project_id: str = None,
-    limit: int = None,
-    offset: int = None,
+    limit: int = 25,
+    offset: int = 0,
 ) -> Dict[str, Any]:
     """Get the list of Redmine project versions.
 
