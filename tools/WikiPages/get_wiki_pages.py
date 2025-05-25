@@ -9,12 +9,12 @@ def get_wiki_pages(
     api_key: str,
     project_id: str,
 ) -> Dict[str, Any]:
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    if not redmine_url or not api_key:
-        raise ValueError("redmine_url and api_key are required.")
+    """Get the list of Redmine project wiki pages.
+    Args:
+        redmine_url (str): URL of the Redmine server.
+        api_key (str): Redmine API key.
+        project_id (str): Project ID or identifier.
+    """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     endpoint = f"/projects/{project_id}/wiki/index.json"
     try:

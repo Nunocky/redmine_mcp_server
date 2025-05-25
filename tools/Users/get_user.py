@@ -1,14 +1,14 @@
 """Redmine User Details Retrieval Tool
 
-Get user details using RedmineAPIClient.
-APIレスポンスをそのまま返却（userキー含む場合も含まない場合も）。
-404や他HTTPエラー時はException送出。
+Retrieve user details using RedmineAPIClient.
+Returns the API response as-is (including or not including the 'user' key).
+Raises Exception on 404 or other HTTP errors.
 
 Returns:
-    dict: APIレスポンスそのまま
+    dict: The API response as-is
 
 Raises:
-    Exception: When API request fails (including 404 errors)
+    Exception: When the API request fails (including 404 errors)
 """
 
 from typing import Any, Dict, Optional, Union
@@ -31,10 +31,10 @@ def get_user(
         include: Related information to include in the response (memberships, groups)
 
     Returns:
-        APIレスポンスそのまま
+        The API response as-is
 
     Raises:
-        Exception: When API request fails (including 404 errors)
+        Exception: When the API request fails (including 404 errors)
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}

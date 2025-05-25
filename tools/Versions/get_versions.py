@@ -1,4 +1,6 @@
-import os
+"""
+Get the list of Redmine project versions.
+"""
 from typing import Any, Dict
 
 from tools.redmine_api_client import RedmineAPIClient
@@ -11,12 +13,15 @@ def get_versions(
     limit: int = None,
     offset: int = None,
 ) -> Dict[str, Any]:
-    if redmine_url is None:
-        redmine_url = os.environ.get("REDMINE_URL")
-    if api_key is None:
-        api_key = os.environ.get("REDMINE_ADMIN_API_KEY")
-    if not redmine_url or not api_key:
-        raise ValueError("redmine_url and api_key are required.")
+    """Get the list of Redmine project versions.
+
+    Args:
+        redmine_url (str): URL of the Redmine server.
+        api_key (str): Redmine API key.
+        project_id (str, optional): Project ID or identifier. If None, retrieves all versions.
+        limit (int, optional): Number of records to retrieve. Defaults to 25 if not specified.
+        offset (int, optional): Number of records to skip. Defaults to 0 if not specified.
+    """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params = {}
     if limit is not None:

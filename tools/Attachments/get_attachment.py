@@ -11,8 +11,7 @@ def get_attachment(
     attachment_id: int,
     response_format: str = "json",
 ) -> Dict[str, Any]:
-    """
-    Get attachment meta information from Redmine.
+    """Get attachment meta information from Redmine.
 
     Args:
         redmine_url (str): Base URL of Redmine

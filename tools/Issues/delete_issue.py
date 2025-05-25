@@ -8,8 +8,7 @@ def delete_issue(
     api_key: str,
     issue_id: int,
 ) -> Dict[str, Any]:
-    """
-    Delete an issue from Redmine.
+    """Delete an issue from Redmine.
 
     Args:
         redmine_url (str): Redmine base URL

@@ -11,8 +11,7 @@ def delete_attachment(
     attachment_id: int,
     response_format: str = "json",
 ) -> Dict[str, Any]:
-    """
-    Delete an attachment from Redmine.
+    """Delete an attachment from Redmine.
 
     Args:
         redmine_url (str): Base URL of Redmine

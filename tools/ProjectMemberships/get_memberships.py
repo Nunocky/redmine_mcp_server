@@ -23,21 +23,21 @@ def get_memberships(
     offset: Optional[int] = None,
     limit: Optional[int] = None,
 ) -> Dict[str, Any]:
-    """Redmineのプロジェクトメンバーシップ一覧を取得
+    """Get the list of Redmine project memberships
 
     Args:
-        redmine_url: RedmineサーバのURL
-        api_key: Redmine APIキー
-        project_id: プロジェクトIDまたは識別子
-        offset: スキップする件数
-        limit: 取得件数
+        redmine_url: URL of the Redmine server
+        api_key: Redmine API key
+        project_id: Project ID or identifier
+        offset: Number of records to skip
+        limit: Number of records to retrieve
 
     Returns:
-        dict: メンバーシップ一覧とページ情報
-        存在しないリソース（404エラー）は空リストを返す
+        dict: List of memberships and page information
+        Returns an empty list if the resource does not exist (404 error)
 
     Raises:
-        Exception: APIリクエスト失敗時（404以外）
+        Exception: When API request fails (excluding 404 errors)
     """
     client = RedmineAPIClient(base_url=redmine_url, api_key=api_key)
     params: Dict[str, Any] = {}

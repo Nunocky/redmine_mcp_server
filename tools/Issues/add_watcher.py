@@ -11,8 +11,7 @@ def add_watcher(
     issue_id: int,
     user_id: int,
 ) -> Dict[str, Any]:
-    """
-    Add a watcher (user_id) to the specified issue (issue_id)
+    """Add a watcher (user_id) to the specified issue (issue_id)
 
     Args:
         redmine_url (str): Base URL of Redmine

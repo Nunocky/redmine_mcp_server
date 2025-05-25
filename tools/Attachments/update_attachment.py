@@ -12,8 +12,7 @@ def update_attachment(
     update_fields: dict,
     response_format: str = "json",
 ) -> Dict[str, Any]:
-    """
-    Update attachment meta information on Redmine.
+    """Update attachment meta information on Redmine.
 
     Args:
         redmine_url (str): Base URL of Redmine
