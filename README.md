@@ -57,9 +57,9 @@ uv sync
 To retrieve the list of tools by passing API requests to `main.py` via a pipe, use the following method.
 
 ```sh
- (echo '{"jsonrpc":"2.0", "id":0, "method":"initialize"' ; \
-  echo '{"jsonrpc":"2.0",         "method":"notifications/initialized"}' ; \
-  echo '{"jsonrpc":"2.0", "id":2, "method":"tools/list"}') | python main.py
+(echo '{"jsonrpc":"2.0","id":0, "method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"mcp-util-list-tools","version":"0.1.0"}}}' ; \
+ echo '{"jsonrpc":"2.0",         "method":"notifications/initialized"}' ; \
+ echo '{"jsonrpc":"2.0", "id":2, "method":"tools/list"}') | python main.py
 ```
 
 ## License

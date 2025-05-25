@@ -21,9 +21,9 @@ Usage:
 
 # main.pyにパイプでAPIを渡してツール一覧を取得するには以下のようにする。
 # "notifications/initialized"に idが付いていないのは、これが正しいみたい
- (echo '{"jsonrpc":"2.0", "id":0, "method":"initialize"' ; \
-  echo '{"jsonrpc":"2.0",         "method":"notifications/initialized"}' ; \
-  echo '{"jsonrpc":"2.0", "id":2, "method":"tools/list"}') | python main.py
+(echo '{"jsonrpc":"2.0","id":0, "method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"mcp-util-list-tools","version":"0.1.0"}}}' ; \
+ echo '{"jsonrpc":"2.0",         "method":"notifications/initialized"}' ; \
+ echo '{"jsonrpc":"2.0", "id":2, "method":"tools/list"}') | python main.py
 """
 
 import json
