@@ -34,7 +34,10 @@ def search(
     Returns:
         Dict[str, Any]: Search results, hit count, and pagination info
     """
-    client = RedmineAPIClient(base_url=redmine_url, api_key=api_key,)
+    client = RedmineAPIClient(
+        base_url=redmine_url,
+        api_key=api_key,
+    )
     results = []
     total_count = 0
 
